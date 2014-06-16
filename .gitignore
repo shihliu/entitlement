@@ -1,1 +1,10 @@
+#ignore pyc file
 *.pyc
+
+#ignore eclipse workspace
+.project
+.pydevproject
+.settings/
+
+#ignore log file
+entitlement.log
