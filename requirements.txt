@@ -1,2 +1,8 @@
 # For testcases: installation
 paramiko==1.12.3
+
+coverage
+unittest-xml-reporting
+nose
+pylint
+clonedigger
