@@ -5,9 +5,8 @@ class SAMInstall(Install):
     '''
     classdocs
     '''
-
-    def check_build(self):
-        pass
+    conf_file_name = SAM_INSTALLATION_CONF
+    product_name = "SAM"
 
     def install_host(self):
         pass
@@ -19,4 +18,4 @@ class SAMInstall(Install):
         pass
 
 if __name__ == "__main__":
-    SAMInstall(SAM_INSTALLATION_CONF).install()
+    SAMInstall().start()
