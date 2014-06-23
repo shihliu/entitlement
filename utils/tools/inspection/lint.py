@@ -13,8 +13,8 @@ def lint():
     this_file = os.path.realpath(__file__)
     this_dir = os.path.dirname(this_file)
     search_paths = (
-        os.path.join(this_dir, os.pardir, 'testcases'),
-        os.path.join(this_dir, os.pardir, 'utils'),
+        os.path.join(this_dir, os.pardir, os.pardir, 'testcases'),
+        os.path.join(this_dir, os.pardir, os.pardir, 'utils'),
     )
 
     # Prep work done. Time to find files! Yeah, this is a stupid amount of

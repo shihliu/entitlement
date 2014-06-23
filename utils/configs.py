@@ -16,7 +16,7 @@ class Configs(object):
             for section in conf_parser.sections():
                 for option in conf_parser.options(section):
                     self._confs[
-                        "%s.%s" % (section, option)
+                        "%s" % option
                     ] = conf_parser.get(section, option)
 
         logger.debug(conf_file)

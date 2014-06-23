@@ -1,10 +1,11 @@
 import os
+from utils import logger
 from xml.dom import minidom
 # from utils.tools.htmlparser import buildparser
 
 builds_xml = os.path.realpath(os.path.join(os.path.dirname(__file__), "builds.xml"))
 xmldom = minidom.parse(builds_xml)
-
+root = xmldom.documentElement
 # def new_build_check(product_name):
 #     # check the last build in html, if not in xml file then it's a new build
 #     last_build = buildparser.build_list(product_name.upper())[-1]
@@ -15,34 +16,34 @@ xmldom = minidom.parse(builds_xml)
 
 def get_builds(product_name):
     '''product_name: "sam", "rhel", '''
-    root = xmldom.documentElement
-    product_section = root.getElementsByTagName("%s" % product_name)[0]
+    product_name = product_name.lower()
     build_list = []
-    # get every build in <build>XXX</build>
-    for build in product_section.getElementsByTagName("build"):
-        for node in build.childNodes:
-            if node.nodeType in (node.TEXT_NODE,):
-                build_list.append(node.data)
+    product_section = root.getElementsByTagName("%s" % product_name)
+    if product_section.length == 0:
+        # if product not in xml file, then add it
+        logger.info("Adding new product : %s to build.xml" % product_name)
+        __add_product(product_name)
+    else:
+        # get every build in <build>XXX</build>
+        for build in product_section[0].getElementsByTagName("build"):
+            for node in build.childNodes:
+                if node.nodeType in (node.TEXT_NODE,):
+                    build_list.append(node.data)
+    logger.info("All %s builds in build.xml : %s " % (product_name, build_list))
     return build_list
 
 def add_build(product_name, build_name):
     ''' '''
-    root = xmldom.documentElement
-    product_section = root.getElementsByTagName("%s" % product_name)[0]
+    product_section = root.getElementsByTagName("%s" % product_name.lower())[0]
     build = xmldom.createTextNode('%s' % build_name)
     item = xmldom.createElement('build')
     item.appendChild(build)
     product_section.appendChild(item)
-
-    minidom.Element.writexml = fixed_writexml
-    xmlfile = open('builds.xml', 'w')
-    xmldom.writexml(xmlfile, addindent='' , newl='\n')
-    xmlfile.close()
+    __write_xml()
 
 def reset_builds(product_name, build_list):
     ''' reset product builds '''
-    root = xmldom.documentElement
-    product_section = root.getElementsByTagName("%s" % product_name)[0]
+    product_section = root.getElementsByTagName("%s" % product_name.lower())[0]
 
     # remove all builds in product
     for build in product_section.getElementsByTagName("build"):
@@ -54,13 +55,20 @@ def reset_builds(product_name, build_list):
         item = xmldom.createElement('build')
         item.appendChild(build)
         product_section.appendChild(item)
+    __write_xml()
 
-    minidom.Element.writexml = fixed_writexml
-    xmlfile = open('builds.xml', 'w')
+def __add_product(product_name):
+    item = xmldom.createElement(product_name)
+    root.appendChild(item)
+    __write_xml()
+
+def __write_xml():
+    minidom.Element.writexml = __fixed_writexml
+    xmlfile = open(builds_xml, 'w')
     xmldom.writexml(xmlfile, addindent='' , newl='\n')
     xmlfile.close()
 
-def fixed_writexml(self, writer, indent="", addindent="", newl=""):
+def __fixed_writexml(self, writer, indent="", addindent="", newl=""):
     # indent = current indentation
     # addindent = indentation to add to higher levels
     # newl = newline string
@@ -93,6 +101,8 @@ if __name__ == "__main__":
 #     reset_builds("sam", ["build1", "build2"])
 #     reset_builds("sam", buildparser.build_list("sam".upper()))
 #     add_build("sam", "testbuild")
-#     print get_builds("sam")
+#     __add_product("sam-1.4.0")
+#     add_build("sam-1.4.0", "testbuild")
+#     print get_builds("sam-1.4.0")
 #     print new_build_check("sam")
     pass

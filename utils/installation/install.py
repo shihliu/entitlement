@@ -1,7 +1,7 @@
 from utils.configs import Configs
 from utils import logger
 from utils.tools.xmlparser import buildxml
-from utils.tools.htmlparser import buildparser
+from utils.tools.htmlparser.buildparser import BuildParser
 
 class Install(object):
     '''
@@ -14,7 +14,8 @@ class Install(object):
         '''
         Parse configure file
         '''
-        Configs(self.conf_file_name)
+        confs = Configs(self.conf_file_name)
+        self.product_name = confs._confs["product_name"]
 
     def start(self):
         new_build = self.check_build()
@@ -26,19 +27,12 @@ class Install(object):
             self.install_guest()
             self.install_product()
 
-#     def new_build_check(self, product_name):
-#         # check the last build in html, if not in xml file then it's a new build
-#         last_build = buildparser.build_list(product_name.upper())[-1]
-#         if not last_build in buildxml.get_builds(product_name):
-#             return last_build
-#         else:
-#             return "No New Build"
-
     def check_build(self):
-        # check the last build in html, if not in xml file then it's a new build
-        last_build = buildparser.build_list(self.product_name.upper())[-1]
-        if not last_build in buildxml.get_builds(self.product_name.lower()):
-            buildxml.add_build(self.product_name.lower(), last_build)
+        # check the last build from html, if not in xml file then it's a new build
+        last_build = BuildParser(self.product_name).parse()
+        if not last_build in buildxml.get_builds(self.product_name):
+            buildxml.add_build(self.product_name, last_build)
+            logger.info("Build version is : %s " % last_build)
             return last_build
         else:
             return "No New Build"

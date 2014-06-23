@@ -6,7 +6,6 @@ class SAMInstall(Install):
     classdocs
     '''
     conf_file_name = SAM_INSTALLATION_CONF
-    product_name = "SAM"
 
     def install_host(self):
         pass
