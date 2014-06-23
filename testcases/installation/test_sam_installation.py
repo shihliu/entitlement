@@ -5,7 +5,7 @@ class Test_Sam_Installation(unittest.TestCase):
 
 
     def setUp(self):
-        SAMInstall(SAM_INSTALLATION_CONF).install()
+        SAMInstall().start()
 
 
     def tearDown(self):
