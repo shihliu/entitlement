@@ -65,9 +65,10 @@
 <build>SAM-1.4.0-RHEL-6-20140409.0/</build>
 <build>SAM-1.4.0-RHEL-6-20140416.0/</build>
 <build>SAM-1.4.0-RHEL-6-20140509.0/</build>
-<build>testbuild</build>
-<build>testbuild</build>
 </sam>
 <rhel id="rhel">
 </rhel>
+<sam-1.4.0>
+<build>SAM-1.4.0-RHEL-6-20140512.0/</build>
+</sam-1.4.0>
 </product>

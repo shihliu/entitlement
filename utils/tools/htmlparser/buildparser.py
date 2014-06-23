@@ -1,24 +1,15 @@
 """
 parse all builds from HTML into a list
 """
-import urllib
 from utils import logger
 from sgmllib import SGMLParser
 from utils import constants
+from utils.tools.htmlparser import htmlsource
 
 class BuildParser(SGMLParser):
 	build_url = ""
 	product_name = ""
-	
-	def __init__(self, product_name):
-		self.product_name = product_name.upper()
-		if self.product_name.startswith("SAM"):
-			self.build_url = constants.SAM_BUILD_URL
-		elif self.product_name.startswith("RHEL"):
-			self.build_url = constants.RHEL_BUILD_URL
-		else:
-			logger.error("Unknown product name : %s " % product_name)
-	
+
 	def reset(self):
 		self.is_a = 0
 		self.build_lists = []
@@ -35,17 +26,10 @@ class BuildParser(SGMLParser):
 			logger.debug("add %s " % data)
 			self.build_lists.append(data)
 
-	def __get_html_source(self):
-		"""Accept a url and return html source"""
-		logger.info("Build URL is : %s" % self.build_url)
-		sock = urllib.urlopen(self.build_url)
-		htmlSource = sock.read()
-		sock.close()
-		# logger.debug(htmlSource)
-		return htmlSource
-
-	def parse(self):
-		self.feed(self.__get_html_source())
+	def parse(self, product_name): 
+		self.product_name = product_name
+		self.build_url = constants.get_build_tree(product_name)
+		self.feed(htmlsource.get_html_source(self.build_url))
 		self.close()
 		return self.build_lists
 
@@ -79,7 +63,6 @@ class BuildParser(SGMLParser):
 # 	parser = globals()[parserName]()
 # 	return parser.parse()
 # 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 # 	logger.debug(build_list("SAM"))
 # 	logger.debug(build_list("RHEL"))
-	BuildParser("SAM").parse()

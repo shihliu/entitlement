@@ -1,6 +1,9 @@
 from utils.configs import Configs
+import time
 from utils import logger
+from utils import constants
 from utils.tools.xmlparser import buildxml
+from utils.tools.htmlparser import htmlsource
 from utils.tools.htmlparser.buildparser import BuildParser
 
 class Install(object):
@@ -20,22 +23,34 @@ class Install(object):
     def start(self):
         new_build = self.check_build()
         if new_build == "No New Build":
-            logger.info("No %s new build available yet, just exit ..." % self.product_name) 
+            logger.info("No %s new build available yet, just exit ..." % self.product_name)
         else:
-            logger.info("Found %s new build %s, begin installing ..." % (self.product_name, new_build)) 
+            logger.info("Found %s new build %s, begin installing ..." % (self.product_name, new_build))
             self.install_host()
             self.install_guest()
             self.install_product()
 
     def check_build(self):
         # check the last build from html, if not in xml file then it's a new build
-        last_build = BuildParser(self.product_name).parse()
+        last_build = BuildParser().parse(self.product_name)[-1]
         if not last_build in buildxml.get_builds(self.product_name):
             buildxml.add_build(self.product_name, last_build)
-            logger.info("Build version is : %s " % last_build)
+            self.check_build_status(last_build)
             return last_build
         else:
             return "No New Build"
+
+    def check_build_status(self, build):
+        # check STATUS file, if FINISHED, begin installing
+        status_file = constants.get_build_tree(build) + "/" + build + "/" + "STATUS"
+        logger.info("Status file is : %s." % status_file)
+        while True:
+            if "FINISHED" in htmlsource.get_html_source(status_file):
+                logger.info("Build %s is in Finished status, going on ..." % build)
+                break
+            else:
+                time.sleep("60")
+                logger.info("Build %s is not in Finished status yet, wait 1 minute ..." % build)
 
     def install_host(self):
         raise NotImplementedError, "Cannot call abstract method"
