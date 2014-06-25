@@ -12,22 +12,23 @@ class Install(object):
     '''
     conf_file_name = ""
     product_name = ""
+    confs = None
 
     def __init__(self):
         '''
         Parse configure file
         '''
-        confs = Configs(self.conf_file_name)
-        self.product_name = confs._confs["product_name"]
+        self.confs = Configs(self.conf_file_name)
+        self.product_name = self.confs._confs["product_name"]
 
     def start(self):
-        new_build = self.check_build()
+        new_build = self.check_build().strip("/")
         if new_build == "No New Build":
             logger.info("No %s new build available yet, just exit ..." % self.product_name)
         else:
             logger.info("Found %s new build %s, begin installing ..." % (self.product_name, new_build))
             self.install_host()
-            self.install_guest()
+            self.install_guest(new_build)
             self.install_product()
 
     def check_build(self):
@@ -55,7 +56,7 @@ class Install(object):
     def install_host(self):
         raise NotImplementedError, "Cannot call abstract method"
 
-    def install_guest(self):
+    def install_guest(self, guest_name):
         raise NotImplementedError, "Cannot call abstract method"
 
     def install_product(self):
