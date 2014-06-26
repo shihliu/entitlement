@@ -46,7 +46,7 @@ class VirshCommand(Command):
         '--accelerate -v '
         '--disk path=/home/auto-imgs/%s.img,size=20 '
         '-l http://download.englab.nay.redhat.com/pub/rhel/released/RHEL-6/6.5/Server/x86_64/os/ '
-        # '--nographics '
+        '--nographics '
         '--initrd-inject=/root/workspace/entitlement/data/kickstart/unattended/rhel-server-6-series.ks '
         '--extra-args "ks=file:/rhel-server-6-series.ks"' % (guest_name, guest_name))
         self.run(cmd, timeout=3600)
