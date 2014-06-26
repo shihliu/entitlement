@@ -19,7 +19,7 @@ class Install(object):
         Parse configure file
         '''
         self.confs = Configs(self.conf_file_name)
-        self.product_name = self.confs._confs["product_name"]
+        self.product_name = self.confs._confs["version"]
 
     def start(self):
         new_build = self.check_build().strip("/")
