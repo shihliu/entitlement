@@ -21,7 +21,7 @@ def get_builds(product_name):
     product_section = root.getElementsByTagName("%s" % product_name)
     if product_section.length == 0:
         # if product not in xml file, then add it
-        logger.info("Adding new product : %s to build.xml" % product_name)
+        logger.info("Adding %s build version to builds.xml" % product_name)
         __add_product(product_name)
     else:
         # get every build in <build>XXX</build>
@@ -29,7 +29,7 @@ def get_builds(product_name):
             for node in build.childNodes:
                 if node.nodeType in (node.TEXT_NODE,):
                     build_list.append(node.data)
-    logger.info("All %s builds in build.xml : %s " % (product_name, build_list))
+    logger.info("All %s builds in builds.xml : %s" % (product_name, build_list))
     return build_list
 
 def add_build(product_name, build_name):
@@ -39,6 +39,7 @@ def add_build(product_name, build_name):
     item = xmldom.createElement('build')
     item.appendChild(build)
     product_section.appendChild(item)
+    logger.info("Add build %s to builds.xml" % (build_name))
     __write_xml()
 
 def reset_builds(product_name, build_list):
@@ -49,7 +50,7 @@ def reset_builds(product_name, build_list):
     for build in product_section.getElementsByTagName("build"):
         product_section.removeChild(build)
 
-    # add builds from build_list to build.xml
+    # add builds from build_list to builds.xml
     for item in build_list:
         build = xmldom.createTextNode('%s' % item)
         item = xmldom.createElement('build')

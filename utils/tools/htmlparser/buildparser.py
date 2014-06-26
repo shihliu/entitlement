@@ -23,7 +23,7 @@ class BuildParser(SGMLParser):
 
 	def handle_data(self, data):
 		if self.is_a and self.is_build(data):
-			logger.debug("add %s " % data)
+			logger.debug("Found %s " % data)
 			self.build_lists.append(data)
 
 	def parse(self, product_name): 
