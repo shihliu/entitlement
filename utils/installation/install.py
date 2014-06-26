@@ -28,7 +28,10 @@ class Install(object):
         else:
             logger.info("Found %s new build %s, begin installing ..." % (self.product_name, new_build))
             self.install_host()
-            self.install_guest(new_build)
+            if self.confs._confs["install_guest"] == "yes":
+                self.install_guest(new_build)
+            else:
+                self.find_guest(new_build)
             self.install_product(new_build)
 
     def check_build(self):
@@ -57,6 +60,9 @@ class Install(object):
         raise NotImplementedError, "Cannot call abstract method"
 
     def install_guest(self, guest_name):
+        raise NotImplementedError, "Cannot call abstract method"
+
+    def find_guest(self, guest_name):
         raise NotImplementedError, "Cannot call abstract method"
 
     def install_product(self, machine_ip, compose):

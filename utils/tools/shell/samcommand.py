@@ -65,7 +65,7 @@ class SAMCommand(Command):
         cmd = "katello-configure --deployment=sam --user-pass=admin"
         self.run(cmd, timeout=1800)
 
-    def import_manifest(self):
+    def __import_manifest(self):
         # only support remote run
         self.__upload_manifest()
         cmd = "headpin -u admin -p admin provider import_manifest --org=ACME_Corporation --name='Red Hat' --file=/root/%s" % manifest_name
@@ -75,7 +75,7 @@ class SAMCommand(Command):
         self.remote_put(sam_manifest, "/root/%s" % manifest_name)
 
 if __name__ == "__main__":
-    sam_command = SAMCommand("10.66.128.12", "root", "redhat")
+    sam_command = SAMCommand("10.66.128.31", "root", "redhat")
     sam_command.import_manifest()
 #     sam_command.add_sam_repo("SAM-1.4.0-RHEL-6-20140512.0")
 

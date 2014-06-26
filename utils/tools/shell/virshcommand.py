@@ -15,6 +15,11 @@ class VirshCommand(Command):
         guestip = self.__mac_to_ip(self.__get_dom_mac_addr(guest_name))
         return guestip
 
+    def find_vm(self, guest_name):
+        # Get guest IP
+        guestip = self.__mac_to_ip(self.__get_dom_mac_addr(guest_name))
+        return guestip
+
     def define_vm(self):
         pass
     
@@ -72,7 +77,7 @@ class VirshCommand(Command):
             return None
         cmd = "sh " + os.path.realpath(os.path.join(os.path.dirname(__file__), "ipget.sh ")) + mac
         (ret, out) = self.run(cmd, timeout)
-        return out
+        return out.strip("\n").strip(" ")
 
 if __name__ == "__main__":
     virsh_command = VirshCommand()
