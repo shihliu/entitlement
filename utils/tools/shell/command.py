@@ -15,6 +15,7 @@ class Command(object):
             ret, output = LocalSH.local_run(cmd, timeout)
         else:
             ret, output = RemoteSH.remote_run(cmd, self.remote_ip, self.username, self.password, timeout)
+#             ret, output = RemoteSH.run_pexpect(cmd, self.remote_ip, self.username, self.password, timeout)
         return ret, output
 
     def remote_put(self, from_path, to_path):

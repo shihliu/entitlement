@@ -75,29 +75,6 @@ class RemoteSH(object):
         ssh.close()
         return retcode, stdout.read()
 
-
-    @classmethod
-    def run_paramiko_2(self, cmd, remote_ip, username, password, timeout=None):
-        # paramiko.util.log_to_file('/tmp/test')
-        ssh = paramiko.SSHClient()
-        ssh.load_system_host_keys()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(remote_ip, 22, username, password)
-        channel = ssh.get_transport().open_session()
-        stdin, stdout, stderr = channel.exec_command(cmd, timeout=timeout)
-        retcode = stdout.channel.recv_exit_status()
-        while True:
-            if channel.exit_status_ready():
-                break
-            rl, wl, xl = select.select([channel], [], [], 0.0)
-            if len(rl) > 0:
-                print channel.recv(1024)
-#         logger.info("Error : %s" % stderr.read())
-#         logger.info("Return Code : %s" % retcode)
-#         logger.info("Output : \n%s" % stdout.read())
-        ssh.close()
-        return retcode, stdout.read()
-
     @classmethod
     def run_pexpect(self, cmd, remote_ip, username, password):
             """ Remote exec function via pexpect """
