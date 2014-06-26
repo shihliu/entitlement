@@ -8,8 +8,8 @@ from utils.tools.shell.command import Command
 class VirshCommand(Command):
 
     def create_vm(self, guest_name):
-        self.__create_storage()
-        self.__create_img(guest_name)
+#         self.__create_storage()
+#         self.__create_img(guest_name)
         self.__unattended_install(guest_name)
         # Get guest IP
         guestip = self.__mac_to_ip(self.__get_dom_mac_addr(guest_name))
@@ -75,5 +75,7 @@ class VirshCommand(Command):
         return out
 
 if __name__ == "__main__":
+    virsh_command = VirshCommand()
+    print virsh_command.create_vm("AUTO-SAM-1.4.0-RHEL-6-20140512.0")
     pass
 

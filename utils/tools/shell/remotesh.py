@@ -21,7 +21,7 @@ class RemoteSH(object):
         Executes SSH command on remote machine.
         """
 
-        logger.info(">>> %s" % cmd)
+        logger.info(">>>Remote Run: %s" % cmd)
         retcode, stdout = self.run_paramiko(cmd, remote_ip, username, password, timeout=timeout)
 #         regex = re.compile(r'\x1b\[\d\d?m')
 #         if stdout:
@@ -34,8 +34,8 @@ class RemoteSH(object):
 #             output = []
 #         if output:
 #             logger.debug("<<<\n%s" % '\n'.join(output[:-1]))
-        logger.info("<<<Return Code :%s" % retcode)
-        logger.info("<<<Output :\n%s" % stdout)
+        logger.info("<<<Return Code: %s" % retcode)
+        logger.info("<<<Output:\n%s" % stdout)
         return retcode, stdout
 
     @classmethod

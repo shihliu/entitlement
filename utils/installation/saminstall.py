@@ -17,8 +17,9 @@ class SAMInstall(Install):
         remote_ip = self.confs._confs["installation_host_ip"]
         username = self.confs._confs["host_username"]
         password = self.confs._confs["host_password"]
-        virsh_command = VirshCommand(remote_ip, username, password)
-        self.target_ip = virsh_command.create_vm(guest_name)
+        # virsh_command = VirshCommand(remote_ip, username, password)
+        virsh_command = VirshCommand()
+        self.target_ip = virsh_command.create_vm("AUTO-%s" % guest_name)
 
     def install_product(self, sam_compose):
         sam_command = SAMCommand(self.target_ip, "root", "redhat")

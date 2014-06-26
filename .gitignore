@@ -12,5 +12,5 @@
 #ignore log file
 entitlement.log
 
-#ignore build.xml
-build.xml
+#ignore builds.xml
+builds.xml

@@ -11,10 +11,10 @@ class LocalSH(object):
         """
         Executes SSH command on local machine.
         """
-        logger.info(">>> %s" % cmd)
+        logger.info(">>>Local Run: %s" % cmd)
         retcode, stdout = self.run_subprocess(cmd, timeout)
-        logger.info("<<<Return Code :%s" % retcode)
-        logger.info("<<<Output :\n%s" % stdout)
+        logger.info("<<<Return Code: %s" % retcode)
+        logger.info("<<<Output:\n%s" % stdout)
         return retcode, stdout
 
     @classmethod
