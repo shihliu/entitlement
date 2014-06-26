@@ -1,7 +1,7 @@
 '''
 Run command in remote machine with paramiko
 '''
-import sys
+import sys, re
 import pexpect
 from utils import logger
 
@@ -22,7 +22,7 @@ class RemoteSH(object):
         """
 
         logger.info(">>> %s" % cmd)
-        stdout = self.run_paramiko(cmd, remote_ip, username, password, timeout=timeout)
+        retcode, stdout = self.run_paramiko(cmd, remote_ip, username, password, timeout=timeout)
 #         regex = re.compile(r'\x1b\[\d\d?m')
 #         if stdout:
 #             stdout = stdout.decode('utf-8')
@@ -32,29 +32,33 @@ class RemoteSH(object):
 #                 ]
 #         else:
 #             output = []
-
 #         if output:
 #             logger.debug("<<<\n%s" % '\n'.join(output[:-1]))
-        logger.info("<<<\n%s" % stdout)
-        return stdout
+        logger.info("<<<Return Code :%s" % retcode)
+        logger.info("<<<Output :\n%s" % stdout)
+        return retcode, stdout
 
     @classmethod
     def remote_get(self, remote_ip, username, password, from_path, to_path):
+        logger.info(">>> remote_get")
         scp = paramiko.Transport((remote_ip, 22))
-        scp.connect(username, password)
+        scp.connect(username=username, password=password)
         sftp = paramiko.SFTPClient.from_transport(scp)
         # Copy a remote file from the SFTP server to the local host
         sftp.get(from_path, to_path)
         scp.close()
+        logger.info("<<< remote_get")
 
     @classmethod
     def remote_put(self, remote_ip, username, password, from_path, to_path):
+        logger.info(">>> remote_put")
         scp = paramiko.Transport((remote_ip, 22))
-        scp.connect(username, password)
+        scp.connect(username=username, password=password)
         sftp = paramiko.SFTPClient.from_transport(scp)
         # Copy a local file to the SFTP server
         sftp.put(from_path, to_path)
         scp.close()
+        logger.info("<<< remote_put")
 
     @classmethod
     def run_paramiko(self, cmd, remote_ip, username, password, timeout=None):
@@ -64,9 +68,11 @@ class RemoteSH(object):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(remote_ip, 22, username, password)
         stdin, stdout, stderr = ssh.exec_command(cmd, timeout=timeout)
-        # logger.info(stdout.read())
+        retcode = stdout.channel.recv_exit_status()
+#         logger.info("Return Code : %s" % retcode)
+#         logger.info("Output : \n%s" % stdout.read())
         ssh.close()
-        return stdout.read()
+        return retcode, stdout.read()
 
     @classmethod
     def run_pexpect(self, cmd, remote_ip, username, password):
@@ -90,4 +96,5 @@ if __name__ == "__main__":
 #     print exit_code, result
 #     RemoteSH.run_paramiko("ifconfig", "10.66.129.77", "root", "gaoshang")
 #     RemoteSH.remote_run("ifconfig", "10.66.129.77", "root", "gaoshang")
+    RemoteSH.remote_put("10.66.128.12", "root", "redhat", "/root/openrc.sh", "/root/openrc.sh")
     pass

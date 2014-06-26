@@ -16,3 +16,6 @@ class Command(object):
         else:
             ret, output = RemoteSH.remote_run(cmd, self.remote_ip, self.username, self.password, timeout)
         return ret, output
+
+    def remote_put(self, from_path, to_path):
+        RemoteSH.remote_put(self.remote_ip, self.username, self.password, from_path, to_path)

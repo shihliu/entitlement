@@ -29,7 +29,7 @@ class Install(object):
             logger.info("Found %s new build %s, begin installing ..." % (self.product_name, new_build))
             self.install_host()
             self.install_guest(new_build)
-            self.install_product()
+            self.install_product(new_build)
 
     def check_build(self):
         # check the last build from html, if not in xml file then it's a new build
@@ -59,5 +59,5 @@ class Install(object):
     def install_guest(self, guest_name):
         raise NotImplementedError, "Cannot call abstract method"
 
-    def install_product(self):
+    def install_product(self, machine_ip, compose):
         raise NotImplementedError, "Cannot call abstract method"

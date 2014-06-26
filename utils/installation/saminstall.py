@@ -1,12 +1,14 @@
 from utils.constants import SAM_INSTALLATION_CONF
 from utils.installation.install import Install
 from utils.tools.shell.virshcommand import VirshCommand
+from utils.tools.shell.samcommand import SAMCommand
 
 class SAMInstall(Install):
     '''
     classdocs
     '''
     conf_file_name = SAM_INSTALLATION_CONF
+    target_ip = ""
 
     def install_host(self):
         pass
@@ -16,10 +18,11 @@ class SAMInstall(Install):
         username = self.confs._confs["host_username"]
         password = self.confs._confs["host_password"]
         virsh_command = VirshCommand(remote_ip, username, password)
-        virsh_command.create_vm(guest_name)
+        self.target_ip = virsh_command.create_vm(guest_name)
 
-    def install_product(self):
-        pass
+    def install_product(self, sam_compose):
+        sam_command = SAMCommand(self.target_ip, "root", "redhat")
+        sam_command.install_sam(sam_compose)
 
 if __name__ == "__main__":
     SAMInstall().start()

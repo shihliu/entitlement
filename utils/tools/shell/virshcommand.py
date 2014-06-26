@@ -13,6 +13,7 @@ class VirshCommand(Command):
         self.__unattended_install(guest_name)
         # Get guest IP
         guestip = self.__mac_to_ip(self.__get_dom_mac_addr(guest_name))
+        return guestip
 
     def define_vm(self):
         pass

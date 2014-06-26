@@ -13,7 +13,8 @@ class LocalSH(object):
         """
         logger.info(">>> %s" % cmd)
         retcode, stdout = self.run_subprocess(cmd, timeout)
-        logger.info("<<<\n%s" % stdout)
+        logger.info("<<<Return Code :%s" % retcode)
+        logger.info("<<<Output :\n%s" % stdout)
         return retcode, stdout
 
     @classmethod
