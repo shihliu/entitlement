@@ -11,6 +11,7 @@ except ImportError:
     print "Please install paramiko."
     sys.exit(-1)
 
+
 class RemoteSH(object):
     """
     Run shell in remote machine via paramiko
@@ -67,13 +68,48 @@ class RemoteSH(object):
         ssh.load_system_host_keys()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(remote_ip, 22, username, password)
-        stdin, stdout, stderr = ssh.exec_command(cmd, timeout=timeout)
-        retcode = stdout.channel.recv_exit_status()
-#         logger.info("Error : %s" % stderr.read())
-#         logger.info("Return Code : %s" % retcode)
-#         logger.info("Output : \n%s" % stdout.read())
-        ssh.close()
-        return retcode, stdout.read()
+        if timeout == None:
+            stdin, stdout, stderr = ssh.exec_command(cmd)
+            retcode = stdout.channel.recv_exit_status()
+#             logger.info("Error : %s" % stderr.read())
+#             logger.info("Return Code : %s" % retcode)
+#             logger.info("Output : \n%s" % stdout.read())
+            ssh.close()
+            return retcode, stdout.read()
+        else:
+            import time, socket
+            from select import select
+            channel = ssh.get_transport().open_session()
+            channel.settimeout(timeout)
+            channel.exec_command(cmd)
+
+            terminate_time = time.time() + timeout
+            while True:
+                try:
+                    rlist, wlist, elist = select([channel], [], [], float(timeout))
+                    while (not channel.recv_ready() and
+                           not channel.recv_stderr_ready() and
+                           terminate_time > time.time()):
+                        logger.debug("Command running, wait 1 minute ...")
+                        time.sleep(60)
+                    if rlist is not None and len(rlist) > 0:
+                        if channel.exit_status_ready():
+                            stdout = channel.recv(1048576)
+                            stderr = channel.recv_stderr(1048576)
+                            retcode = channel.recv_exit_status()
+                            return retcode, stdout
+                    elif elist is not None and len(elist) > 0:
+                        if channel.recv_stderr_ready():
+                            stdout = channel.recv(1048576)
+                            stderr = channel.recv_stderr(1048576)
+                            return -1, stdout
+                    if terminate_time < time.time():
+                        logger.debug("Command timeout exceeded ...")
+                        return -1, "Command timeout exceeded ..."
+                        
+                except socket.timeout:
+                    logger.debug("SSH channel timeout exceeded ...")
+                    return -1, "SSH channel timeout exceeded ..."
 
     @classmethod
     def run_pexpect(self, cmd, remote_ip, username, password):
@@ -95,7 +131,7 @@ class RemoteSH(object):
 if __name__ == "__main__":
 #     exit_code, result = RemoteSH.run_pexpect("ifconfig", "10.66.129.77", "root", "gaoshang")
 #     print exit_code, result
-#     RemoteSH.run_paramiko("ifconfig", "10.66.129.77", "root", "gaoshang")
+    print RemoteSH.run_paramiko("sleep 10", "10.66.129.77", "root", "gaoshang", 20)
 #     RemoteSH.remote_run("ifconfig", "10.66.129.77", "root", "gaoshang")
-    RemoteSH.remote_put("10.66.128.12", "root", "redhat", "/root/openrc.sh", "/root/openrc.sh")
+#     RemoteSH.remote_put("10.66.128.12", "root", "redhat", "/root/openrc.sh", "/root/openrc.sh")
     pass
