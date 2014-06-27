@@ -13,7 +13,7 @@ class VirshCommand(Command):
         self.__unattended_install(guest_name)
         return self.__check_vm_available(guest_name)
 
-    def __check_vm_available(self, guest_name, timeout=3600):
+    def __check_vm_available(self, guest_name, timeout=600):
         terminate_time = time.time() + timeout
         while True:
             guestip = self.__mac_to_ip(self.__get_dom_mac_addr(guest_name))
@@ -72,11 +72,11 @@ class VirshCommand(Command):
         cmd = "virsh dumpxml " + domname + " | grep 'mac address' | awk -F'=' '{print $2}' | tr -d \"[\'/>]\""
         (ret, out) = self.run(cmd)
         if ret == 0:
-            return out
+            return out("\n").strip(" ")
         else:
             return None
 
-    def __mac_to_ip(self, mac, timeout=600):
+    def __mac_to_ip(self, mac):
         """
         Map mac address to ip
         Return None on FAILURE and the mac address on SUCCESS
@@ -84,7 +84,7 @@ class VirshCommand(Command):
         if not mac:
             return None
         cmd = "sh " + os.path.realpath(os.path.join(os.path.dirname(__file__), "ipget.sh ")) + mac
-        (ret, out) = self.run(cmd, timeout)
+        (ret, out) = self.run(cmd)
         return out.strip("\n").strip(" ")
 
 if __name__ == "__main__":

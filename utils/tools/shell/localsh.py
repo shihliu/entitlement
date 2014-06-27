@@ -27,20 +27,22 @@ class LocalSH(object):
         """
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         # if timeout is not set wait for process to complete
-        if not timeout:
+        if timeout == None:
             retcode = process.wait()
             stdout, stderr = process.communicate()
         else:
             terminate_time = time.time() + timeout
-            while process.poll() == None and terminate_time > time.time():
+            while process.poll() == None:
                 logger.debug("Run command, wait 1 minute ...")
-                time.sleep(60)
-            if terminate_time < time.time():
-                # starting 2.6 subprocess has a kill() method which is preferable
-                logger.debug("Kill process, return -1 ...")
-                retcode = -1
-                stdout = "Command terminated due to timeout ..."
-                process.kill()
+                time.sleep(1)
+                if terminate_time < time.time():
+                    # starting 2.6 subprocess has a kill() method which is preferable
+                    logger.debug("Kill process, return -1 ...")
+                    retcode = -1
+                    stdout = "Command terminated due to timeout ..."
+                    process.kill()
+            retcode = process.wait()
+            stdout, stderr = process.communicate()
 #                 os.kill(process.pid, signal.SIGKILL)
 #                 raise OSError("Process timeout has been reached")
 #             retcode = process.returncode
@@ -67,4 +69,5 @@ class LocalSH(object):
 # out = child2.communicate()  
 
 if __name__ == "__main__":
-    LocalSH.local_run("/usr/bin/virt-install --network=bridge:br0 --initrd-inject=/root/workspace/entitlement/data/kickstart/unattended/rhel-server-6-series.ks --extra-args \"ks=file:/rhel-server-6-series.ks\" --name=AUTO-SAM-1.4.0-RHEL-6-20140512.0 --disk path=/home/auto-imgs/AUTO-SAM-1.4.0-RHEL-6-20140512.0.img,size=20 --ram 2048 --vcpus=2 --check-cpu --accelerate --hvm --location=http://download.englab.nay.redhat.com/pub/rhel/released/RHEL-6/6.5/Server/x86_64/os/ ", 10)
+#     LocalSH.local_run("/usr/bin/virt-install --network=bridge:br0 --initrd-inject=/root/workspace/entitlement/data/kickstart/unattended/rhel-server-6-series.ks --extra-args \"ks=file:/rhel-server-6-series.ks\" --name=AUTO-SAM-1.4.0-RHEL-6-20140512.0 --disk path=/home/auto-imgs/AUTO-SAM-1.4.0-RHEL-6-20140512.0.img,size=20 --ram 2048 --vcpus=2 --check-cpu --accelerate --hvm --location=http://download.englab.nay.redhat.com/pub/rhel/released/RHEL-6/6.5/Server/x86_64/os/ ", 10)
+    LocalSH.local_run("ifconfig", 20)
