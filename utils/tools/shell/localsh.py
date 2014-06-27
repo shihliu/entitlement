@@ -34,7 +34,7 @@ class LocalSH(object):
             terminate_time = time.time() + timeout
             while process.poll() == None:
                 logger.debug("Command running, wait 1 minute ...")
-                time.sleep(1)
+                time.sleep(60)
                 if terminate_time < time.time():
                     # starting 2.6 subprocess has a kill() method which is preferable
                     logger.debug("Kill process, return -1 ...")
