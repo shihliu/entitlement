@@ -1,7 +1,7 @@
 '''
 Use virsh API to manipulate vms
 '''
-import utils.constants, os
+import utils.constants, os, time
 from utils import logger
 from utils.tools.shell.command import Command
 
@@ -11,9 +11,18 @@ class VirshCommand(Command):
 #         self.__create_storage()
 #         self.__create_img(guest_name)
         self.__unattended_install(guest_name)
-        # Get guest IP
-        guestip = self.__mac_to_ip(self.__get_dom_mac_addr(guest_name))
-        return guestip
+        return self.__check_vm_available(guest_name)
+
+    def __check_vm_available(self, guest_name, timeout=3600):
+        terminate_time = time.time() + timeout
+        while True:
+            guestip = self.__mac_to_ip(self.__get_dom_mac_addr(guest_name))
+            if guestip != "":
+                return guestip
+            if terminate_time < time.time():
+                raise OSError("Process timeout has been reached")
+            logger.debug("Check guest IP, wait 1 minute ...")
+            time.sleep(60)
 
     def find_vm(self, guest_name):
         # Get guest IP
@@ -37,25 +46,23 @@ class VirshCommand(Command):
     def __unattended_install(self, guest_name):
         '''
         install a guest with virt-install command, need virt-install tool installed:
-        virt-install -n SAM-1.4.0-RHEL-6-20140512.0 -r 2048 --vcpus=1 --os-variant=rhel6 --accelerate -v 
-        --disk path=/home/auto-imgs/SAM-1.4.0-RHEL-6-20140512.0.img,size=20 
-        -l http://download.englab.nay.redhat.com/pub/rhel/released/RHEL-6/6.5/Server/x86_64/os/ 
-        --initrd-inject=/root/workspace/entitlement/data/kickstart/unattended/rhel-server-6-series.ks 
-        --extra-args "ks=file:/rhel-server-6-series.ks"
+        can not quite normally, check ip to make sure guest installed temperatelly
         '''
         cmd = ('virt-install '
-        '-n %s '
-        '-r 2048 '
-        '--vcpus=1 '
-        '--os-variant=rhel6 '
-        '--accelerate -v '
-        '--disk path=/home/auto-imgs/%s.img,size=20 '
-        '-l http://download.englab.nay.redhat.com/pub/rhel/released/RHEL-6/6.5/Server/x86_64/os/ '
-        '--nographics '
-#         '-x console=ttyS0,115200'
-        '--initrd-inject=/root/workspace/entitlement/data/kickstart/unattended/rhel-server-6-series.ks '
-        '--extra-args "ks=file:/rhel-server-6-series.ks console=tty0 console=ttyS0,115200"' % (guest_name, guest_name))
-        self.run(cmd, timeout=3600)
+#                '--network=bridge:br0 '
+               '--initrd-inject=/root/workspace/entitlement/data/kickstart/unattended/rhel-server-6-series.ks '
+               '--extra-args "ks=file:/rhel-server-6-series.ks" '
+               '--name=%s '
+               '--disk path=/home/auto-imgs/%s.img,size=20 '
+               '--ram 2048 '
+               '--vcpus=1 '
+               '--check-cpu '
+               '--accelerate '
+               '--hvm '
+               '--location=http://download.englab.nay.redhat.com/pub/rhel/released/RHEL-6/6.5/Server/x86_64/os/ '
+#                 '--nographics '
+               % (guest_name, guest_name))
+        self.run(cmd, timeout=600)
 
     def __get_dom_mac_addr(self, domname):
         """
@@ -84,4 +91,5 @@ if __name__ == "__main__":
     virsh_command = VirshCommand()
     print virsh_command.create_vm("AUTO-SAM-1.4.0-RHEL-6-20140512.0")
     pass
+# "virt-clone --connect=qemu:///system -o srchost -n newhost -f /path/to/newhost.qcow2"
 

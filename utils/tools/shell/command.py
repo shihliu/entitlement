@@ -20,3 +20,6 @@ class Command(object):
 
     def remote_put(self, from_path, to_path):
         RemoteSH.remote_put(self.remote_ip, self.username, self.password, from_path, to_path)
+
+    def fork_run(self, cmd, timeout=None):
+        pass
