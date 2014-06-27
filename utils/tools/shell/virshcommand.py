@@ -72,7 +72,7 @@ class VirshCommand(Command):
         cmd = "virsh dumpxml " + domname + " | grep 'mac address' | awk -F'=' '{print $2}' | tr -d \"[\'/>]\""
         (ret, out) = self.run(cmd)
         if ret == 0:
-            return out("\n").strip(" ")
+            return out.strip("\n").strip(" ")
         else:
             return None
 
