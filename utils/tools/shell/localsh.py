@@ -29,6 +29,7 @@ class LocalSH(object):
         # if timeout is not set wait for process to complete
         if not timeout:
             retcode = process.wait()
+            stdout, stderr = process.communicate()
         else:
             terminate_time = time.time() + timeout
             while process.poll() == None and terminate_time > time.time():
@@ -36,11 +37,13 @@ class LocalSH(object):
                 time.sleep(60)
             if terminate_time < time.time():
                 # starting 2.6 subprocess has a kill() method which is preferable
-                # p.kill()
-                os.kill(process.pid, signal.SIGKILL)
+                logger.debug("Kill process, return -1 ...")
+                retcode = -1
+                stdout = "Command terminated due to timeout ..."
+                process.kill()
+#                 os.kill(process.pid, signal.SIGKILL)
 #                 raise OSError("Process timeout has been reached")
-            retcode = process.returncode
-        stdout, stderr = process.communicate()
+#             retcode = process.returncode
         return retcode, stdout
 
     @classmethod
