@@ -79,6 +79,12 @@ class VirtWhoKickstart(Command):
             cmd = "git push" % (profile_name, kickstart_name)
             self.run(cmd)
 
+    def check_file_exist(self, file_name):
+        return os.path.isfile(file_name)
+
+    def check_path_exist(self, path_name):
+        return os.path.exists(path_name)
+
 if __name__ == "__main__":
     virt_who_kick = VirtWhoKickstart().create("")
 #     sam_command.add_sam_repo("SAM-1.4.0-RHEL-6-20140512.0")
