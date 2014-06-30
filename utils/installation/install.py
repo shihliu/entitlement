@@ -40,7 +40,7 @@ class Install(object):
         if not last_build in buildxml.get_builds(self.product_name):
             buildxml.add_build(self.product_name, last_build)
             self.check_build_status(last_build)
-            return last_build
+            return last_build.strip("/")
         else:
             return "No New Build"
 

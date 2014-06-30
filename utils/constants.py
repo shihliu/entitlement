@@ -5,6 +5,7 @@ Defines various constants
 # configure module
 SAM_INSTALLATION_CONF = "sam_installation.conf"
 RHEL_INSTALLATION_CONF = "rhel_installation.conf"
+VIRTWHO_KICKSTART_CONF = "virtwho_kickstart.conf"
 OPENSTACK_INSTALLATION_CONF = "openstack_installation.conf"
 
 # log module
