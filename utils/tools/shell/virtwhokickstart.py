@@ -68,7 +68,7 @@ class VirtWhoKickstart(Command):
 #         "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/RHEL6.5-20131213.0/6.5/Server/x86_64/os/"
 #         "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/RHEL-7.0-20140507.0/compose/Server/x86_64/os/"
         compose = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/RHEL5.11-Server-20140625.0/tree-x86_64/"
-        cmd = "sed 's/url --url=.*/url --url=%s/g' 's/baseurl=.*/baseurl=%s/g' %s" % (compose, compose, dir_sample_kickstart + "/" + sample_kickstart)
+        cmd = "sed 's#url --url=.*#url --url=%s#g' 's#baseurl=.*#baseurl=%s#g' %s" % (compose, compose, dir_sample_kickstart + "/" + sample_kickstart)
         self.run(cmd)
 
     def __create_profile(self, profile_file, distro_name, kickstart_name):
