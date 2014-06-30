@@ -14,3 +14,6 @@ entitlement.log
 
 #ignore builds.xml
 builds.xml
+
+#ignore kickstart repo
+utils/tools/shell/repo/

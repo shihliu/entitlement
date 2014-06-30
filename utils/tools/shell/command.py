@@ -23,3 +23,11 @@ class Command(object):
 
     def fork_run(self, cmd, timeout=None):
         pass
+
+    def interact_run(self, cmd):
+        ret, output = LocalSH.run_pexpect(cmd)
+        return ret, output
+
+    def git_run(self, git_cmd, git_dir=""):
+        ret, output = LocalSH.run_git(git_cmd, git_dir)
+        return ret, output
