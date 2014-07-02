@@ -29,5 +29,6 @@ class Command(object):
         return ret, output
 
     def git_run(self, git_cmd, git_dir=""):
+        # can also pip install gitpython and use it
         ret, output = LocalSH.run_git(git_cmd, git_dir)
         return ret, output

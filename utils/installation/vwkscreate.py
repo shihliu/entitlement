@@ -20,5 +20,4 @@ class VWKSCreate(Install):
 
 if __name__ == "__main__":
     builds = VWKSCreate().check_build()
-    print builds
     VirtWhoKickstart().create(builds)

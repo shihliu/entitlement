@@ -1,0 +1,5 @@
+# use beaker-wizard command to write beaker tasks
+# you need to install: beaker-client, rhts-devel
+# beaker-client rely on libxslt-python which is in rhel optional repo
+# rhts-devel is used to run "make run" which support debug test locally
+#run make bkradd to submit task, pay attention to the task name, e.g /installation/entitlement-qa/Install/sam-latest-install

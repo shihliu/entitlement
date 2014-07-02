@@ -1,0 +1,3 @@
+PURPOSE of /installation/entitlement-qa/Install/sam-latest-install
+Description: Install the latest SAM to support Entitlement QA testing, including SAM intergration and virt-who testing
+Author: gao shang <sgao@redhat.com>
