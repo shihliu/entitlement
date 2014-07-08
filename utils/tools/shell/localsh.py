@@ -52,15 +52,17 @@ class LocalSH(object):
         child = pexpect.spawn(cmd, timeout=60, maxread=2000, logfile=None)
         while True:
 #             print child.exitstatus, child.before
-            index = child.expect(['(?i)password:', pexpect.EOF, pexpect.TIMEOUT])
+            index = child.expect(['(yes\/no)', '(?i)password:', pexpect.EOF, pexpect.TIMEOUT])
             if index == 0:
-                child.sendline(password)
+                child.sendline("yes")
             elif index == 1:
+                child.sendline(password)
+            elif index == 2:
                 retcode, stdout = child.exitstatus, child.before
                 logger.info("<<<Return Code: %s" % retcode)
                 logger.info("<<<Output:\n%s" % stdout)
                 return retcode, stdout
-            elif index == 2:
+            elif index == 3:
                 retcode, stdout = "-1", "Command terminated due to timeout ..."
                 logger.info("<<<Return Code: %s" % retcode)
                 logger.info("<<<Output:\n%s" % stdout)

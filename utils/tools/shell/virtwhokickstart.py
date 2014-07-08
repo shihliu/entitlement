@@ -7,7 +7,8 @@ from utils import logger
 from utils.tools.shell.command import Command
 
 manifest_name = "sam_install_manifest.zip"
-kickstart_repo_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), "repo"))
+runtime_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, os.pardir, "runtime/"))
+kickstart_repo_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, os.pardir, "runtime/repo/"))
 dir_sample_kickstart = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, os.pardir, "data/kickstart/"))
 
 class VirtWhoKickstart(Command):
@@ -71,7 +72,8 @@ class VirtWhoKickstart(Command):
         if not self.__check_path_exist(kickstart_repo_dir):
             logger.info("git repo not exist, cloning now ...")
             cmd = "git clone git+ssh://git@qe-git.englab.nay.redhat.com/~/repo/virt-qe/repo"
-            self.git_run(cmd)
+#             LocalSH.run_pexpect(cmd)
+            self.git_run(cmd, runtime_dir)
 #         cmd = "pushd /root/workspace/entitlement/utils/tools/shell/repo/ && git pull && popd"
         cmd = "git pull"
         self.git_run(cmd, kickstart_repo_dir)
@@ -122,9 +124,9 @@ class VirtWhoKickstart(Command):
 
     def __git_push(self, profile_name, kickstart_name):
             cmd = "git add %s %s " % (profile_name, kickstart_name)
-#             self.run(cmd)
+            self.run(cmd)
             cmd = "git commit -m 'Auto add virt-who kickstart file: %s %s' " % (profile_name, kickstart_name)
-#             self.run(cmd)
+            self.run(cmd)
             cmd = "git push"
             # self.git_run(cmd, kickstart_repo_dir)
 

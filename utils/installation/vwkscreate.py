@@ -1,6 +1,7 @@
 from utils.constants import VIRTWHO_KICKSTART_CONF
 from utils.installation.install import Install
 from utils.tools.shell.virtwhokickstart import VirtWhoKickstart
+from utils import logger
 
 class VWKSCreate(Install):
     '''
@@ -18,6 +19,13 @@ class VWKSCreate(Install):
     def install_product(self, sam_compose):
         pass
 
+    def start(self):
+        builds = self.check_build()
+        if builds == "No New Build":
+            logger.info("No rhel new build available yet, just exit ...")
+        else:
+            logger.info("Found rhel new build %s, begin creating virt-who kickstart file ..." % builds)
+            VirtWhoKickstart().create(builds)
+
 if __name__ == "__main__":
-    builds = VWKSCreate().check_build()
-    VirtWhoKickstart().create(builds)
+    pass

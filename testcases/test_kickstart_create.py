@@ -1,13 +1,11 @@
 from utils import *
-from utils.installation.saminstall import SAMInstall
-from utils.installation.beaker.bksaminstall import BKSAMInstall
+from utils.installation.vwkscreate import VWKSCreate
 
-class Test_Sam_Installation(unittest.TestCase):
+class Test_Kickstart_Create(unittest.TestCase):
 
 
     def setUp(self):
-#         SAMInstall().start()
-        BKSAMInstall().start()
+        VWKSCreate().start()
 
 
     def tearDown(self):
