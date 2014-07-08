@@ -65,11 +65,11 @@ EOF" 0 "Add SAM latest repo"
     rlPhaseEnd
 
     rlPhaseStartTest
-        rlRun "wget http://10.66.100.116/projects/sam-virtwho/latest-manifest/sam_install_manifest.zip" 0 "Wget manifest from data server"
+        rlRun "wget http://10.66.100.116/projects/sam-virtwho/latest-manifest/sam_install_manifest.zip -P /root/" 0 "Wget manifest from data server"
     rlPhaseEnd
 
     rlPhaseStartTest
-        rlRun "headpin -u admin -p admin provider import_manifest --org=ACME_Corporation --name='Red Hat' --file=sam_install_manifest.zip" 0 "Import entitlement team related manifest"
+        rlRun "headpin -u admin -p admin provider import_manifest --org=ACME_Corporation --name='Red Hat' --file=/root/sam_install_manifest.zip" 0 "Import entitlement team related manifest"
     rlPhaseEnd
 
 rlJournalPrintText
