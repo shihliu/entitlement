@@ -17,3 +17,6 @@ builds.xml
 
 #ignore kickstart repo
 utils/tools/shell/repo/
+
+#ignore runtime tepmorary file
+runtime/

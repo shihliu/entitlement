@@ -1,7 +1,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-#   Makefile of /installation/entitlement-qa/Install/sam-latest-install
-#   Description: Install the latest SAM to support Entitlement QA testing, including SAM intergration and virt-who testing
+#   Makefile of /distribution/entitlement-qa/Regression/virt-who
+#   Description: Run virt-who testing
 #   Author: gao shang <sgao@redhat.com>
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -23,8 +23,8 @@
 #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-export TEST=/installation/entitlement-qa/Install/sam-latest-install
-export TESTVERSION=1.1
+export TEST=/distribution/entitlement-qa/Regression/virt-who
+export TESTVERSION=1.7
 
 BUILT_FILES=
 
@@ -49,8 +49,8 @@ $(METADATA): Makefile
 	@echo "Name:            $(TEST)" >> $(METADATA)
 	@echo "TestVersion:     $(TESTVERSION)" >> $(METADATA)
 	@echo "Path:            $(TEST_DIR)" >> $(METADATA)
-	@echo "Description:     Install the latest SAM to support Entitlement QA testing, including SAM intergration and virt-who testing" >> $(METADATA)
-	@echo "Type:            Install" >> $(METADATA)
+	@echo "Description:     Run virt-who testing" >> $(METADATA)
+	@echo "Type:            Regression" >> $(METADATA)
 	@echo "TestTime:        2h" >> $(METADATA)
 	@echo "RunFor:          entitlement-qa" >> $(METADATA)
 	@echo "Requires:        entitlement-qa" >> $(METADATA)

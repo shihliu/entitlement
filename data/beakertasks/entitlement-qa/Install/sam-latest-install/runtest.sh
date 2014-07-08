@@ -50,7 +50,7 @@ rlJournalStart
         rlRun "cat > /etc/yum.repos.d/sam.repo <<EOF
 [sam]
 name=sam
-baseurl=http://download.devel.redhat.com/devel/candidate-trees/SAM/latest-SAM-1.4-RHEL-6/compose/SAM/x86_64/os/
+baseurl=http://download.devel.redhat.com/devel/candidate-trees/SAM/latest-SAM-$VERSION-RHEL-6/compose/SAM/x86_64/os/
 enabled=1
 gpgcheck=0
 EOF" 0 "Add SAM latest repo"
