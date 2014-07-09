@@ -22,7 +22,7 @@ class BeakerCMD(Command):
     def create_sam_job_xml(self, build):
         version = build.split("-")[1][:-2]
         runtime_job = self.create_run_time_job("sam_latest_install_job_sample.xml")
-        XMLParser("/root/workspace/entitlement/runtime/sam_latest_install_job_sample.xml").update_param("/installation/entitlement-qa/Install/sam-latest-install", "VERSION", version)
+        XMLParser(runtime_job).update_param("/installation/entitlement-qa/Install/sam-latest-install", "VERSION", version)
         return runtime_job
 
     def create_run_time_job(self, job_name):
