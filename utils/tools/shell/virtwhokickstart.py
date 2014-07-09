@@ -6,7 +6,6 @@ import os, time
 from utils import logger
 from utils.tools.shell.command import Command
 
-manifest_name = "sam_install_manifest.zip"
 runtime_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, os.pardir, "runtime/"))
 kickstart_repo_dir = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, os.pardir, "runtime/repo/"))
 dir_sample_kickstart = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, os.pardir, "data/kickstart/"))
@@ -72,7 +71,8 @@ class VirtWhoKickstart(Command):
         if not self.__check_path_exist(kickstart_repo_dir):
             logger.info("git repo not exist, cloning now ...")
             cmd = "git clone git+ssh://git@qe-git.englab.nay.redhat.com/~/repo/virt-qe/repo"
-#             LocalSH.run_pexpect(cmd)
+            if not self.__check_path_exist(runtime_dir):
+                self.__create_path(runtime_dir)
             self.git_run(cmd, runtime_dir)
 #         cmd = "pushd /root/workspace/entitlement/utils/tools/shell/repo/ && git pull && popd"
         cmd = "git pull"
@@ -135,6 +135,9 @@ class VirtWhoKickstart(Command):
 
     def __check_path_exist(self, path_name):
         return os.path.exists(path_name)
+
+    def __create_path(self, path_name):
+        os.makedirs(path_name)
 
 if __name__ == "__main__":
 #     virt_who_kick = VirtWhoKickstart().create("RHEL6.5-20131213.0")
