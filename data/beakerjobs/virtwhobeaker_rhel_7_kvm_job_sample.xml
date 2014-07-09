@@ -56,11 +56,11 @@
 			<task name="/distribution/install" role="STANDALONE"/>
 			<task name="/distribution/entitlement-qa/Regression/virt-who" role="STANDALONE">
 				<params>
-					<param name="HANDLEGUEST" value="7.0_Server_x86_64"/>
+					<param name="HANDLEGUEST" value="5.10_Server_x86_64"/>
 					<param name="SAMHOSTNAME" value="samserv.redhat.com"/>
 					<param name="SAMHOSTIP" value="10.66.129.94"/>
 					<param name="CONFILE" value="entitlement_virtwho_kvm_acceptance.conf"/>
-					<param name="COPYIMAGES" value="no"/>
+					<param name="COPYIMAGES" value="yes"/>
 				</params>
 			</task>
 			<task name="/distribution/reservesys" role="STANDALONE">

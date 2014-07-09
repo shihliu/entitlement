@@ -62,7 +62,7 @@ EOF"
         rlRun "cd /root/libvirt-test-API"
         rlRun "echo \"Clients: $CLIENTS\""
         rlRun "echo \"Servers: $SERVERS\""
-        rlRun "python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS"
+        rlRun "python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes"
         #temporary method to show result
         for logfile in `ls -t -r result/default`
         do
