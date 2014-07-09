@@ -24,7 +24,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export TEST=/distribution/entitlement-qa/Regression/virt-who
-export TESTVERSION=1.7
+export TESTVERSION=1.9
 
 BUILT_FILES=
 

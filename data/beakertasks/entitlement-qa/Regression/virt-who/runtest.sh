@@ -51,6 +51,7 @@ send \"yes\r\"
 expect \"password:\"
 send \"redhat\r\"
 expect \"Resolving deltas: 100%\"
+sleep 30
 expect eof
 EOF"
         rlRun "chmod 777 /root/get-libvirt-repo.sh"
