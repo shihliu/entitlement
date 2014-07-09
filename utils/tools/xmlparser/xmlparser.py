@@ -1,6 +1,36 @@
-import os, shutil
+import shutil, os
 from utils import logger
 from xml.dom import minidom
+
+class XMLParser(object):
+
+    xml_file = None
+    xmldom = None
+    root = None
+    def __init__(self, xml_file=""):
+        self.xml_file = xml_file
+        if self.xml_file != "":
+            self.xmldom = minidom.parse(xml_file)
+            self.root = self.xmldom.documentElement
+
+    @classmethod
+    def xml_copy(self, source, destination):
+        shutil.copy(source, destination) 
+    @classmethod
+    def check_file_exist(self, file_name):
+        return os.path.isfile(file_name)
+    @classmethod
+    def check_path_exist(self, path_name):
+        return os.path.exists(path_name)
+    @classmethod
+    def create_path(self, path_name):
+        os.makedirs(path_name)
+
+    def write_xml(self):
+        minidom.Element.writexml = fixed_writexml
+        xmlfile = open(self.xml_file, 'w')
+        self.xmldom.writexml(xmlfile, addindent='' , newl='\n')
+        xmlfile.close()
 
 def fixed_writexml(self, writer, indent="", addindent="", newl=""):
     writer.write(indent + "<" + self.tagName)
@@ -27,34 +57,6 @@ def fixed_writexml(self, writer, indent="", addindent="", newl=""):
         writer.write("%s</%s>%s" % (indent, self.tagName, newl))
     else:
         writer.write("/>%s" % (newl))
-
-class XMLParser():
-    xml_file = None
-    xmldom = None
-    root = None
-    def __init__(self, xml_file=""):
-        self.xml_file = xml_file
-        if self.xml_file != "":
-            self.xmldom = minidom.parse(xml_file)
-            self.root = self.xmldom.documentElement
-
-    def update_param(self, task_name, param_name, param_value):
-        for taskitem in self.root.getElementsByTagName("task"):
-            if taskitem.getAttribute("name") == task_name:
-                for paramitem in taskitem.getElementsByTagName("param"):
-                    if paramitem.getAttribute("name") == param_name:
-                        paramitem.setAttribute("value", param_value)
-                        self.__write_xml()
-
-    @classmethod
-    def xml_copy(self, source, destination):
-        shutil.copy(source, destination) 
-
-    def __write_xml(self):
-        minidom.Element.writexml = fixed_writexml
-        xmlfile = open(self.xml_file, 'w')
-        self.xmldom.writexml(xmlfile, addindent='' , newl='\n')
-        xmlfile.close()
 
 if __name__ == "__main__":
     pass

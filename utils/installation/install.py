@@ -2,7 +2,7 @@ from utils.configs import Configs
 import time
 from utils import logger
 from utils import constants
-from utils.tools.xmlparser import buildxml
+from utils.tools.xmlparser.buildsparser import BuildsParser
 from utils.tools.htmlparser import htmlsource
 from utils.tools.htmlparser.buildparser import BuildParser
 
@@ -37,8 +37,8 @@ class Install(object):
     def check_build(self):
         # check the last build from html, if not in xml file then it's a new build
         last_build = BuildParser().parse(self.product_name)[-1]
-        if not last_build in buildxml.get_builds(self.product_name):
-            buildxml.add_build(self.product_name, last_build)
+        if not last_build in BuildsParser().get_builds(self.product_name):
+            BuildsParser().add_build(self.product_name, last_build)
             self.check_build_status(last_build)
             return last_build.strip("/")
         else:
