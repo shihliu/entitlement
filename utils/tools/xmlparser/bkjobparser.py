@@ -16,8 +16,8 @@ class BKJobParser(XMLParser):
                         self.write_xml()
 
     def update_distroRequires(self, distro_name):
-        for item in self.root.getElementsByTagName("distroRequires"):
-            item.getElementsByTagName("distro_name").setAttribute("value", distro_name)
+        for distroitem in self.root.getElementsByTagName("distroRequires"):
+            distroitem.getElementsByTagName("distro_name")[0].setAttribute("value", distro_name)
             self.write_xml()
 
     @classmethod
