@@ -26,6 +26,8 @@ class BKvirtwho(Install):
 #             logger.info("Found %s new build %s, begin installing ..." % (self.product_name, new_build))
             beaker_command = BeakerCMD()
             job_xml = beaker_command.create_runtime_job("virtwhobeaker_rhel_7_kvm_job_sample.xml")
+            beaker_command.set_beaker_distro(job_xml, self.confs._confs["beakerdistro"])
+
             beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "HANDLEGUEST", self.confs._confs["handleguest"])
             beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "SAMHOSTNAME", self.confs._confs["samhostname"])
             beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "SAMHOSTIP", self.confs._confs["samhostip"])

@@ -15,6 +15,11 @@ class BKJobParser(XMLParser):
                         paramitem.setAttribute("value", param_value)
                         self.write_xml()
 
+    def update_distroRequires(self, distro_name):
+        for item in self.root.getElementsByTagName("distroRequires"):
+            item.getElementsByTagName("distro_name").setAttribute("value", distro_name)
+            self.write_xml()
+
     @classmethod
     def runtime_job_copy(self, job_xml):
         if not self.check_path_exist(self.runtime_path):

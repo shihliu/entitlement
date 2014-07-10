@@ -53,7 +53,7 @@ class Install(object):
                 logger.info("Build %s is in Finished status, going on ..." % build)
                 break
             else:
-                time.sleep("60")
+                time.sleep(60)
                 logger.info("Build %s is not in Finished status yet, wait 1 minute ..." % build)
 
     def install_host(self):
