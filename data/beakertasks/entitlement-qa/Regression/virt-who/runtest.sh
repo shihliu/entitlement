@@ -57,6 +57,7 @@ EOF"
         rlRun "chmod 777 /root/get-libvirt-repo.sh"
         rlRun "cd /root/"
         rlRun "/root/get-libvirt-repo.sh" 0 "Git clone libvirt-test-API"
+        rlRun "sleep 60"
     rlPhaseEnd
 
     rlPhaseStartTest
