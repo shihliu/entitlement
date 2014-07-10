@@ -128,7 +128,7 @@ class VirtWhoKickstart(Command):
             cmd = "git commit -m 'Auto add virt-who kickstart file: %s %s' " % (profile_name, kickstart_name)
             self.run(cmd)
             cmd = "git push"
-            # self.git_run(cmd, kickstart_repo_dir)
+            self.git_run(cmd, kickstart_repo_dir)
 
     def __check_file_exist(self, file_name):
         return os.path.isfile(file_name)

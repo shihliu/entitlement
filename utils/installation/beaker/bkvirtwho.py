@@ -1,13 +1,12 @@
-from utils.constants import SAM_INSTALLATION_CONF
+from utils.constants import VIRTWHO_RUN_CONF
 from utils.installation.install import Install
 from utils.tools.shell.beakercmd import BeakerCMD
-from utils import logger
 
 class BKvirtwho(Install):
     '''
     classdocs
     '''
-    conf_file_name = SAM_INSTALLATION_CONF
+    conf_file_name = VIRTWHO_RUN_CONF
     target_ip = ""
 
     def install_host(self):
@@ -26,8 +25,15 @@ class BKvirtwho(Install):
 #         else:
 #             logger.info("Found %s new build %s, begin installing ..." % (self.product_name, new_build))
             beaker_command = BeakerCMD()
-            job_xml = beaker_command.create_virtwho_job_xml()
-            beaker_command.job_submit(job_xml)
+            job_xml = beaker_command.create_runtime_job("virtwhobeaker_rhel_7_kvm_job_sample.xml")
+            beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "HANDLEGUEST", self.confs._confs["handleguest"])
+            beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "SAMHOSTNAME", self.confs._confs["samhostname"])
+            beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "SAMHOSTIP", self.confs._confs["samhostip"])
+            beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "CONFILE", self.confs._confs["confile"])
+            beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "COPYIMAGES", self.confs._confs["copyimages"])
+
+#             beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "VERSION", "1.4")
+#             beaker_command.job_submit(job_xml)
 
 if __name__ == "__main__":
     BKvirtwho().start()

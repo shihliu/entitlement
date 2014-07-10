@@ -15,17 +15,11 @@ class BeakerCMD(Command):
         cmd = "bkr job_watch %s" % job_id
         return self.run(cmd)
 
-    def create_sam_job_xml(self, build):
-        version = build.split("-")[1][:-2]
-        runtime_job = BKJobParser().runtime_job_copy("sam_latest_install_job_sample.xml")
-        BKJobParser(runtime_job).update_param("/installation/entitlement-qa/Install/sam-latest-install", "VERSION", version)
-        return runtime_job
+    def create_runtime_job(self, job_xml):
+        return BKJobParser().runtime_job_copy(job_xml)
 
-    def create_virtwho_job_xml(self):
-        runtime_job = BKJobParser().runtime_job_copy("virtwhobeaker_rhel_7_kvm_job_sample.xml")
-#         BKJobParser(runtime_job).update_param("/distribution/entitlement-qa/Regression/virt-who", "VERSION", version)
-        return runtime_job
+    def update_job_param(self, job_xml, task_name, parameter, value):
+        BKJobParser(job_xml).update_param(task_name, parameter, value)
 
 if __name__ == "__main__":
-    beaker_command = BeakerCMD()
-    beaker_command.create_sam_job_xml("SAM-1.5.0-RHEL-6-20140512.0")
+    pass

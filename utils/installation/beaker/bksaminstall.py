@@ -25,8 +25,10 @@ class BKSAMInstall(Install):
             logger.info("No %s new build available yet, just exit ..." % self.product_name)
         else:
             logger.info("Found %s new build %s, begin installing ..." % (self.product_name, new_build))
+            version = new_build.split("-")[1][:-2]
             beaker_command = BeakerCMD()
-            job_xml = beaker_command.create_sam_job_xml(new_build)
+            job_xml = beaker_command.create_runtime_job("sam_latest_install_job_sample.xml")
+            beaker_command.update_job_param(job_xml, "/installation/entitlement-qa/Install/sam-latest-install", "VERSION", version)
             beaker_command.job_submit(job_xml)
 
 if __name__ == "__main__":
