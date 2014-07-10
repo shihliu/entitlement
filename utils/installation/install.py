@@ -45,16 +45,19 @@ class Install(object):
             return "No New Build"
 
     def check_build_status(self, build):
-        # check STATUS file, if FINISHED, begin installing
-        status_file = constants.get_build_tree(build) + "/" + build + "/" + "STATUS"
-        logger.info("Status file is : %s." % status_file)
-        while True:
-            if "FINISHED" in htmlsource.get_html_source(status_file):
-                logger.info("Build %s is in Finished status, going on ..." % build)
-                break
-            else:
-                time.sleep(60)
-                logger.info("Build %s is not in Finished status yet, wait 1 minute ..." % build)
+        if "RHEL5" in build:
+            pass
+        else:
+            # check STATUS file, if FINISHED, begin installing
+            status_file = constants.get_build_tree(build) + "/" + build + "/" + "STATUS"
+            logger.info("Status file is : %s." % status_file)
+            while True:
+                if "FINISHED" in htmlsource.get_html_source(status_file):
+                    logger.info("Build %s is in Finished status, going on ..." % build)
+                    break
+                else:
+                    time.sleep(60)
+                    logger.info("Build %s is not in Finished status yet, wait 1 minute ..." % build)
 
     def install_host(self):
         raise NotImplementedError, "Cannot call abstract method"
