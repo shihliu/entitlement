@@ -28,4 +28,4 @@ class VWKSCreate(Install):
             VirtWhoKickstart().create(builds)
 
 if __name__ == "__main__":
-    pass
+    VirtWhoKickstart().create("RHEL5.11-Server-20140709.0")
