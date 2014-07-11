@@ -1,19 +1,17 @@
 from utils import *
-from utils.installation.beaker.bkvirtwho import BKvirtwho
+from utils.installation.beaker.allinone import AllInOne
 
-class Test_VIRTWHO(unittest.TestCase):
+class Test_Allinone(unittest.TestCase):
 
 
     def setUp(self):
-#         SAMInstall().start()
-        BKvirtwho().start()
-
+        pass
 
     def tearDown(self):
         pass
 
-
     def testName(self):
+        AllInOne().start()
         self.assertEqual(1, 1, "test")
 
 

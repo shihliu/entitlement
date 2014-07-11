@@ -153,7 +153,7 @@ class VirtWhoKickstart(Command):
                 '[General]\n'
                 'distro = %s\n'
                 'kickstart = libvirt/RHEL%s/%s\n'
-                'EOF' % (profile_file, distro_name, self.__get_rhel_version(distro_name), kickstart_name)
+                'EOF' % (profile_file, distro_name.strip(".distro"), self.__get_rhel_version(distro_name), kickstart_name)
                 )
             logger.info("Created profile: %s" % profile_file)
             self.run(cmd)

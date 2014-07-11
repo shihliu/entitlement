@@ -23,9 +23,11 @@ class VWKSCreate(Install):
         builds = self.check_build()
         if builds == "No New Build":
             logger.info("No rhel new build available yet, just exit ...")
+            return -1, ""
         else:
             logger.info("Found rhel new build %s, begin creating virt-who kickstart file ..." % builds)
             VirtWhoKickstart().create(builds)
+            return 0, builds
 
 if __name__ == "__main__":
     VirtWhoKickstart().create("RHEL5.11-Server-20140709.0")
