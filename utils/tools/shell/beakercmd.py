@@ -13,7 +13,7 @@ class BeakerCMD(Command):
         retcode, output = self.run(cmd)
         if retcode == 0:
             # Submitted: ['J:693133']
-            job_id = output.strip("Submitted: ['").strip("']")
+            job_id = output.strip("\n").split("[")[1].strip("'").strip("]").strip("'")
         return job_id
 
     def job_watch(self, job_id):
