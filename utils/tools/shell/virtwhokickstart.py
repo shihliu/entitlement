@@ -125,27 +125,28 @@ class VirtWhoKickstart(Command):
                 'template_files :\n'
                 'EOF' % (distro_file, compose_url, compose_url, rhel_version)
                 )
-        logger.info("Created distro file: %s" % distro_file)
-        self.run(cmd)
+            logger.info("Created distro file: %s" % distro_file)
+            self.run(cmd)
+        else:
+            logger.info("Distro file: %s already existed ..." % distro_file)
 
     def __create_kickstart(self, compose, kickstart_file):
-        if "xen" in kickstart_file:
-            sample_kickstart = "ent-ks-rhel5-xen-sample.cfg"
+        if not self.__check_file_exist(kickstart_file):
+            if "xen" in kickstart_file:
+                sample_kickstart = "ent-ks-rhel5-xen-sample.cfg"
+            else:
+                sample_kickstart = "ent-ks-rhel%s-kvm-sample.cfg" % self.__get_rhel_version(compose)
+            if self.__get_rhel_version(compose) == 5:
+                compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/tree-x86_64" % compose
+            elif self.__get_rhel_version(compose) == 6:
+                compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/%s/Server/x86_64/os/" % (compose, self.__get_rhel_version(compose))
+            elif self.__get_rhel_version(compose) == 7:
+                compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/compose/Server/x86_64/os/" % compose
+            cmd = "sed -e 's#auto-rhel-compose-url#%s#g' %s > %s" % (compose_url, dir_sample_kickstart + "/" + sample_kickstart, kickstart_file)
+            logger.info("Created kickstart: %s" % kickstart_file)
+            self.run(cmd)
         else:
-            sample_kickstart = "ent-ks-rhel%s-kvm-sample.cfg" % self.__get_rhel_version(compose)
-#             RHEL6.5-20131213.0
-        if self.__get_rhel_version(compose) == 5:
-            compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/tree-x86_64" % compose
-        elif self.__get_rhel_version(compose) == 6:
-            compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/%s/Server/x86_64/os/" % (compose, self.__get_rhel_version(compose))
-        elif self.__get_rhel_version(compose) == 7:
-            compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/compose/Server/x86_64/os/" % compose
-#         "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/RHEL5.11-Server-20140625.0/tree-x86_64"
-#         "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/RHEL6.5-20131213.0/6/Server/x86_64/os/"
-#         "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/RHEL-7.0-20140507.0/compose/Server/x86_64/os/"
-        cmd = "sed -e 's#auto-rhel-compose-url#%s#g' %s > %s" % (compose_url, dir_sample_kickstart + "/" + sample_kickstart, kickstart_file)
-        logger.info("Created kickstart: %s" % kickstart_file)
-        self.run(cmd)
+            logger.info("kickstart: %s already existed ..." % kickstart_file)
 
     def __create_profile(self, distro_name, kickstart_name, profile_file):
         if not self.__check_file_exist(profile_file):
@@ -157,6 +158,8 @@ class VirtWhoKickstart(Command):
                 )
             logger.info("Created profile: %s" % profile_file)
             self.run(cmd)
+        else:
+            logger.info("Profile: %s already existed ..." % profile_file)
 
     def __git_push(self):
         cmd = "git commit -m 'Auto add virt-who kickstart file'"
