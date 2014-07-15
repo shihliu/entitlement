@@ -42,9 +42,19 @@ fi
 
 rlJournalStart
     rlPhaseStartSetup
+        rlRun "sed -i '/^BOOTPROTO/d' /etc/sysconfig/network-scripts/ifcfg-eth0"
+        rlRun "echo "BRIDGE=switch" >> /etc/sysconfig/network-scripts/ifcfg-eth0"
+        rlRun "cat > /etc/sysconfig/network-scripts/ifcfg-br0 <<EOF
+DEVICE=switch
+BOOTPROTO=dhcp
+ONBOOT=yes
+TYPE=Bridge
+EOF"
+        rlRun "service network restart"
+ 
         rlRun "rm -rf ~/.ssh/known_hosts"
         rlRun "cat > /root/get-libvirt-repo.sh <<EOF
-#!/usr/bin/expect 
+#!/usr/bin/expect
 spawn git clone git@qe-git.englab.nay.redhat.com:~/repo/hss-qe/entitlement/libvirt-test-API
 expect \"yes/no\"
 send \"yes\r\"
@@ -56,7 +66,7 @@ expect eof
 EOF"
         rlRun "chmod 777 /root/get-libvirt-repo.sh"
         rlRun "cd /root/"
-        rlRun "/root/get-libvirt-repo.sh" 0 "Git clone libvirt-test-API"
+        rlRun "if [ ! -d /root/libvirt-test-API ]; then /root/get-libvirt-repo.sh; fi" 0 "Git clone libvirt-test-API"
         rlRun "sleep 60"
     rlPhaseEnd
 
@@ -64,6 +74,7 @@ EOF"
         rlRun "cd /root/libvirt-test-API"
         rlRun "echo \"Clients: $CLIENTS\""
         rlRun "echo \"Servers: $SERVERS\""
+        rlRun "echo \"python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes\""
         rlRun "python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes"
         #temporary method to show result
         for logfile in `ls -t -r result/default`
