@@ -21,7 +21,7 @@ class BKSAMInstall(Install):
 
     def start(self, build=None):
         if build == None:
-            new, build = self.check_build().strip("/")
+            new, build = self.check_build()
             if new == -1:
                 logger.info("No %s new build available yet, just exit ..." % self.product_name)
                 return -1, build, ""
