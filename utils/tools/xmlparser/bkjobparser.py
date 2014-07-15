@@ -20,6 +20,10 @@ class BKJobParser(XMLParser):
             distroitem.getElementsByTagName(tag_name)[0].setAttribute("value", distro_name)
             self.write_xml()
 
+    def update_whiteboard(self, job_name):
+        self.root.getElementsByTagName("whiteboard")[0].firstChild.replaceWholeText(job_name)
+        self.write_xml()
+
     @classmethod
     def runtime_job_copy(self, job_xml):
         if not self.check_path_exist(self.runtime_path):

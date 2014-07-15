@@ -18,7 +18,7 @@ class BKvirtwho(Install):
     def install_product(self, sam_compose):
         pass
 
-    def start(self, distro=None, sam_server=None):
+    def start(self, distro=None, sam_build=None, sam_server=None):
             if distro == None:
                 distro = self.confs._confs["beakerdistro"]
             if sam_server == None:
@@ -40,6 +40,7 @@ class BKvirtwho(Install):
             if beaker_command.get_rhel_version(distro) == 5:
                 beaker_command.set_beaker_distro_variant(job_xml, "")
 
+            beaker_command.set_beaker_job_name(job_xml, "Host/guest association test on %s(KVM) against %s" % (distro, sam_build))
             beaker_command.job_submit(job_xml)
 
 if __name__ == "__main__":

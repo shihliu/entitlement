@@ -7,9 +7,12 @@ class AllInOne():
 
     def start(self):
         new_rhel, build = VWKSCreate().start()
-        new_sam, sam_server = BKSAMInstall().start()
+        new_sam, sam_build, sam_server = BKSAMInstall().start()
         if new_rhel == 0 or new_sam == 0:
-            BKvirtwho().start(build, sam_server)
+            # if no sam new build, install the latest one
+            if new_sam == -1:
+                new_sam, sam_build, sam_server = BKSAMInstall().start(sam_build)
+            BKvirtwho().start(build, sam_build, sam_server)
 
 if __name__ == "__main__":
     AllInOne().start()
