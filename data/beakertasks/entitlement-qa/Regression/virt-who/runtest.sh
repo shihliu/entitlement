@@ -52,7 +52,7 @@ TYPE=Bridge
 EOF"
         rlRun "service network restart"
 
-        rlRun "if [ `uname -r | awk -F "el" '{print substr($2,1,1)}'` -eq 5 ]; then rpm -Uvh http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm; yum install git -y; fi"
+        rlRun "if [ `uname -r | awk -F "el" '{print substr($2,1,1)}'` -eq 5 ]; then rpm -Uvh http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm; yum -y install git vgabios gnutls-utils selinux-policy selinux-policy-targeted selinux-policy-devel python-virtinst virt-manager virt-viewer; fi"
 
         rlRun "rm -rf ~/.ssh/known_hosts"
         rlRun "cat > /root/get-libvirt-repo.sh <<EOF
