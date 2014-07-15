@@ -32,3 +32,11 @@ class Command(object):
         # can also pip install gitpython and use it
         ret, output = LocalSH.run_git(git_cmd, git_dir)
         return ret, output
+
+    def get_rhel_version(self, file_name):
+        if "RHEL5" in file_name:
+            return 5
+        elif "RHEL6" in file_name:
+            return 6
+        elif "RHEL7" or "RHEL-7" in file_name:
+            return 7

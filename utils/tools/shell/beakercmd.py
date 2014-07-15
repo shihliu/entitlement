@@ -26,8 +26,11 @@ class BeakerCMD(Command):
     def update_job_param(self, job_xml, task_name, parameter, value):
         BKJobParser(job_xml).update_param(task_name, parameter, value)
 
-    def set_beaker_distro(self, job_xml, distro_name):
-        BKJobParser(job_xml).update_distroRequires(distro_name)
+    def set_beaker_distro_name(self, job_xml, distro_name):
+        BKJobParser(job_xml).update_distroRequires("distro_name", distro_name)
+
+    def set_beaker_distro_variant(self, job_xml, distro_variant):
+        BKJobParser(job_xml).update_distroRequires("distro_variant", distro_variant)
 
     def check_job_finished(self, job_id):
         cmd = "bkr job-logs %s | grep 'test_log--distribution-reservesys.log'" % job_id

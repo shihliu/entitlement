@@ -29,13 +29,17 @@ class BKvirtwho(Install):
 
             beaker_command = BeakerCMD()
             job_xml = beaker_command.create_runtime_job("virtwhobeaker_rhel_7_kvm_job_sample.xml")
-            beaker_command.set_beaker_distro(job_xml, distro)
+            beaker_command.set_beaker_distro_name(job_xml, distro)
 
             beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "HANDLEGUEST", self.confs._confs["handleguest"])
             beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "SAMHOSTNAME", sam_server)
             beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "SAMHOSTIP", sam_ip)
             beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "CONFILE", self.confs._confs["confile"])
             beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "COPYIMAGES", self.confs._confs["copyimages"])
+            
+            if beaker_command.get_rhel_version(distro) == 5:
+                beaker_command.set_beaker_distro_variant(job_xml, "")
+
             beaker_command.job_submit(job_xml)
 
 if __name__ == "__main__":

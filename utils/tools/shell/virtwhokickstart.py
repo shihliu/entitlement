@@ -18,17 +18,17 @@ class VirtWhoKickstart(Command):
         kickstart_name = "ent-ks-%s-server-x64-%s-kvm-libvirt.cfg" % (build, date)
         distro_file = kickstart_repo_dir + "/distros/" + distro_name
         profile_file = kickstart_repo_dir + "/profiles/" + profile_name
-        kickstart_file = kickstart_repo_dir + "/kickstarts/libvirt/RHEL%s/" % self.__get_rhel_version(kickstart_name) + kickstart_name 
+        kickstart_file = kickstart_repo_dir + "/kickstarts/libvirt/RHEL%s/" % self.get_rhel_version(kickstart_name) + kickstart_name 
         self.__check_git_repo()
 #         self.__check_distro(distro_file)
         self.__create_distro(compose, distro_file)
         self.__create_kickstart(compose, kickstart_file)
         self.__create_profile(distro_name, kickstart_name, profile_file)
-        if self.__get_rhel_version(compose) == 5:
+        if self.get_rhel_version(compose) == 5:
             profile_xen_name = "ent-%s-server-x64-%s-xen-libvirt.profile" % (build, date)
             profile_xen_file = kickstart_repo_dir + "/profiles/" + profile_xen_name
             kickstart_xen_name = "ent-ks-%s-server-x64-%s-xen-libvirt.cfg" % (build, date)
-            kickstart_xen_file = kickstart_repo_dir + "/kickstarts/libvirt/RHEL%s/" % self.__get_rhel_version(kickstart_xen_name) + kickstart_xen_name
+            kickstart_xen_file = kickstart_repo_dir + "/kickstarts/libvirt/RHEL%s/" % self.get_rhel_version(kickstart_xen_name) + kickstart_xen_name
             self.__create_kickstart(compose, kickstart_xen_file)
             self.__create_profile(distro_name, kickstart_xen_name, profile_xen_file)
             self.__git_add(profile_xen_file)
@@ -45,29 +45,29 @@ class VirtWhoKickstart(Command):
 #         RHEL-7u0-Server-x64-20140507.0.distro
 #         RHEL5.11-Server-20140625.0
 #         RHEL5u11-Server-x86_64-20140625.0.distro
-        if self.__get_rhel_version(compose) == 5:
+        if self.get_rhel_version(compose) == 5:
             build = compose.split("-")[0].replace(".", "u")
             date = compose.split("-")[2]
             return build, date, "ent-%s-Server-x86_64-%s.distro" % (build, date)
-        elif self.__get_rhel_version(compose) == 6:
+        elif self.get_rhel_version(compose) == 6:
             build = compose.split("-")[0].replace(".", "u")
             date = compose.split("-")[1]
             return build, date, "ent-%s-Server-x64-%s.distro" % (build, date)
-        elif self.__get_rhel_version(compose) == 7:
+        elif self.get_rhel_version(compose) == 7:
             build = compose.split("-")[0] + "-" + compose.split("-")[1].replace(".", "u")
             date = compose.split("-")[2]
             return compose.split("-")[0] + compose.split("-")[1].replace(".", "u"), date, "ent-%s-Server-x64-%s.distro" % (build, date)
 
     def __get_build_name(self, compose):
-        if self.__get_rhel_version(compose) == 5:
+        if self.get_rhel_version(compose) == 5:
             build = compose.split("-")[0].replace(".", "u")
             date = compose.split("-")[2]
             return "%s-Server-x86_64-%s.distro" % (build, date)
-        elif self.__get_rhel_version(compose) == 6:
+        elif self.get_rhel_version(compose) == 6:
             build = compose.split("-")[0].replace(".", "u")
             date = compose.split("-")[1]
             return "%s-Server-x64-%s.distro" % (build, date)
-        elif self.__get_rhel_version(compose) == 7:
+        elif self.get_rhel_version(compose) == 7:
             build = compose.split("-")[0] + "-" + compose.split("-")[1].replace(".", "u")
             date = compose.split("-")[2]
             return "%s-Server-x64-%s.distro" % (build, date)
@@ -89,20 +89,12 @@ class VirtWhoKickstart(Command):
             logger.info("distro_name %s not exist yet, waiting 1 minute ..." % distro_name)
             time.sleep(60)
 
-    def __get_rhel_version(self, file_name):
-        if "RHEL5" in file_name:
-            return 5
-        elif "RHEL6" in file_name:
-            return 6
-        elif "RHEL7" or "RHEL-7" in file_name:
-            return 7
-
     def __create_distro(self, compose, distro_file):
-        rhel_version = self.__get_rhel_version(compose)
+        rhel_version = self.get_rhel_version(compose)
         if rhel_version == 5:
             compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/tree-x86_64/" % compose
         elif rhel_version == 6:
-            compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/%s/Server/x86_64/os/" % (compose, self.__get_rhel_version(compose))
+            compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/%s/Server/x86_64/os/" % (compose, self.get_rhel_version(compose))
         elif rhel_version == 7:
             compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/compose/Server/x86_64/os/" % compose
         if not self.__check_file_exist(distro_file):
@@ -135,12 +127,12 @@ class VirtWhoKickstart(Command):
             if "xen" in kickstart_file:
                 sample_kickstart = "ent-ks-rhel5-xen-sample.cfg"
             else:
-                sample_kickstart = "ent-ks-rhel%s-kvm-sample.cfg" % self.__get_rhel_version(compose)
-            if self.__get_rhel_version(compose) == 5:
+                sample_kickstart = "ent-ks-rhel%s-kvm-sample.cfg" % self.get_rhel_version(compose)
+            if self.get_rhel_version(compose) == 5:
                 compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/tree-x86_64" % compose
-            elif self.__get_rhel_version(compose) == 6:
-                compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/%s/Server/x86_64/os/" % (compose, self.__get_rhel_version(compose))
-            elif self.__get_rhel_version(compose) == 7:
+            elif self.get_rhel_version(compose) == 6:
+                compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/%s/Server/x86_64/os/" % (compose, self.get_rhel_version(compose))
+            elif self.get_rhel_version(compose) == 7:
                 compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/compose/Server/x86_64/os/" % compose
             cmd = "sed -e 's#auto-rhel-compose-url#%s#g' %s > %s" % (compose_url, dir_sample_kickstart + "/" + sample_kickstart, kickstart_file)
             logger.info("Created kickstart: %s" % kickstart_file)
@@ -154,7 +146,7 @@ class VirtWhoKickstart(Command):
                 '[General]\n'
                 'distro = %s\n'
                 'kickstart = libvirt/RHEL%s/%s\n'
-                'EOF' % (profile_file, distro_name.strip(".distro"), self.__get_rhel_version(distro_name), kickstart_name)
+                'EOF' % (profile_file, distro_name.strip(".distro"), self.get_rhel_version(distro_name), kickstart_name)
                 )
             logger.info("Created profile: %s" % profile_file)
             self.run(cmd)
