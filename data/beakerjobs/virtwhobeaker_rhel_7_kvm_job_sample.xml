@@ -6,35 +6,7 @@
 		<recipe kernel_options="" kernel_options_post="" ks_meta="method=nfs" role="SERVERS" whiteboard="Master Machine">
 			<autopick random="false"/>
 			<watchdog panic="ignore"/>
-			<packages>
-				<package name="@base"/>
-				<package name="@core"/>
-				<package name="@virtualization-client"/>
-				<package name="@virtualization-hypervisor"/>
-				<package name="@virtualization-platform"/>
-				<package name="@virtualization-tools"/>
-				<package name="@virtualization"/>
-				<package name="@desktop-debugging"/>
-				<package name="@dial-up"/>
-				<package name="@fonts"/>
-				<package name="@gnome-desktop"/>
-				<package name="@guest-desktop-agents"/>
-				<package name="@input-methods"/>
-				<package name="@internet-browser"/>
-				<package name="@multimedia"/>
-				<package name="@print-client"/>
-				<package name="@x11"/>
-				<package name="nmap"/>
-				<package name="bridge-utils"/>
-				<package name="tunctl"/>
-				<package name="rpcbind"/>
-				<package name="qemu-kvm-tools"/>
-				<package name="expect"/>
-				<package name="pexpect"/>
-				<package name="git"/>
-				<package name="make"/>
-				<package name="gcc"/>
-			</packages>
+			<packages/>
 			<ks_appends/>
 			<repos/>
 			<distroRequires>
@@ -72,35 +44,7 @@
 		<recipe kernel_options="" kernel_options_post="" ks_meta="method=nfs" role="CLIENTS" whiteboard="Slave Machine">
 			<autopick random="false"/>
 			<watchdog panic="ignore"/>
-			<packages>
-				<package name="@base"/>
-				<package name="@core"/>
-				<package name="@virtualization-client"/>
-				<package name="@virtualization-hypervisor"/>
-				<package name="@virtualization-platform"/>
-				<package name="@virtualization-tools"/>
-				<package name="@virtualization"/>
-				<package name="@desktop-debugging"/>
-				<package name="@dial-up"/>
-				<package name="@fonts"/>
-				<package name="@gnome-desktop"/>
-				<package name="@guest-desktop-agents"/>
-				<package name="@input-methods"/>
-				<package name="@internet-browser"/>
-				<package name="@multimedia"/>
-				<package name="@print-client"/>
-				<package name="@x11"/>
-				<package name="nmap"/>
-				<package name="bridge-utils"/>
-				<package name="tunctl"/>
-				<package name="rpcbind"/>
-				<package name="qemu-kvm-tools"/>
-				<package name="expect"/>
-				<package name="pexpect"/>
-				<package name="git"/>
-				<package name="make"/>
-				<package name="gcc"/>
-			</packages>
+			<packages/>
 			<ks_appends/>
 			<repos/>
 			<distroRequires>

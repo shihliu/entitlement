@@ -35,6 +35,9 @@ class BeakerCMD(Command):
     def set_beaker_job_name(self, job_xml, job_name):
         BKJobParser(job_xml).update_whiteboard(job_name)
 
+    def set_packages(self, job_xml, packages):
+        BKJobParser(job_xml).add_packages(packages)
+
     def check_job_finished(self, job_id):
         cmd = "bkr job-logs %s | grep 'test_log--distribution-reservesys.log'" % job_id
         while True:

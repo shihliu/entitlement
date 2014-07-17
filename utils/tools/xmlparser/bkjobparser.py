@@ -24,6 +24,14 @@ class BKJobParser(XMLParser):
         self.root.getElementsByTagName("whiteboard")[0].firstChild.replaceWholeText(job_name)
         self.write_xml()
 
+    def add_packages(self, packages):
+        for packages_section in self.root.getElementsByTagName("packages"):
+            for item in packages:
+                package = self.xmldom.createElement('package')
+                package.setAttribute("name", item)
+                packages_section.appendChild(package)
+        self.write_xml()
+
     @classmethod
     def runtime_job_copy(self, job_xml):
         if not self.check_path_exist(self.runtime_path):
