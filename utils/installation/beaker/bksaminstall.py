@@ -31,6 +31,7 @@ class BKSAMInstall(Install):
                 beaker_command = BeakerCMD()
                 job_xml = beaker_command.create_runtime_job("sam_latest_install_job_sample.xml")
                 beaker_command.update_job_param(job_xml, "/installation/entitlement-qa/Install/sam-latest-install", "VERSION", version)
+                beaker_command.set_beaker_job_name(job_xml, "SAM %s installation" % build)
                 job = beaker_command.job_submit(job_xml)
                 sam_server = beaker_command.check_job_finished(job)
                 return 0, build, sam_server
@@ -40,6 +41,7 @@ class BKSAMInstall(Install):
             beaker_command = BeakerCMD()
             job_xml = beaker_command.create_runtime_job("sam_latest_install_job_sample.xml")
             beaker_command.update_job_param(job_xml, "/installation/entitlement-qa/Install/sam-latest-install", "VERSION", version)
+            beaker_command.set_beaker_job_name(job_xml, "SAM %s installation" % build)
             job = beaker_command.job_submit(job_xml)
             sam_server = beaker_command.check_job_finished(job)
             return 0, build, sam_server
