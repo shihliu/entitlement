@@ -40,9 +40,9 @@ class Install(object):
         if not last_build in BuildsParser().get_builds(self.product_name):
             BuildsParser().add_build(self.product_name, last_build)
             self.check_build_status(last_build)
-            return -1, last_build.strip("/")
-        else:
             return 0, last_build.strip("/")
+        else:
+            return -1, last_build.strip("/")
 
     def check_build_status(self, build):
         if "RHEL5" in build:
