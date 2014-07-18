@@ -52,4 +52,4 @@ class BKvirtwho(Install):
             beaker_command.job_submit(job_xml)
 
 if __name__ == "__main__":
-    BKvirtwho().start("RHEL5.11-Server-20140709.0")
+    BKvirtwho().start()

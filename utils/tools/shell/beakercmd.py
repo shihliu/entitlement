@@ -45,7 +45,7 @@ class BeakerCMD(Command):
             if retcode == 0:
                 reserved_machine = output.split("/")[2]
                 return reserved_machine
-            time.sleep(60)
+            time.sleep(600)
 
 if __name__ == "__main__":
     pass
