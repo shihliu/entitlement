@@ -43,9 +43,16 @@ class BeakerCMD(Command):
         while True:
             retcode, output = self.run(cmd)
             if retcode == 0:
-                reserved_machine = output.split("/")[2]
+#                 reserved_machine = output.split("/")[2]
+                reserved_machine = self.get_job_machine(job_id)
                 return reserved_machine
             time.sleep(600)
+
+    def get_job_machine(self, job_id):
+        cmd = "curl -s `bkr job-logs J:696850 | grep 'test_log--distribution-install-Sysinfo.log'` | grep Hostname" % job_id
+        retcode, output = self.run(cmd)
+        reserved_machine = output.split("=").strip(" ")
+        return reserved_machine
 
 if __name__ == "__main__":
     pass
