@@ -65,6 +65,18 @@ EOF" 0 "Add SAM latest repo"
     rlPhaseEnd
 
     rlPhaseStartTest
+        rlRun "katello-configure --deployment=sam --user-pass=admin" 0 "Deploy SAM"
+    rlPhaseEnd
+
+    rlPhaseStartTest
+        rlRun "katello-service restart" 0 "Restart katello-service"
+    rlPhaseEnd
+
+    rlPhaseStartTest
+        rlRun "katello-service status" 0 "Check katello-service status"
+    rlPhaseEnd
+
+    rlPhaseStartTest
         rlRun "wget http://10.66.100.116/projects/sam-virtwho/latest-manifest/sam_install_manifest.zip -P /root/" 0 "Wget manifest from data server"
     rlPhaseEnd
 
