@@ -24,7 +24,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export TEST=/installation/entitlement-qa/Install/sam-latest-install
-export TESTVERSION=1.4
+export TESTVERSION=1.10
 
 BUILT_FILES=
 

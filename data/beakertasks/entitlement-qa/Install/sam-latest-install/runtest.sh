@@ -32,56 +32,31 @@
 PACKAGE="entitlement-qa"
 
 rlJournalStart
-
-    rlPhaseStartTest
-        rlRun "setenforce 0" 0 "Set selinux"
-        rlRun "sed -i -e 's/SELINUX=.*/SELINUX=permissive/g' /etc/sysconfig/selinux" 0 "Change selinux configure: permissive"
-    rlPhaseEnd
-
-    rlPhaseStartTest
-        rlRun "service iptables stop" 0 "Stop iptables service"
-    rlPhaseEnd
-
-    rlPhaseStartTest
-        rlRun "subscription-manager register --username=qa@redhat.com --password=HWj8TE28Qi0eP2c --auto-attach" 0 "Auto subscribe"
-    rlPhaseEnd
-
-    rlPhaseStartTest
-        rlRun "cat > /etc/yum.repos.d/sam.repo <<EOF
+    rlPhaseStartSetup
+        if [ "$REBOOTCOUNT" -eq 0 ] ; then
+            rlRun "setenforce 0" 0 "Set selinux"
+            rlRun "sed -i -e 's/SELINUX=.*/SELINUX=permissive/g' /etc/sysconfig/selinux" 0 "Change selinux configure: permissive"
+            rlRun "service iptables stop" 0 "Stop iptables service"
+            rlRun "subscription-manager register --username=qa@redhat.com --password=HWj8TE28Qi0eP2c --auto-attach" 0 "Auto subscribe"
+            rlRun "cat > /etc/yum.repos.d/sam.repo <<EOF
 [sam]
 name=sam
 baseurl=http://download.devel.redhat.com/devel/candidate-trees/SAM/latest-SAM-$VERSION-RHEL-6/compose/SAM/x86_64/os/
 enabled=1
 gpgcheck=0
 EOF" 0 "Add SAM latest repo"
-    rlPhaseEnd
-
-    rlPhaseStartTest
-        rlRun "yum install -y katello-headpin-all" 0 "Install katello-headpin-all"
-    rlPhaseEnd
-
-    rlPhaseStartTest
+            rlRun "yum-config-manager --enable rhel-6-server-optional-rpms" 0 "Enable rhel 6 server optional rpms"
+            rlRun "yum -y update" 0 "Update system"
+            rlRun "yum install -y katello-headpin-all" 0 "Install katello-headpin-all"
+            rhts-reboot
+        fi
         rlRun "katello-configure --deployment=sam --user-pass=admin" 0 "Deploy SAM"
-    rlPhaseEnd
-
-    rlPhaseStartTest
-        rlRun "katello-configure --deployment=sam --user-pass=admin" 0 "Deploy SAM"
-    rlPhaseEnd
-
-    rlPhaseStartTest
-        rlRun "katello-service restart" 0 "Restart katello-service"
-    rlPhaseEnd
-
-    rlPhaseStartTest
-        rlRun "katello-service status" 0 "Check katello-service status"
     rlPhaseEnd
 
     rlPhaseStartTest
         rlRun "wget http://10.66.100.116/projects/sam-virtwho/latest-manifest/sam_install_manifest.zip -P /root/" 0 "Wget manifest from data server"
-    rlPhaseEnd
-
-    rlPhaseStartTest
         rlRun "headpin -u admin -p admin provider import_manifest --org=ACME_Corporation --name='Red Hat' --file=/root/sam_install_manifest.zip" 0 "Import entitlement team related manifest"
+        rlLogInfo "$(rpm -q katello katello-cli candlepin katello-configure katello-cli-common katello-common subscription-manager python-rhsm)"
     rlPhaseEnd
 
 rlJournalPrintText
