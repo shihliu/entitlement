@@ -5,6 +5,7 @@ need beaker-client installed
 import time
 from utils.tools.xmlparser.bkjobparser import BKJobParser
 from utils.tools.shell.command import Command
+from utils.tools.shell.remotesh import RemoteSH
 
 class BeakerCMD(Command):
 
@@ -54,5 +55,19 @@ class BeakerCMD(Command):
         reserved_machine = output.split("=").strip(" ")
         return reserved_machine
 
+    def post_config_sam(self, sam_server):
+        self.__deploy_sam(sam_server)
+        self.__import_manifest(sam_server)
+
+    def __deploy_sam(self, sam_server):
+        cmd = "katello-configure --deployment=sam --user-pass=admin"
+        RemoteSH.remote_run(cmd, sam_server, "root", "xxoo2014", 1800)
+
+    def __import_manifest(self, sam_server):
+        cmd = "headpin -u admin -p admin provider import_manifest --org=ACME_Corporation --name='Red Hat' --file=/root/sam_install_manifest.zip"
+        RemoteSH.remote_run(cmd, sam_server, "root", "xxoo2014", 1800)
+
 if __name__ == "__main__":
+    test = BeakerCMD()
+    test.post_config_sam("dell-per300-01.rhts.eng.bos.redhat.com")
     pass
