@@ -45,8 +45,6 @@ baseurl=http://download.devel.redhat.com/devel/candidate-trees/SAM/latest-SAM-$V
 enabled=1
 gpgcheck=0
 EOF" 0 "Add SAM latest repo"
-            rlRun "yum-config-manager --enable rhel-6-server-optional-rpms" 0 "Enable rhel 6 server optional rpms"
-            rlRun "yum -y update" 0 "Update system"
             rlRun "yum install -y katello-headpin-all" 0 "Install katello-headpin-all"
 #            rhts-reboot
 #        fi
