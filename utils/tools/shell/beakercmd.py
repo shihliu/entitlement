@@ -52,7 +52,7 @@ class BeakerCMD(Command):
     def get_job_machine(self, job_id):
         cmd = "curl -s `bkr job-logs %s | grep 'test_log--distribution-install-Sysinfo.log'` | grep Hostname" % job_id
         retcode, output = self.run(cmd)
-        reserved_machine = output.split("=").strip(" ")
+        reserved_machine = output.split("=")[1].strip(" ")
         return reserved_machine
 
     def post_config_sam(self, sam_server):
