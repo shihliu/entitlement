@@ -64,6 +64,7 @@
 			</hostRequires>
 			<partitions/>
 			<task name="/distribution/install" role="STANDALONE"/>
+			<task name="/distribution/entitlement-qa/Regression/virt-who" role="STANDALONE"/>
 			<task name="/distribution/reservesys" role="STANDALONE">
 				<params>
 					<param name="RESERVETIME" value="99h"/>

@@ -51,9 +51,11 @@ ONBOOT=yes
 TYPE=Bridge
 EOF"
         rlRun "service network restart"
-
         rlRun "if [ `uname -r | awk -F "el" '{print substr($2,1,1)}'` -eq 5 ]; then rpm -Uvh http://dl.fedoraproject.org/pub/epel/5/x86_64/epel-release-5-4.noarch.rpm; yum -y install git vgabios gnutls-utils selinux-policy selinux-policy-targeted selinux-policy-devel python-virtinst virt-manager virt-viewer; fi"
+    rlPhaseEnd
 
+    rlPhaseStartTest
+        if $(echo $SERVERS | grep -q $:envvar:`HOSTNAME`); then
         rlRun "rm -rf ~/.ssh/known_hosts"
         rlRun "cat > /root/get-libvirt-repo.sh <<EOF
 #!/usr/bin/expect
@@ -70,9 +72,6 @@ EOF"
         rlRun "cd /root/"
         rlRun "if [ ! -d /root/libvirt-test-API ]; then /root/get-libvirt-repo.sh; fi" 0 "Git clone libvirt-test-API"
         rlRun "sleep 60"
-    rlPhaseEnd
-
-    rlPhaseStartTest
         rlRun "cd /root/libvirt-test-API"
         rlRun "echo \"Clients: $CLIENTS\""
         rlRun "echo \"Servers: $SERVERS\""
@@ -82,10 +81,11 @@ EOF"
         for i in $cases_params_list; do
             rlRun "python libvirt-test-beaker-api.py $i" 0 "$i"
         done
+        fi
     rlPhaseEnd
 
     rlPhaseStartCleanup
-        rlRun "echo cleanup"
+        rlRun "Clear Up"
     rlPhaseEnd
 rlJournalPrintText
 rlJournalEnd
