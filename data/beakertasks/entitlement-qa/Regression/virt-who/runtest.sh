@@ -76,12 +76,11 @@ EOF"
         rlRun "cd /root/libvirt-test-API"
         rlRun "echo \"Clients: $CLIENTS\""
         rlRun "echo \"Servers: $SERVERS\""
-        rlRun "echo \"python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes\""
-        rlRun "python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes"
-        #temporary method to show result
-        for logfile in `ls -t -r result/default`
-        do
-            rlRun "cat result/default/$logfile"
+        #rlRun "echo \"python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes\""
+        #rlRun "python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes"
+        cases_params_list=$(python libvirt-test-beaker-api.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes 2>&1 >/dev/null)
+        for i in $cases_params_list; do
+            rlRun "python libvirt-test-beaker-api.py $i" 0 "$i"
         done
     rlPhaseEnd
 
