@@ -50,8 +50,12 @@ class VirtWhoKickstart(Command):
             date = compose.split("-")[2]
             return build, date, "ent-%s-Server-x86_64-%s.distro" % (build, date)
         elif self.get_rhel_version(compose) == 6:
-            build = compose.split("-")[0].replace(".", "u")
-            date = compose.split("-")[1]
+            # change from 6.6 begining
+#             build = compose.split("-")[0].replace(".", "u")
+#             date = compose.split("-")[1]
+#             return build, date, "ent-%s-Server-x64-%s.distro" % (build, date)
+            build = compose.split("-")[0] + "-" + compose.split("-")[1].replace(".", "u")
+            date = compose.split("-")[2]
             return build, date, "ent-%s-Server-x64-%s.distro" % (build, date)
         elif self.get_rhel_version(compose) == 7:
             build = compose.split("-")[0] + "-" + compose.split("-")[1].replace(".", "u")
@@ -176,6 +180,6 @@ class VirtWhoKickstart(Command):
 if __name__ == "__main__":
 #     virt_who_kick = VirtWhoKickstart().create("RHEL6.5-20131213.0")
 #     virt_who_kick = VirtWhoKickstart().create("RHEL-7.0-20140507.0")
-    virt_who_kick = VirtWhoKickstart().create("RHEL5.11-Server-20140709.0")
+    virt_who_kick = VirtWhoKickstart().create("RHEL-6.6-20140718.0")
 #     sam_command.add_sam_repo("SAM-1.4.0-RHEL-6-20140512.0")
 
