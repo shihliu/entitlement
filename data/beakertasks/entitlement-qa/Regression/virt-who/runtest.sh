@@ -55,9 +55,9 @@ EOF"
     rlPhaseEnd
 
     rlPhaseStartTest
-        if $(echo $SERVERS | grep -q $:envvar:`HOSTNAME`); then
-        rlRun "rm -rf ~/.ssh/known_hosts"
-        rlRun "cat > /root/get-libvirt-repo.sh <<EOF
+        if echo "${SERVERS}" | grep $HOSTNAME >/dev/null; then
+            rlRun "rm -rf ~/.ssh/known_hosts"
+            rlRun "cat > /root/get-libvirt-repo.sh <<EOF
 #!/usr/bin/expect
 spawn git clone git@qe-git.englab.nay.redhat.com:~/repo/hss-qe/entitlement/libvirt-test-API
 expect \"yes/no\"
@@ -68,24 +68,27 @@ expect \"Resolving deltas: 100%\"
 sleep 30
 expect eof
 EOF"
-        rlRun "chmod 777 /root/get-libvirt-repo.sh"
-        rlRun "cd /root/"
-        rlRun "if [ ! -d /root/libvirt-test-API ]; then /root/get-libvirt-repo.sh; fi" 0 "Git clone libvirt-test-API"
-        rlRun "sleep 60"
-        rlRun "cd /root/libvirt-test-API"
-        rlRun "echo \"Clients: $CLIENTS\""
-        rlRun "echo \"Servers: $SERVERS\""
-        #rlRun "echo \"python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes\""
-        #rlRun "python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes"
-        cases_params_list=$(python libvirt-test-beaker-api.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes 2>&1 >/dev/null)
-        for i in $cases_params_list; do
-            rlRun "python libvirt-test-beaker-api.py $i" 0 "$i"
-        done
+            rlRun "chmod 777 /root/get-libvirt-repo.sh"
+            rlRun "cd /root/"
+            rlRun "if [ ! -d /root/libvirt-test-API ]; then /root/get-libvirt-repo.sh; fi" 0 "Git clone libvirt-test-API"
+            rlRun "sleep 60"
+            rlRun "cd /root/libvirt-test-API"
+            rlRun "echo \"Clients: $CLIENTS\""
+            rlRun "echo \"Servers: $SERVERS\""
+            #rlRun "echo \"python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes\""
+            #rlRun "python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes"
+            cases_params_list=$(python libvirt-test-beaker-api.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes 2>&1 >/dev/null)
+            for i in $cases_params_list; do
+                result=$(python libvirt-test-beaker-api.py $i)
+                if [ result ]; then
+                    report_result $i PASS result/default/$i
+                else
+                    report_result $i FAIL result/default/$i
+                fi
+                #rlFileSubmit result/default/$i
+                #rhts_submit_log -S $RESULT_SERVER -T $TESTID -l result/default/$i
+            done
         fi
-    rlPhaseEnd
-
-    rlPhaseStartCleanup
-        rlRun "Clear Up"
     rlPhaseEnd
 rlJournalPrintText
 rlJournalEnd
