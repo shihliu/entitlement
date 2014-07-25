@@ -36,7 +36,7 @@ class Command(object):
     def get_rhel_version(self, file_name):
         if "RHEL5" in file_name:
             return 5
-        elif "RHEL6" or "RHEL-6" in file_name:
+        elif "RHEL6" in file_name or "RHEL-6" in file_name:
             return 6
-        elif "RHEL7" or "RHEL-7" in file_name:
+        elif "RHEL7" in file_name or "RHEL-7" in file_name:
             return 7
