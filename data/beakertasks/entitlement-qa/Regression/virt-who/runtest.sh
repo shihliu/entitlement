@@ -75,18 +75,14 @@ EOF"
             rlRun "cd /root/libvirt-test-API"
             rlRun "echo \"Clients: $CLIENTS\""
             rlRun "echo \"Servers: $SERVERS\""
-            #rlRun "echo \"python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes\""
-            #rlRun "python excute/virtlab.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes"
             cases_params_list=$(python libvirt-test-beaker-api.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes 2>&1 >/dev/null)
             for i in $cases_params_list; do
                 result=$(python libvirt-test-beaker-api.py $i)
                 if [ result ]; then
-                    report_result $i PASS result/default/$i
+                    rhts-report-result $i PASS result/default/$i
                 else
-                    report_result $i FAIL result/default/$i
+                    rhts-report-result $i FAIL result/default/$i
                 fi
-                #rlFileSubmit result/default/$i
-                #rhts_submit_log -S $RESULT_SERVER -T $TESTID -l result/default/$i
             done
         fi
     rlPhaseEnd
