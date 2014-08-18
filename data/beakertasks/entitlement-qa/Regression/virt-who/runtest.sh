@@ -40,6 +40,10 @@ else
         echo "Variable JOBID set, we're running inside Beaker"
 fi
 
+#disable avc check
+setenforce 0
+export AVC_ERROR=+no_avc_check
+
 rlJournalStart
     rlPhaseStartSetup
         rlRun "sed -i '/^BOOTPROTO/d' /etc/sysconfig/network-scripts/ifcfg-eth0"
@@ -78,7 +82,7 @@ EOF"
             cases_params_list=$(python libvirt-test-beaker-api.py --handleguest=$HANDLEGUEST --samhostname=$SAMHOSTNAME --confile=$CONFILE --copyimages=$COPYIMAGES --samhostip=$SAMHOSTIP --targetmachine_ip=$CLIENTS --targetmachine_hostname=$CLIENTS --beaker=yes 2>&1 >/dev/null)
             for i in $cases_params_list; do
                 result=$(python libvirt-test-beaker-api.py $i)
-                if [ result ]; then
+                if [ $result ]; then
                     rhts-report-result $i PASS result/default/$i
                 else
                     rhts-report-result $i FAIL result/default/$i
