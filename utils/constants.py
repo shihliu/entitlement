@@ -10,6 +10,9 @@ VIRTWHO_KICKSTART_CONF = "virtwho_kickstart.conf"
 OPENSTACK_INSTALLATION_CONF = "openstack_installation.conf"
 VIRTWHO_RUN_CONF = "virtwho_run.conf"
 
+# beaker job
+KVM_JOB = "virtwhobeaker_kvm_job_sample.xml"
+
 # log module
 LOGGER_NAME = "entitlement"
 LOGGER_FILE = "entitlement.log"
