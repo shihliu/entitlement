@@ -14,8 +14,8 @@ class AllInOne():
             if new_sam == -1:
                 new_sam, sam_build, sam_server = BKSAMInstall().start(sam_build)
             BKvirtwhoKVM().start(build, sam_build, sam_server)
-            BKvirtwhoXENFV.start(build, sam_build, sam_server)
-            BKvirtwhoXENPV.start(build, sam_build, sam_server)
+            BKvirtwhoXENFV().start(build, sam_build, sam_server)
+            BKvirtwhoXENPV().start(build, sam_build, sam_server)
 
 if __name__ == "__main__":
     AllInOne().start()
