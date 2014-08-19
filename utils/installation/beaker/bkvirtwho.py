@@ -52,6 +52,7 @@ class BKvirtwho(Install):
                 beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "COPYIMAGES", self.confs._confs["copyimages"])
                 beaker_command.set_packages(job_xml, packages_kvm)
                 beaker_command.set_beaker_job_name(job_xml, "Host/guest association test on %s(KVM) against %s" % (distro, sam_build))
+                beaker_command.set_beaker_distro_variant(job_xml, "")
                 beaker_command.job_submit(job_xml)
                 # xen fv run
                 job_xml = beaker_command.create_runtime_job(KVM_JOB)
@@ -63,6 +64,7 @@ class BKvirtwho(Install):
                 beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "COPYIMAGES", self.confs._confs["copyimages"])
                 beaker_command.set_packages(job_xml, packages_xen)
                 beaker_command.set_beaker_job_name(job_xml, "Host/guest association test on %s(XEN/FV) against %s" % (distro, sam_build))
+                beaker_command.set_beaker_distro_variant(job_xml, "")
                 beaker_command.job_submit(job_xml)
                 # xen pv run
                 job_xml = beaker_command.create_runtime_job(KVM_JOB)
@@ -74,6 +76,7 @@ class BKvirtwho(Install):
                 beaker_command.update_job_param(job_xml, "/distribution/entitlement-qa/Regression/virt-who", "COPYIMAGES", self.confs._confs["copyimages"])
                 beaker_command.set_packages(job_xml, packages_xen)
                 beaker_command.set_beaker_job_name(job_xml, "Host/guest association test on %s(XEN/PV) against %s" % (distro, sam_build))
+                beaker_command.set_beaker_distro_variant(job_xml, "")
                 beaker_command.job_submit(job_xml)
             else:
                 packages = PACKAGES
