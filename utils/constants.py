@@ -8,9 +8,15 @@ SAM_INSTALLATION_CONF = "sam_installation.conf"
 RHEL_INSTALLATION_CONF = "rhel_installation.conf"
 VIRTWHO_KICKSTART_CONF = "virtwho_kickstart.conf"
 OPENSTACK_INSTALLATION_CONF = "openstack_installation.conf"
+
+#virt-who configure
 VIRTWHO_RUN_CONF = "virtwho_run.conf"
+VIRTWHO_KVM_CONF = "virtwho_kvm.conf"
+VIRTWHO_XEN_FV_CONF = "virtwho_xen_fv.conf"
+VIRTWHO_ESX_PV_CONF = "virtwho_esx_pv.conf"
 
 # beaker job
+SAM_JOB = "sam_latest_install_job_sample.xml"
 KVM_JOB = "virtwhobeaker_kvm_job_sample.xml"
 
 # log module

@@ -1,5 +1,5 @@
 from utils import *
-from utils.installation.beaker.allinone import AllInOne
+from beaker.allinone import AllInOne
 
 class Test_Allinone(unittest.TestCase):
 

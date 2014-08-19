@@ -1,5 +1,5 @@
 from utils import *
-from utils.installation.beaker.bkvirtwho import BKvirtwho
+from beaker.bkvirtwho import BKvirtwho
 
 class Test_VIRTWHO(unittest.TestCase):
 
