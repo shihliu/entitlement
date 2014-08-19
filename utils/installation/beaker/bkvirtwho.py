@@ -37,8 +37,11 @@ class BKvirtwho(Install):
 #                     packages.append("@kvm")
 #                 beaker_command.set_beaker_distro_variant(job_xml, "")
                 packages = RHEL5_PACKAGES
-                packages_kvm = packages.append("@kvm")
-                packages_xen = packages.append("@xen")
+                import copy
+                packages_kvm = copy.copy(packages)
+                packages_kvm.append("@kvm")
+                packages_xen = copy.copy(packages)
+                packages_xen.append("@xen")
                 # kvm run
                 job_xml = beaker_command.create_runtime_job(KVM_JOB)
                 beaker_command.set_beaker_distro_name(job_xml, distro)
