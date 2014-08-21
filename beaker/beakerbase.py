@@ -32,7 +32,7 @@ class BeakerBase(object):
             return -1, last_build.strip("/")
 
     def check_build_status(self, build):
-        if "RHEL5" in build:
+        if "RHEL5" in build or "RHEL-6.6" in build:
             pass
         else:
             # check STATUS file, if FINISHED, begin installing
