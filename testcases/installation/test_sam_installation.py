@@ -1,6 +1,5 @@
 from utils import *
-from utils.installation.saminstall import SAMInstall
-from utils.installation.beaker.bksaminstall import BKSAMInstall
+from beaker.bksaminstall import BKSAMInstall
 
 class Test_Sam_Installation(unittest.TestCase):
 

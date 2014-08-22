@@ -17,7 +17,8 @@ VIRTWHO_ESX_PV_CONF = "virtwho_esx_pv.conf"
 
 # beaker job
 SAM_JOB = "sam_latest_install_job_sample.xml"
-KVM_JOB = "virtwhobeaker_kvm_job_sample.xml"
+KVM_JOB = "virtwho_kvm_xen_job_sample.xml"
+RHSM_GUI_JOB = "rhsm_gui_job_sample.xml"
 
 # log module
 LOGGER_NAME = "entitlement"
