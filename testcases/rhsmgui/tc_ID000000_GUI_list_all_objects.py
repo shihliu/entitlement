@@ -1,16 +1,16 @@
 from utils import *
-from testcases.rhsmgui.rhsmbase import RHSMBase
-from testcases.rhsmgui.rhsmlocator import RHSMLocator
+from testcases.rhsmgui.rhsmguibase import RHSMGuiBase
+from testcases.rhsmgui.rhsmguilocator import RHSMGuiLocator
 
-class run_tc_ID000000_GUI_list_all_objects(RHSMBase):
+class run_tc_ID000000_GUI_list_all_objects(RHSMGuiBase):
 
 	logging.info("========== Begin of Running Test Case %s ==========" % __name__)
 
 	try:
 		try:
 			# open subscription-manager-gui
-			RHSMLocator().open_subscription_manager()
-			RHSMLocator().list_objects("main-window")
+			open_subscription_manager()
+			RHSMGuiLocator().list_objects("main-window")
 
 	# 		# click register button
 	# 		egu().click_register_button()
@@ -27,6 +27,6 @@ class run_tc_ID000000_GUI_list_all_objects(RHSMBase):
 		except Exception, e:
 			logging.error("Test Failed - error happened to list all objects:" + str(e))
 	finally:
-		RHSMLocator().capture_image("list_all_objects")
-		RHSMLocator().restore_gui_environment()
+		RHSMGuiLocator().capture_image("list_all_objects")
+		RHSMGuiLocator().restore_gui_environment()
 		logging.info("========== End of Running Test Case: %s ==========" % __name__)
