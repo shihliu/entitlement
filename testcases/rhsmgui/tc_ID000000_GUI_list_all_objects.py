@@ -9,8 +9,8 @@ class run_tc_ID000000_GUI_list_all_objects(RHSMGuiBase):
 	try:
 		try:
 			# open subscription-manager-gui
-			open_subscription_manager()
-			RHSMGuiLocator().list_objects("main-window")
+			RHSMGuiBase().open_subscription_manager()
+# 			RHSMGuiLocator().list_objects("main-window")
 
 	# 		# click register button
 	# 		egu().click_register_button()
