@@ -8,15 +8,17 @@ class LocalSH(object):
     """
 
     @classmethod
-    def local_run(self, cmd, timeout=None):
+    def local_run(self, cmd, timeout=None, comments=True):
         """
         Executes SSH command on local machine.
         """
-        logger.info(">>>Local Run: %s" % cmd)
+        if comments:
+            logger.info(">>>Local Run: %s" % cmd)
 #         retcode, stdout = self.run_subprocess(cmd, timeout)
         retcode, stdout = self.run_subprocess(cmd, timeout)
-        logger.info("<<<Return Code: %s" % retcode)
-        logger.info("<<<Output:\n%s" % stdout)
+        if comments:
+            logger.info("<<<Return Code: %s" % retcode)
+            logger.info("<<<Output:\n%s" % stdout)
         return retcode, stdout
 
     @classmethod

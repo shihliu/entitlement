@@ -211,7 +211,8 @@ class RHSMGuiLocator(object):
 
     os_serial = ""
     def __init__(self):
-        self.os_serial = self.get_os_serials()
+        if self.os_serial == "":
+            self.os_serial = self.get_os_serials()
 
     def get_locator(self, name):
         if name + "-" + self.os_serial in self.element_locators.keys():
@@ -222,7 +223,7 @@ class RHSMGuiLocator(object):
     def get_os_serials(self):
         # close subscription-manager-gui
         cmd = "uname -r | awk -F \"el\" '{print substr($2,1,1)}'"
-        (ret, output) = Command().run(cmd)
+        (ret, output) = Command().run(cmd, comments=False)
         if ret == 0:
             return output.strip("\n").strip(" ")
             logging.info("It's successful to get system serials.")

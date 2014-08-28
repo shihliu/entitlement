@@ -9,10 +9,10 @@ class Command(object):
             self.username = username
             self.password = password
 
-    def run(self, cmd, timeout=None):
+    def run(self, cmd, timeout=None, comments=True):
         if self.remote_ip == None:
             # (ret, output) = commands.getstatusoutput(cmd, timeout)
-            ret, output = LocalSH.local_run(cmd, timeout)
+            ret, output = LocalSH.local_run(cmd, timeout, comments)
         else:
             ret, output = RemoteSH.remote_run(cmd, self.remote_ip, self.username, self.password, timeout)
 #             ret, output = RemoteSH.run_pexpect(cmd, self.remote_ip, self.username, self.password, timeout)
