@@ -32,6 +32,8 @@ RHEL_BUILD_URL = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/"
 DATA_PATH = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, "data/"))
 RUNTIME_PATH = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, "runtime/"))
 BEAKER_JOBS_PATH = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, "data/beakerjobs/"))
+GUI_IMG_PATH = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, "runtime/captures/"))
+
 
 RHEL5_PACKAGES = [
                 "@admin-tools",

@@ -10,7 +10,7 @@ class tc_ID000000_GUI_list_all_objects(RHSMGuiBase):
 			try:
 				# open subscription-manager-gui
 				self.open_subscription_manager()
-	# 			RHSMGuiLocator().list_objects("main-window")
+	 			self.list_objects("main-window")
 	
 		# 		# click register button
 		# 		egu().click_register_button()

@@ -209,7 +209,7 @@ class RHSMGuiLocator(object):
     'register-progressbar-6':                    'pbarregisterprogressbar',
     }
 
-    os_serial = 0
+    os_serial = ""
     def __init__(self):
         self.os_serial = self.get_os_serials()
 
@@ -224,7 +224,7 @@ class RHSMGuiLocator(object):
         cmd = "uname -r | awk -F \"el\" '{print substr($2,1,1)}'"
         (ret, output) = Command().run(cmd)
         if ret == 0:
-            return int(output.strip("\n").strip(" "))
+            return output.strip("\n").strip(" ")
             logging.info("It's successful to get system serials.")
         else:
             logging.info("It's failed to get system serials.")

@@ -651,86 +651,7 @@ class RHSMGuiBase(object):
  
     # ========================================================
     #     2. LDTP GUI Common Functions
-    # ========================================================
 
-    def restore_gui_environment(self):
-        # close subscription-manager-gui
-        cmd = "killall -9 subscription-manager-gui"
-        (ret, output) = Command().run(cmd)
-        if ret == 0:
-            logging.info("It's successful to close subscription-manager-gui.")
-        # unregister system
-        self.unregister()
-
-    def unregister(self):
-        # close subscription-manager-gui
-        cmd = "subscription-manager unregister"
-        (ret, output) = Command().run(cmd)
-        if ret == 0:
-            logging.info("It's successful to unregister system.")
-        # unregister system
-
-    def get_os_serials(self):
-        # close subscription-manager-gui
-        cmd = "uname -r | awk -F \"el\" '{print substr($2,1,1)}'"
-        (ret, output) = Command().run(cmd)
-        if ret == 0:
-            return int(output.strip(" "))
-            logging.info("It's successful to get system serials.")
-        else:
-            logging.info("It's failed to get system serials.")
-
-
-    def capture_image(self, image_name="", window=""):
-        # capture image and name it by time
-        time.sleep(5.0)
-        image_path = "/usr/local/staf/test/Entitlement/entitlement-autotest/autotest/client/results/"
-        picture_name = time.strftime('%Y%m%d%H%M%S') + "-" + image_name + ".png"
-        ldtp.imagecapture(window, image_path + picture_name)
-        logging.info("capture image: %s to log directory" % picture_name)
-
-    def list_objects(self, window):
-        logging.info("get objects list in window: %s" % window)
-        all_objects_list = self.parse_objects(ldtp.getobjectlist(self.get_window(window)))
-        self.show_object_list(all_objects_list)
-        # return all_objects_list
- 
-    def parse_objects(self, objects_list):
-        logging.info("parse objects list")
-        window_list = []
-        tab_list = []
-        button_list = []
-        table_list = []
-        text_list = []
-        menu_list = []
-        checkbox_list = []
-        label_list = []
-        others_list = []
-        parsed_objects_list = [window_list, tab_list, button_list, table_list, text_list, menu_list, checkbox_list, label_list, others_list]
-        for item in objects_list:
-            if item.startswith("frm") or item.startswith("dlg"):
-                window_list.append(item)
-            elif item.startswith("ptab"):
-                tab_list.append(item)
-            elif item.startswith("btn"):
-                button_list.append(item)
-            elif item.startswith("ttbl") or item.startswith("tbl"):
-                table_list.append(item)
-            elif item.startswith("txt"):
-                text_list.append(item)
-            elif item.startswith("mnu"):
-                menu_list.append(item)
-            elif item.startswith("chk"):
-                checkbox_list.append(item)
-            elif item.startswith("lbl"):
-                label_list.append(item)
-            else:
-                others_list.append(item)
-        return parsed_objects_list
- 
-    def show_object_list(self, all_objects_list):
-        print all_objects_list
- 
     def check_consumer_cert_files(self, exist=True):
         cmd = "ls /etc/pki/consumer"
         (ret, output) = Command().run(cmd)
@@ -829,7 +750,70 @@ class RHSMGuiBase(object):
  
     def wait_seconds(self, seconds):
         ldtp.wait(seconds)
+    # ========================================================
+    #     LDTP GUI Common Functions
+    # ========================================================
+    def restore_gui_environment(self):
+        # close subscription-manager-gui
+        cmd = "killall -9 subscription-manager-gui"
+        (ret, output) = Command().run(cmd)
+        if ret == 0:
+            logging.info("It's successful to close subscription-manager-gui.")
+        # unregister system
+        self.unregister()
 
+    def unregister(self):
+        # close subscription-manager-gui
+        cmd = "subscription-manager unregister"
+        (ret, output) = Command().run(cmd)
+        if ret == 0:
+            logging.info("It's successful to unregister system.")
+
+    def capture_image(self, image_name="", window=""):
+        # capture image and name it by time
+        time.sleep(5.0)
+        image_path = GUI_IMG_PATH
+        picture_name = time.strftime('%Y%m%d%H%M%S') + "-" + image_name + ".png"
+        ldtp.imagecapture(window, image_path + picture_name)
+        logging.info("capture image: %s to runtime directory" % picture_name)
+
+    def list_objects(self, window):
+        logging.info("get objects list in window: %s" % window)
+        all_objects_list = self.__parse_objects(ldtp.getobjectlist(RHSMGuiLocator().get_locator(window)))
+        logging.info("sorted all_objects_list: %s" % all_objects_list)
+
+    def __parse_objects(self, objects_list):
+        logging.info("parse objects list")
+        window_list = []
+        tab_list = []
+        button_list = []
+        table_list = []
+        text_list = []
+        menu_list = []
+        checkbox_list = []
+        label_list = []
+        others_list = []
+        parsed_objects_list = [window_list, tab_list, button_list, table_list, text_list, menu_list, checkbox_list, label_list, others_list]
+        for item in objects_list:
+            if item.startswith("frm") or item.startswith("dlg"):
+                window_list.append(item)
+            elif item.startswith("ptab"):
+                tab_list.append(item)
+            elif item.startswith("btn"):
+                button_list.append(item)
+            elif item.startswith("ttbl") or item.startswith("tbl"):
+                table_list.append(item)
+            elif item.startswith("txt"):
+                text_list.append(item)
+            elif item.startswith("mnu"):
+                menu_list.append(item)
+            elif item.startswith("chk"):
+                checkbox_list.append(item)
+            elif item.startswith("lbl"):
+                label_list.append(item)
+            else:
+                others_list.append(item)
+        return parsed_objects_list
 
     def check_window_exist(self, window):
         ldtp.waittillguiexist(RHSMGuiLocator().get_locator(window))
