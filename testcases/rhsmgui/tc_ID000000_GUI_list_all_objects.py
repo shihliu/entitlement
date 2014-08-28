@@ -30,3 +30,7 @@ class tc_ID000000_GUI_list_all_objects(RHSMGuiBase):
 			RHSMGuiLocator().capture_image("list_all_objects")
 			RHSMGuiLocator().restore_gui_environment()
 			logging.info("========== End of Running Test Case: %s ==========" % __name__)
+
+
+if __name__ == "__main__":
+    tc_ID000000_GUI_list_all_objects().run_tc_ID000000_GUI_list_all_objects()
