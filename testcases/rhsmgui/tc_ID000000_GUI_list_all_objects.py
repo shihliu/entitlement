@@ -27,8 +27,8 @@ class tc_ID000000_GUI_list_all_objects(RHSMGuiBase):
 			except Exception, e:
 				logging.error("Test Failed - error happened to list all objects:" + str(e))
 		finally:
-			RHSMGuiLocator().capture_image("list_all_objects")
-			RHSMGuiLocator().restore_gui_environment()
+			self.capture_image("list_all_objects")
+			self.restore_gui_environment()
 			logging.info("========== End of Running Test Case: %s ==========" % __name__)
 
 
