@@ -9,7 +9,7 @@ class RHSMGuiBase(object):
     #     1. LDTP GUI Keyword Functions
     # ========================================================
     def open_subscription_manager(self):
-        if self.get_os_serials() == "5":
+        if int(self.get_os_serials()) == "5":
             ldtp.launchapp2("subscription-manager-gui")
         else:
             ldtp.launchapp("subscription-manager-gui")
