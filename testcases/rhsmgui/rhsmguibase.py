@@ -773,6 +773,8 @@ class RHSMGuiBase(object):
         # capture image and name it by time
         time.sleep(5.0)
         image_path = GUI_IMG_PATH
+        if not os.path.exists(GUI_IMG_PATH):
+            os.makedirs(GUI_IMG_PATH)
         picture_name = time.strftime('%Y%m%d%H%M%S') + "-" + image_name + ".png"
         ldtp.imagecapture(window, image_path + picture_name)
         logging.info("capture image: %s to runtime directory" % picture_name)
