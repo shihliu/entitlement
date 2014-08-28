@@ -224,7 +224,7 @@ class RHSMGuiLocator(object):
         cmd = "uname -r | awk -F \"el\" '{print substr($2,1,1)}'"
         (ret, output) = Command().run(cmd)
         if ret == 0:
-            return int(output.strip(" "))
+            return int(output.strip("\n").strip(" "))
             logging.info("It's successful to get system serials.")
         else:
             logging.info("It's failed to get system serials.")
