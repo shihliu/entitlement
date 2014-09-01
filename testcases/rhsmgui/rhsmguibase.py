@@ -346,8 +346,8 @@ class RHSMGuiBase(object):
     def check_org_displayed_in_facts(self, username, password):
         cmd = "subscription-manager orgs --user=%s --password=%s | grep Key" % (username, password)
         (ret, output) = Command().run(cmd)
+        org_in_cml = output.split(":")[1].strip()
         if ret == 0:
-            org_in_cml = output.split(":")[1].strip()
             logger.info("It's successful to get org %s by CML" % org_in_cml)
         else:
             raise FailException("Test Failed - Failed to get org by CML.")
