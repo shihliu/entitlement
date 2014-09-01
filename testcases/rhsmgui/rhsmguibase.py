@@ -350,11 +350,11 @@ class RHSMGuiBase(object):
             org_in_cml = output.split(":")[1].strip()
             logger.info("It's successful to get org %s by CML" % org_in_cml)
         else:
-            raise logger.error("Test Failed - Failed to get org by CML.")
+            raise FailException("Test Failed - Failed to get org by CML.")
         if self.check_element_exist("system-facts-dialog", "lbl", org_in_cml):
-            return True
+            logger.info("It's successful to get org %s in system facts" % org_in_cml)
         else:
-            return False
+            raise FailException("Test Failed - Failed to get org %s in system facts." % org_in_cml)
 
     def check_system_uuid_displayed_in_facts(self):
         cmd = "subscription-manager identity | grep 'Current identity is'"

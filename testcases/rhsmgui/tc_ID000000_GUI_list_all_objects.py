@@ -10,7 +10,6 @@ class tc_ID000000_GUI_list_all_objects(RHSMGuiBase):
         logger.info("========== Begin of Running Test Case %s ==========" % case_name)
         try:
             try:
-                # open subscription-manager-gui
                 self.open_subscription_manager()
                 self.list_objects("main-window")
                 return 0

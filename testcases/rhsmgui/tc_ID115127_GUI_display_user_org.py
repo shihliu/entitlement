@@ -12,14 +12,10 @@ class tc_ID115127_GUI_display_user_org(RHSMGuiBase):
             try:
                 username = RHSMConstants().get_constant("username")
                 password = RHSMConstants().get_constant("password")
-                # open subscription-manager-gui
                 self.open_subscription_manager()
                 self.register_and_autosubscribe_in_gui(username, password)
                 self.click_view_system_facts_menu()
-                if self.check_org_displayed_in_facts(username, password):
-                    logger.info("It's successful to check orgs displayed in system facts in GUI ")
-                else:
-                    raise logger.error("Test Faild - Failed to check orgs displayed in system facts in GUI")
+                self.check_org_displayed_in_facts(username, password)
                 return 0
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))

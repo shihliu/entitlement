@@ -13,10 +13,8 @@ class tc_ID115150_GUI_register(RHSMGuiBase):
             try:
                 username = RHSMConstants().get_constant("username")
                 password = RHSMConstants().get_constant("password")
-                # open subscription-manager-gui
                 self.open_subscription_manager()
                 self.check_consumer_cert_files(exist=False)
-                # click register button
                 self.click_register_button()
                 self.click_dialog_next_button()
                 self.input_username(username)
