@@ -43,8 +43,9 @@ class RHSMGuiBase(object):
         self.input_username(username)
         self.input_password(password)
         self.click_dialog_register_button()
+        self.click_dialog_next_button()
         self.click_dialog_subscribe_button()
-        time.sleep(20)
+        time.sleep(10)
 
     def click_register_button(self):
         self.click_button("main-window", "register-button")
@@ -154,12 +155,8 @@ class RHSMGuiBase(object):
 
     def click_dialog_subscribe_button(self):
         logger.info("click_dialog_subscribe_button")
-        if RHSMGuiLocator().get_os_serials() == "5" or RHSMGuiLocator().get_os_serials() == "6":
-            self.click_button("register-dialog", "dialog-register-button")
-            self.check_window_closed("register-dialog")
-        else:
-            self.click_button("subscribe-dialog", 'dialog-subscribe-button')
-            self.check_window_closed("subscribe-dialog")
+        self.click_button("register-dialog", "dialog-register-button")
+        self.check_window_closed("register-dialog")
 
     def click_dialog_cancle_button(self):
         logger.info("click_dialog_cancle_button")
