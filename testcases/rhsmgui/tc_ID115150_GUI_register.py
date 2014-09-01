@@ -5,7 +5,7 @@ from testcases.rhsmgui.rhsmconstants import RHSMConstants
 
 class tc_ID115150_GUI_register(RHSMGuiBase):
 
-    def run_tc_ID115150_GUI_register(self):
+    def run(self):
         case_name = self.__class__.__name__
         logger.info("========== Begin of Running Test Case %s ==========" % self.__class__.__name__)
         try:
@@ -26,12 +26,14 @@ class tc_ID115150_GUI_register(RHSMGuiBase):
                     logger.info("It's successful to check certificate files are dropped into /etc/pki/consumer")
                 else:
                     logger.error("Test Faild - Failed to check certificate files are dropped into /etc/pki/consumer")
+                return 0
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
+                return -1
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID115150_GUI_register().run_tc_ID115150_GUI_register()
+    tc_ID115150_GUI_register().run()

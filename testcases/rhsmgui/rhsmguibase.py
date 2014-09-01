@@ -347,7 +347,7 @@ class RHSMGuiBase(object):
             org_in_cml = output.split(":")[1].strip()
             logger.info("It's successful to get org %s by CML" % org_in_cml)
         else:
-            logger.error("Test Failed - Failed to get org by CML.")
+            raise logger.error("Test Failed - Failed to get org by CML.")
         if self.check_element_exist("system-facts-dialog", "lbl", org_in_cml):
             return True
         else:
@@ -360,7 +360,7 @@ class RHSMGuiBase(object):
             system_uuid = output.split(":")[1].strip()
             logger.info("It's successful to get system identity %s by CML" % system_uuid)
         else:
-            logger.error("Test Failed - Failed to get system identity by CML.")
+            raise logger.error("Test Failed - Failed to get system identity by CML.")
         if self.get_facts_value_by_name("system.uuid") == system_uuid:
             return True
         else:
@@ -372,7 +372,7 @@ class RHSMGuiBase(object):
                 if(ldtp.getcellvalue(RHSMGuiLocator().get_locator("system-facts-dialog"), RHSMGuiLocator().get_locator("facts-view-table"), row, 0).strip() == facts_name):
                     logger.info("get_facts_value_by_name")
                     return ldtp.getcellvalue(RHSMGuiLocator().get_locator("system-facts-dialog"), RHSMGuiLocator().get_locator("facts-view-table"), row, 1)
-            logger.error("Test Failed - Failed to get_facts_value_by_name.")
+            raise logger.error("Test Failed - Failed to get_facts_value_by_name.")
 
     def check_server_url(self, server_url):
         if ldtp.gettextvalue(RHSMGuiLocator().get_locator("register-dialog"), RHSMGuiLocator().get_locator("server-url-text")) == server_url:
@@ -386,21 +386,21 @@ class RHSMGuiBase(object):
         if self.check_object_exist('firstboot-main-window', 'firstboot-agr-button'):
             logger.info("It's successful to click welcome-forward button")
         else:
-            logger.error("TestFailed - Failed to check agree-license-button")
+            raise logger.error("TestFailed - Failed to check agree-license-button")
 
     def license_forward_click(self):
         self.click_button('firstboot-main-window', 'firstboot-fwd-button')
         if self.check_object_exist('firstboot-main-window', 'firstboot-registeration-warning-label') or self.check_object_exist("firstboot-main-window", "firstboot-register-now-button"):
             logger.info("It's successful to click license-forward button")
         else:
-            logger.error("TestFailed - Failed to check registeration-warning-label or register-now-button")
+            raise logger.error("TestFailed - Failed to check registeration-warning-label or register-now-button")
 
     def software_update_forward_click(self):
         self.click_button('firstboot-main-window', 'firstboot-fwd-button')
         if self.check_object_exist('firstboot-main-window', "firstboot_creat_user-label") or self.check_object_exist('firstboot-main-window', "firstboot-register-rhsm-button"):
             logger.info("It's successful to click software_update_forward button")
         else:
-            logger.error("TestFailed - Failed to check firstboot_creat_user-label or firstboot-register-rhsm-button")
+            raise logger.error("TestFailed - Failed to check firstboot_creat_user-label or firstboot-register-rhsm-button")
 
     def create_user_forward_click(self):
         self.click_button('firstboot-main-window', 'firstboot-fwd-button')
@@ -408,14 +408,14 @@ class RHSMGuiBase(object):
         if self.check_object_exist('firstboot-wng-dialog', 'firstboot-wng-dialog'):
             logger.info("It's successful to click create_user_forward button")
         else:
-            logger.error("TestFailed - Failed to check create-user-warning-dialog")
+            raise logger.error("TestFailed - Failed to check create-user-warning-dialog")
 
     def donot_set_user_yes_button(self):
         self.click_button('firstboot-wng-dialog', 'firstboot-yes-button')
         if not self.check_object_exist('firstboot-wng-dialog', 'firstboot-wng-dialog'):
             logger.info("It's successful to click donot_set_user_yes_button")
         else:
-            logger.error("TestFailed - Failed to check create-user-warning-dialog disappear")
+            raise logger.error("TestFailed - Failed to check create-user-warning-dialog disappear")
 
     def date_time_forward_click(self):
         self.click_button('firstboot-main-window', 'firstboot-fwd-button')
@@ -423,21 +423,21 @@ class RHSMGuiBase(object):
         if self.check_object_exist('firstboot-err-dialog', 'firstboot-err-dialog'):
             logger.info("It's successful to click date_time_forward button")
         else:
-            logger.error("TestFailed - Failed to check date-time-error-dialog")
+            raise logger.error("TestFailed - Failed to check date-time-error-dialog")
 
     def kdump_ok_button(self):
         self.click_button('firstboot-err-dialog', 'firstboot-ok-button')
         if not self.check_object_exist('firstboot-err-dialog', 'firstboot-err-dialog'):
             logger.info("It's successful to click kdump_ok_button")
         else:
-            logger.error("TestFailed - Failed to check date-time-error-dialog disappear")
+            raise logger.error("TestFailed - Failed to check date-time-error-dialog disappear")
 
     def kdump_finish_button(self):
         self.click_button('firstboot-main-window', 'firstboot-finish-button')
         if not self.check_object_exist("firstboot-main-window", "firstboot-main-window"):
             logger.info("It's successful to click kdump_finish_button")
         else:
-            logger.error("TestFailed - Failed to check firstboot-main-window disappear")
+            raise logger.error("TestFailed - Failed to check firstboot-main-window disappear")
 
     def choose_service_forward_click(self):
         self.click_button('firstboot-main-window', 'firstboot-fwd-button')
@@ -445,14 +445,14 @@ class RHSMGuiBase(object):
         if self.check_object_exist('firstboot-main-window', "firstboot_activationkey-checkbox") or self.check_object_exist('firstboot-main-window', "classic-login-text"):
             logger.info("It's successful to click choose_service_forward button")
         else:
-            logger.error("TestFailed - Failed to check firstboot_activationkey-checkbox")
+            raise logger.error("TestFailed - Failed to check firstboot_activationkey-checkbox")
 
     def registeration_with_forward_click(self):
         self.click_button('firstboot-main-window', 'firstboot-fwd-button')
         if self.check_object_exist('firstboot-main-window', "firstboot-manual-checkbox"):
             logger.info("It's successful to click registeration_with_forward button")
         else:
-            logger.error("TestFailed - Failed to check firstboot-manual-checkbox")
+            raise logger.error("TestFailed - Failed to check firstboot-manual-checkbox")
 
     def input_firstboot_username(self, username):
         self.input_text("firstboot-main-window", "firstboot-login-text", username)
@@ -472,7 +472,7 @@ class RHSMGuiBase(object):
         if self.check_object_exist('firstboot-main-window', 'firstboot-skip-auto-label'):
             logger.info("It's successful to click enter_account_info_forward button")
         else:
-            logger.error("TestFailed - Failed to check firstboot-skip-auto-label")
+            raise logger.error("TestFailed - Failed to check firstboot-skip-auto-label")
 
     def skip_auto_forward_click(self):
         self.click_button('firstboot-main-window', 'firstboot-fwd-button')
@@ -480,7 +480,7 @@ class RHSMGuiBase(object):
         if self.check_object_exist("firstboot-main-window", "firstboot_creat_user-label"):
             logger.info("It's successful to click skip_auto_forward button")
         else:
-            logger.error("TestFailed - Failed to check firstboot_creat_user-label")
+            raise logger.error("TestFailed - Failed to check firstboot_creat_user-label")
 
     def select_classic_mode(self):
         self.click_button('firstboot-main-window', 'firstboot-classic-select-button')
@@ -500,14 +500,14 @@ class RHSMGuiBase(object):
         if self.check_object_exist("firstboot-main-window", "classic-OS-realeaseversion-label"):
             logger.info("It's successful to click redhat-account-forward button")
         else:
-            logger.error("TestFailed - TestFailed to enable redhat-account-forward-label")
+            raise logger.error("TestFailed - TestFailed to enable redhat-account-forward-label")
 
     def firstboot_classic_os_release_forward_button_click(self):
         self.click_button('firstboot-main-window', 'classic-forward-button')
         if self.check_object_exist('firstboot-main-window', "classic-set-systemname-text"):
             logger.info("It's successful to click firstboot-classic-os-release-forward-button")
         else:
-            logger.error("TestFailed - Failed to check system text")
+            raise logger.error("TestFailed - Failed to check system text")
 
     def firstboot_classic_profile_forward_button_click(self):
         self.click_button('firstboot-main-window', 'classic-forward-button')
@@ -515,7 +515,7 @@ class RHSMGuiBase(object):
         if self.check_object_exist('firstboot-main-window', "firstboot-classic-reviewsubscription-label"):
             logger.info("It's successful to click firstboot_classic_profile_forward_button")
         else:
-            logger.error("TestFailed - Failed to check firstboot-classic-reviewsubscription-label")
+            raise logger.error("TestFailed - Failed to check firstboot-classic-reviewsubscription-label")
 
     def firstboot_classic_input_systemname(self):
         self.input_text("firstboot-main-window", "classic-set-systemname-text", "zhangqq")
@@ -526,14 +526,14 @@ class RHSMGuiBase(object):
         if self.check_object_exist('firstboot-main-window', "firstboot-classic-finishupdate-label"):
             logger.info("It's successful to click firstboot_classic_profile_forward_button")
         else:
-            logger.error("TestFailed - Failed to check firstboot-classic-finishupdate-label")
+            raise logger.error("TestFailed - Failed to check firstboot-classic-finishupdate-label")
 
     def firstboot_classic_finishupdate_forward_button_click(self):
         self.click_button('firstboot-main-window', 'classic-forward-button')
         if self.check_object_exist('firstboot-main-window', "firstboot_creat_user-label"):
             logger.info("It's successful to click finishupdate_forward_button")
         else:
-            logger.error("TestFailed - Failed to check firstboot_creat_user-label")
+            raise logger.error("TestFailed - Failed to check firstboot_creat_user-label")
 
     # ## rhn_classic register and unregister function
 
@@ -546,14 +546,14 @@ class RHSMGuiBase(object):
         if self.check_object_status("classic-main-window", "classic-software-update-label", 'ENABLED'):
             logger.info("It's successful to open rhn-classic-registeration-gui")
         else:
-            logger.error("TestFailed - TestFailed to open rhn-classic-registeration-gui")
+            raise logger.error("TestFailed - TestFailed to open rhn-classic-registeration-gui")
 
         # click software-update-forward button
         self.click_button('classic-main-window', 'classic-forward-button')
         if self.check_object_status("classic-main-window", "classic-choose-service-label", 'ENABLED'):
             logger.info("It's successful to click softwaref update forward button")
         else:
-            logger.error("TestFailed - TestFailed to enable classic-software-update-label")
+            raise logger.error("TestFailed - TestFailed to enable classic-software-update-label")
 
         # click choose-service-forward button
         self.click_button('classic-main-window', 'classic-forward-button')
@@ -561,7 +561,7 @@ class RHSMGuiBase(object):
         if self.check_object_status("classic-main-window", "classic-redhat-account-label", 'ENABLED'):
             logger.info("It's successful to click choose-service-forward button")
         else:
-            logger.error("TestFailed - TestFailed to enable classic-redhat-account-label")
+            raise logger.error("TestFailed - TestFailed to enable classic-redhat-account-label")
 
         # input account info
         self.input_text("classic-main-window", "classic-login-text", username)
@@ -575,7 +575,7 @@ class RHSMGuiBase(object):
         if self.check_object_status("classic-main-window", "classic-OS-realeaseversion-label", 'ENABLED'):
             logger.info("It's successful to click redhat-account-forward button")
         else:
-            logger.error("TestFailed - TestFailed to enable redhat-account-forward-label")
+            raise logger.error("TestFailed - TestFailed to enable redhat-account-forward-label")
 
         # click OS-releaseversion-forward button
         self.click_button('classic-main-window', 'classic-forward-button')
@@ -583,7 +583,7 @@ class RHSMGuiBase(object):
         if self.check_object_exist("classic-confirm-osrelease-window", "classic-confirm-osrelease-window"):
             logger.info("It's successful to click OS-releaseversion-forward button")
         else:
-            logger.error("TestFailed - TestFailed to prompt classic-confirm-osrelease-window")
+            raise logger.error("TestFailed - TestFailed to prompt classic-confirm-osrelease-window")
 
         # click classic-confirm-osrelease-window yes-continue button
         self.click_button('classic-confirm-osrelease-window', 'classic-confirm-osrelease-yes-button')
@@ -591,7 +591,7 @@ class RHSMGuiBase(object):
         if self.check_object_status("classic-main-window", "classic-create-profile-label", 'ENABLED'):
             logger.info("It's successful to click classic-confirm-osrelease-window yes-continue button")
         else:
-            logger.error("TestFailed - TestFailed to enable classic-confirm-osrelease-window yes-continue button")
+            raise logger.error("TestFailed - TestFailed to enable classic-confirm-osrelease-window yes-continue button")
 
         # set system name
         self.input_text("classic-main-window", "classic-set-systemname-text", "zhangqq")
@@ -603,21 +603,21 @@ class RHSMGuiBase(object):
         if self.check_object_status("classic-main-window", "classic-review-subscription-label", 'ENABLED'):
             logger.info("It's successful to click create-profile-forward button")
         else:
-            logger.error("TestFailed - TestFailed to enable classic-review-subscription-label")
+            raise logger.error("TestFailed - TestFailed to enable classic-review-subscription-label")
 
         # click review-subscription-forward button
         self.click_button('classic-main-window', 'classic-forward-button')
         if self.check_object_exist("classic-updates-configured-window", "classic-updates-configured-window"):
             logger.info("It's successful to click review-subscription-forward button")
         else:
-            logger.error("TestFailed - TestFailed to prompt updates-configured-window")
+            raise logger.error("TestFailed - TestFailed to prompt updates-configured-window")
 
         # click updates-configured-finish button
         self.click_button('classic-updates-configured-window', 'classic-updates-configured-finish-button')
         if not self.check_object_exist("classic-updates-configured-window", "classic-updates-configured-window"):
             logger.info("It's successful to register using firstboot with rhn-classic mode")
         else:
-            logger.error("TestFailed - TestFailed to close updates-configured window")
+            raise logger.error("TestFailed - TestFailed to close updates-configured window")
 
     def unregister_rhn_classic(self):
         cmd = "subscription-manager identity"
@@ -625,7 +625,7 @@ class RHSMGuiBase(object):
         if ret == 0 and "server type: RHN Classic" in output:
             logger.info("It's successful to check the system has been registered with rhn_classic mode, and begin to unregister now")
         else:
-            logger.error("TestFailed - TestFailed to check if the system has been registered with rhn_classic mode")
+            raise logger.error("TestFailed - TestFailed to check if the system has been registered with rhn_classic mode")
 
 
         cmd = "rm -f /etc/sysconfig/rhn/systemid"
@@ -645,7 +645,7 @@ class RHSMGuiBase(object):
         if "server type: RHN Classic" not in output:
             logger.info("It's successful to unregister rhn_classic")
         else:
-            logger.error("TestFailed - TestFailed to unregister rhn_classic")
+            raise logger.error("TestFailed - TestFailed to unregister rhn_classic")
 
     def check_consumer_cert_files(self, exist=True):
         cmd = "ls /etc/pki/consumer"
@@ -655,13 +655,13 @@ class RHSMGuiBase(object):
                 logger.info("It is successful to check certificate files in /etc/pki/consumer!")
                 return True
             else:
-                logger.error("Failed to check certificate files in /etc/pki/consumer!")
+                raise logger.error("Failed to check certificate files in /etc/pki/consumer!")
         else:
             if not ret == 0 :
                 logger.info("It is successful to check certificate files in /etc/pki/consumer!")
                 return True
             else:
-                logger.error("Failed to check certificate files in /etc/pki/consumer!")
+                raise logger.error("Failed to check certificate files in /etc/pki/consumer!")
     # ========================================================
     #     2. LDTP GUI Common Functions
 
@@ -749,6 +749,7 @@ class RHSMGuiBase(object):
 
     def wait_seconds(self, seconds):
         ldtp.wait(seconds)
+
     # ========================================================
     #     LDTP GUI Common Functions
     # ========================================================
@@ -764,7 +765,8 @@ class RHSMGuiBase(object):
         # close subscription-manager-gui
         cmd = "subscription-manager unregister"
         (ret, output) = Command().run(cmd)
-        logger.info("It's successful to unregister system.")
+        if ret == 0:
+            logger.info("It's successful to unregister system.")
 
     def capture_image(self, image_name="", window=""):
         # capture image and name it by time
