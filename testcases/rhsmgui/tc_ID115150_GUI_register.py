@@ -2,6 +2,7 @@ from utils import *
 from testcases.rhsmgui.rhsmguibase import RHSMGuiBase
 from testcases.rhsmgui.rhsmguilocator import RHSMGuiLocator
 from testcases.rhsmgui.rhsmconstants import RHSMConstants
+from utils.exception.failexception import FailException
 
 class tc_ID115150_GUI_register(RHSMGuiBase):
 
@@ -22,10 +23,7 @@ class tc_ID115150_GUI_register(RHSMGuiBase):
                 self.input_password(password)
                 self.check_manual_attach_checkbox()
                 self.click_dialog_register_button_without_autoattach()
-                if self.check_consumer_cert_files():
-                    logger.info("It's successful to check certificate files are dropped into /etc/pki/consumer")
-                else:
-                    logger.error("Test Faild - Failed to check certificate files are dropped into /etc/pki/consumer")
+                self.check_consumer_cert_files(exist=True)
                 return 0
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))

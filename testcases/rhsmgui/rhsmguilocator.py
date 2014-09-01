@@ -60,20 +60,16 @@ class RHSMGuiLocator(object):
     'unsubscribe-button':                    'btnUnsubscribe',
     # button in register dialog
     'dialog-register-button-5':              'register_button',
+    'dialog-register-button-6':              'btnregisterbutton',
     'dialog-cancle-button-5':                'cancel_button',
+    'dialog-cancle-button-6.4':              'btncancelbutton',
     # button in subscribe dialog
     'dialog-subscribe-button-5':             'btnSubscribe',
-    'dialog-back-button-5':                  'btnBack',
-    'dialog-cancle-button-5':                'btnCancel',
-    # button in register dialog
-    'dialog-register-button-6':              'btnregisterbutton',
-    'configure-proxy-button-6':              'btnproxybutton',
-    'dialog-cancle-button-6':                'btncancelbutton',
-    # button in subscribe dialog
     'dialog-subscribe-button-6':             'btnSubscribe',
-    'dialog-back-button-6':                  'btnBack',
-    'dialog-cancle-button-6':                'btnCancel',
-    'dialog-cancle-button-6.4':              'btncancelbutton',
+    'dialog-back-button':                    'btnBack',
+    # button in register dialog
+    'configure-proxy-button-6':              'btnproxybutton',
+    # button in subscribe dialog
     # button in import-certificate-dialog
     'ok-button-6':                           'btnOK',
     'import-file-button-6':                  'btnImport',

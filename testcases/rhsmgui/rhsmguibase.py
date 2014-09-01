@@ -2,6 +2,7 @@ import ldtp, time
 from utils import *
 from utils.tools.shell.command import Command
 from testcases.rhsmgui.rhsmguilocator import RHSMGuiLocator
+from utils.exception.failexception import FailException
 
 class RHSMGuiBase(object):
     # ========================================================
@@ -119,7 +120,9 @@ class RHSMGuiBase(object):
         if RHSMGuiLocator().get_os_serials() == "5" or RHSMGuiLocator().get_os_serials() == "6":
             logger.info("click_dialog_next_button")
             self.click_button("register-dialog", "dialog-register-button")
+            logger.info(ldtp.getwindowlist())
             self.check_window_exist("register-dialog")
+            logger.info(ldtp.getwindowlist())
 
     def click_configure_proxy_button(self):
         if RHSMGuiLocator().get_os_serials() == "5" or RHSMGuiLocator().get_os_serials() == "6":
@@ -651,17 +654,15 @@ class RHSMGuiBase(object):
         cmd = "ls /etc/pki/consumer"
         (ret, output) = Command().run(cmd)
         if exist:
-            if ret == 0 and output.strip() == "cert.pem  key.pem":
+            if ret == 0 and "cert.pem" in output and "key.pem" in output:
                 logger.info("It is successful to check certificate files in /etc/pki/consumer!")
-                return True
             else:
-                raise logger.error("Failed to check certificate files in /etc/pki/consumer!")
+                raise FailException("Failed to check certificate files in /etc/pki/consumer!")
         else:
             if not ret == 0 :
                 logger.info("It is successful to check certificate files in /etc/pki/consumer!")
-                return True
             else:
-                raise logger.error("Failed to check certificate files in /etc/pki/consumer!")
+                raise FailException("Failed to check certificate files in /etc/pki/consumer!")
     # ========================================================
     #     2. LDTP GUI Common Functions
 
@@ -830,9 +831,9 @@ class RHSMGuiBase(object):
         self.check_window_exist(window)
         return ldtp.guiexist(RHSMGuiLocator().get_locator(window))
 
-#     def check_element_exist(self, window, type, name):
-#         logger.info("check_element_exist")
-#         return ldtp.guiexist(RHSMGuiLocator().get_locator(window), type + name)
+    def check_element_exist(self, window, type, name):
+        logger.info("check_element_exist")
+        return ldtp.guiexist(RHSMGuiLocator().get_locator(window), type + name)
 
     def click_button(self, window, button_name):
         ldtp.click(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(button_name))
