@@ -36,10 +36,16 @@ class RHSMConstants(object):
             }
 
     server = ""
+    __instance = None
+    def __new__(cls):
+        if cls.__instance is None:
+            cls.__instance = super(RHSMConstants, cls).__new__(cls)
+            cls.__instance.__initialized = False
+        return cls.__instance
+
     def __init__(self):
-        '''
-        Parse configure file
-        '''
+        if(self.__initialized): return
+        self.__initialized = True
         self.confs = Configs(RHSM_GUI_CONF)
         self.server = self.confs._confs["server"]
         if self.server == "sam":
@@ -48,6 +54,18 @@ class RHSMConstants(object):
             self.configure_stage_host(self.confs._confs["stage_name"])
         elif self.server == "candlepin":
             pass
+#     def __init__(self):
+#         '''
+#         Parse configure file
+#         '''
+#         self.confs = Configs(RHSM_GUI_CONF)
+#         self.server = self.confs._confs["server"]
+#         if self.server == "sam":
+#             self.configure_sam_host(self.confs._confs["samhostname"], self.confs._confs["samhostip"])
+#         elif self.server == "stage":
+#             self.configure_stage_host(self.confs._confs["stage_name"])
+#         elif self.server == "candlepin":
+#             pass
 
     def configure_sam_host(self, samhostname, samhostip):
         ''' configure the host machine for sam '''
