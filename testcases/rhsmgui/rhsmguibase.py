@@ -699,50 +699,14 @@ class RHSMGuiBase(object):
 
     def check_object_exist(self, window, object_name):
         logger.info("check_object_exist")
-        object_type = object_name.split("-")[-1]
-        if object_type == "window" or object_type == "dialog":
-            return ldtp.guiexist(RHSMGuiLocator().get_locator(window))
-        # elif object_name[:4] == "ptab":
-        #     return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
-        elif object_type == "button":
-            return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
-        elif object_type == "table":
-            return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
-        elif object_type == "text":
-            return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
-        elif object_type == "menu":
-            return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
-        elif object_type == "checkbox":
-            return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
-        elif object_type == "label":
-            return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
-        elif object_type == "combobox":
-            return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
-        elif object_type == "progressbar":
-                        return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
+        return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
 
     def check_object_status(self, window, object_name, status):
         if status == "ENABLED":
             real_status = ldtp.state.ENABLED
         elif status == "VISIBLE":
             real_status = ldtp.state.VISIBLE
-        object_type = object_name.split("-")[-1]
-        if object_type == "window" or object_type == "dialog":
-            return ldtp.hasstate(RHSMGuiLocator().get_locator(window), real_status)
-        # elif object_name[:4] == "ptab":
-        #     return ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name), real_status)
-        elif object_type == "button":
-            return ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name), real_status)
-        elif object_type == "table":
-            return ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name), real_status)
-        elif object_type == "text":
-            return ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name), real_status)
-        elif object_type == "menu":
-            return ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name), real_status)
-        elif object_type == "checkbox":
-            return ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name), real_status)
-        elif object_type == "label":
-            return ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name), real_status)
+        return ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name), real_status)
 
     def wait_until_button_enabled(self, window, button_name):
         if RHSMGuiLocator().get_os_serials() == "5" or RHSMGuiLocator().get_os_serials() == "6":
@@ -840,6 +804,21 @@ class RHSMGuiBase(object):
         else:
             raise FailException("Test Failed - Failed to list available releases.")
 
+    def open_subscription_manager_by_cmd(self):
+        cmd = "subscription-manager-gui & \ ; sleep 20"
+        (ret, output) = Command().run(cmd)
+        if ret == 0:
+            logging.info("It's successful to run subscription-manager-gui the first time.")
+        else:
+            raise FailException("Test Failed - Failed to run subscription-manager-gui the first time")
+
+    def open_subscription_manager_twice(self):
+        cmd = "subscription-manager-gui"
+        (ret, output) = Command().run(cmd)
+        if ret == 0 and "subscription-manager-gui is already running" in output:
+            logging.info("It's successful to check message when run_subscription_manager_gui_twice.")
+        else:
+            raise FailException("Test Failed - Failed to check message when run_subscription_manager_gui_twice")
     # ========================================================
     #     LDTP GUI Common Functions
     # ========================================================
