@@ -748,6 +748,53 @@ class RHSMGuiBase(object):
     def wait_seconds(self, seconds):
         ldtp.wait(seconds)
 
+
+
+    def sub_listavailpools(self, productid):
+            cmd = "subscription-manager list --available"
+            (ret, output) = Command.run(cmd)
+            if ret == 0:
+                if "no available subscription pools to list" not in output.lower():
+                    if productid in output:
+                        logging.info("The right available pools are listed successfully.")
+                        pool_list = self.__parse_listavailable_output(output)
+                        return pool_list
+                    else:
+                        raise FailException("Not the right available pools are listed!")
+                else:
+                    logging.info("There is no Available subscription pools to list!")
+                    return None
+            else:
+                raise FailException("Test Failed - Failed to list available pools.")
+
+    def __parse_listavailable_output(self, output):
+        datalines = output.splitlines()
+        data_list = []
+        # split output into segmentations for each pool
+        data_segs = []
+        segs = []
+        tmpline = ""
+        for line in datalines:
+            if ("Product Name:" in line) or ("ProductName" in line) or ("Subscription Name" in line):
+                     tmpline = line
+            elif line and ":" not in line:
+                    tmpline = tmpline + ' ' + line.strip()
+            elif line and ":" in line:
+                    segs.append(tmpline)
+                    tmpline = line
+            if ("Machine Type:" in line) or ("MachineType:" in line) or ("System Type:" in line) or ("SystemType:" in line):
+                    segs.append(tmpline)
+                    data_segs.append(segs)
+                    segs = []
+        for seg in data_segs:
+            data_dict = {}
+            for item in seg:
+                keyitem = item.split(":")[0].replace(' ', '')
+                valueitem = item.split(":")[1].strip()
+                data_dict[keyitem] = valueitem
+            data_list.append(data_dict)
+        return data_list
+
     # ========================================================
     #     LDTP GUI Common Functions
     # ========================================================
@@ -830,6 +877,7 @@ class RHSMGuiBase(object):
 
     def check_element_exist(self, window, type, name):
         logger.info("check_element_exist")
+        logger.info(ldtp.getobjectlist(RHSMGuiLocator().get_locator(window)))
         return ldtp.guiexist(RHSMGuiLocator().get_locator(window), type + name)
 
     def click_button(self, window, button_name):

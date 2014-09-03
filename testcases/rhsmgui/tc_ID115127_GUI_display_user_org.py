@@ -2,6 +2,7 @@ from utils import *
 from testcases.rhsmgui.rhsmguibase import RHSMGuiBase
 from testcases.rhsmgui.rhsmguilocator import RHSMGuiLocator
 from testcases.rhsmgui.rhsmconstants import RHSMConstants
+from utils.exception.failexception import FailException
 
 class tc_ID115127_GUI_display_user_org(RHSMGuiBase):
 
