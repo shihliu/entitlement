@@ -62,7 +62,7 @@ class RHSMGuiLocator(object):
     'dialog-register-button-5':              'register_button',
     'dialog-register-button-6':              'btnregisterbutton',
     'dialog-cancle-button-5':                'cancel_button',
-    'dialog-cancle-button-6.4':              'btncancelbutton',
+    'dialog-cancle-button-6':              'btncancelbutton',
     # button in subscribe dialog
     'dialog-subscribe-button-5':             'btnSubscribe',
     'dialog-subscribe-button-6':             'btnSubscribe',
@@ -78,7 +78,7 @@ class RHSMGuiLocator(object):
     # button in select-file-dialog
     'type-file-name-button-6':               'tbtnTypeafilename',
     'open-file-button-6':                    'btnOpen',
-    'open-file-button-6.4':                  'btnImport',
+    'open-file-button-6':                  'btnImport',
     'proxy-close-button-6':                  'btnCloseButton',
     'yes-button-6':                          'btnYes',
     # button in system-preferences-dialog
@@ -170,7 +170,7 @@ class RHSMGuiLocator(object):
     'match-system-checkbox-6':               'chkMatchSystem',
     'match-installed-checkbox-6':            'chkMatchInstalled',
     'do-not-overlap-checkbox-6':             'chkDoNotOverlap',
-    # ##firstboot checkbox for RHEL6.4
+    # ##firstboot checkbox for RHEL6
     'firstboot-manual-checkbox-6':           'chkautobind',
     'firstboot_activationkey-checkbox-6':    'chkIwilluseanActivationKey',
 

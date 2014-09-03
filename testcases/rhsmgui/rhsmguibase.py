@@ -35,6 +35,7 @@ class RHSMGuiBase(object):
         self.input_username(username)
         self.input_password(password)
         self.click_dialog_register_button()
+        self.click_dialog_next_button()
         self.click_dialog_cancle_button()
 
     def register_and_autosubscribe_in_gui(self, username, password):
