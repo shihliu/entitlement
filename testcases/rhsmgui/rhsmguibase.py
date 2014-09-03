@@ -227,10 +227,10 @@ class RHSMGuiBase(object):
         self.input_text("proxy-configuration-dialog", "proxy-location-text", proxy)
 
     def get_all_subscription_table_row_count(self):
-        return RHSMGuiLocator().get_locator_row_count("main-window", 'all-subscription-table')
+        return self.get_table_row_count("main-window", 'all-subscription-table')
 
     def get_my_subscriptions_table_row_count(self):
-        return RHSMGuiLocator().get_locator_row_count("main-window", 'my-subscription-table')
+        return self.get_table_row_count("main-window", 'my-subscription-table')
 
     def click_view_system_facts_menu(self):
         if RHSMGuiLocator().get_os_serials() == "6":
@@ -304,25 +304,25 @@ class RHSMGuiBase(object):
 
     def get_my_subscriptions_table_my_subscriptions(self):
         for row in range(self.get_my_subscriptions_table_row_count()):
-            return RHSMGuiLocator().get_locator_cell("main-window", 'my-subscription-table', row , 0)
+            return self.get_table_cell("main-window", 'my-subscription-table', row , 0)
 
     def check_content_in_all_subscription_table(self, content):
         for row in range(self.get_all_subscription_table_row_count()):
-            if RHSMGuiLocator().get_locator_cell("main-window", 'all-subscription-table', row , 0) == content:
+            if self.get_table_cell("main-window", 'all-subscription-table', row , 0) == content:
                 logger.info("%s is listed in all-subscription-table" % content)
                 return True
         return False
 
     def check_content_in_my_installed_products_table(self, content):
         for row in range(self.get_all_subscription_table_row_count()):
-            if RHSMGuiLocator().get_locator_cell("main-window", 'installed-product-table', row , 0) == content:
+            if self.get_table_cell("main-window", 'installed-product-table', row , 0) == content:
                 logger.info("%s is listed in my_installed_products_table" % content)
                 return True
         return False
 
     def check_content_in_my_subscriptions_table(self, content):
         for row in range(self.get_all_subscription_table_row_count()):
-            if RHSMGuiLocator().get_locator_cell("main-window", 'my-subscription-table', row , 0) == content:
+            if self.get_table_cell("main-window", 'my-subscription-table', row , 0) == content:
                 logger.info("%s is listed in my_subscriptions_table" % content)
                 return True
         return False
@@ -750,23 +750,22 @@ class RHSMGuiBase(object):
         ldtp.wait(seconds)
 
 
-
     def sub_listavailpools(self, productid):
-            cmd = "subscription-manager list --available"
-            (ret, output) = Command.run(cmd)
-            if ret == 0:
-                if "no available subscription pools to list" not in output.lower():
-                    if productid in output:
-                        logging.info("The right available pools are listed successfully.")
-                        pool_list = self.__parse_listavailable_output(output)
-                        return pool_list
-                    else:
-                        raise FailException("Not the right available pools are listed!")
+        cmd = "subscription-manager list --available"
+        (ret, output) = Command().run(cmd)
+        if ret == 0:
+            if "no available subscription pools to list" not in output.lower():
+                if productid in output:
+                    logging.info("The right available pools are listed successfully.")
+                    pool_list = self.__parse_listavailable_output(output)
+                    return pool_list
                 else:
-                    logging.info("There is no Available subscription pools to list!")
-                    return None
+                    raise FailException("Not the right available pools are listed!")
             else:
-                raise FailException("Test Failed - Failed to list available pools.")
+                logging.info("There is no Available subscription pools to list!")
+                return None
+        else:
+            raise FailException("Test Failed - Failed to list available pools.")
 
     def __parse_listavailable_output(self, output):
         datalines = output.splitlines()
@@ -777,16 +776,16 @@ class RHSMGuiBase(object):
         tmpline = ""
         for line in datalines:
             if ("Product Name:" in line) or ("ProductName" in line) or ("Subscription Name" in line):
-                     tmpline = line
+                tmpline = line
             elif line and ":" not in line:
-                    tmpline = tmpline + ' ' + line.strip()
+                tmpline = tmpline + ' ' + line.strip()
             elif line and ":" in line:
-                    segs.append(tmpline)
-                    tmpline = line
+                segs.append(tmpline)
+                tmpline = line
             if ("Machine Type:" in line) or ("MachineType:" in line) or ("System Type:" in line) or ("SystemType:" in line):
-                    segs.append(tmpline)
-                    data_segs.append(segs)
-                    segs = []
+                segs.append(tmpline)
+                data_segs.append(segs)
+                segs = []
         for seg in data_segs:
             data_dict = {}
             for item in seg:

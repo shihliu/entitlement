@@ -18,7 +18,7 @@ class tc_ID115139_GUI_list_available_pools(RHSMGuiBase):
                 self.click_all_available_subscriptions_tab()
                 self.click_update_button()
                 # check sub_listavailpools are all shown in gui
-                productid = RHSMConstants().get_constant["productid"]
+                productid = RHSMConstants().get_constant("productid")
                 for item in self.sub_listavailpools(productid):
                     print item
                     if not self.check_content_in_all_subscription_table(item["SubscriptionName"]):
