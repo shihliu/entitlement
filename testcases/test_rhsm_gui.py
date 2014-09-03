@@ -10,13 +10,15 @@ class Test_RHSM_GUI(unittest.TestCase):
         pass
 
     def testAll(self):
-        cases_list = ["tc_ID000000_GUI_list_all_objects", "tc_ID115150_GUI_register"]
+        cases_list = ["tc_ID000000_GUI_list_all_objects", "tc_ID115150_GUI_register", "tc_ID115127_GUI_display_user_org", "tc_ID115139_GUI_list_available_pools"]
         from testcases.rhsmgui.tc_ID000000_GUI_list_all_objects import tc_ID000000_GUI_list_all_objects
         from testcases.rhsmgui.tc_ID115150_GUI_register import tc_ID115150_GUI_register
         from testcases.rhsmgui.tc_ID115127_GUI_display_user_org import tc_ID115127_GUI_display_user_org
+        from testcases.rhsmgui.tc_ID115139_GUI_list_available_pools import tc_ID115139_GUI_list_available_pools
         self.assertEqual(tc_ID000000_GUI_list_all_objects().run(), 0, "tc_ID000000_GUI_list_all_objects")
         self.assertEqual(tc_ID115150_GUI_register().run(), 0, "tc_ID115150_GUI_register")
         self.assertEqual(tc_ID115127_GUI_display_user_org().run(), 0, "tc_ID115127_GUI_display_user_org")
+        self.assertEqual(tc_ID115139_GUI_list_available_pools().run(), 0, "tc_ID115139_GUI_list_available_pools")
 
     def regressionTest(self):
 #         path = os.path.abspath(os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, "testcases/rhsmgui/")))

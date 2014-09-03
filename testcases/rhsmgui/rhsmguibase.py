@@ -661,6 +661,34 @@ class RHSMGuiBase(object):
                 logger.info("It is successful to check certificate files in /etc/pki/consumer!")
             else:
                 raise FailException("Failed to check certificate files in /etc/pki/consumer!")
+
+    def check_entitlement_cert_files(self, exist=True):
+        cmd = "ls /etc/pki/entitlement"
+        (ret, output) = Command().run(cmd)
+        if exist:
+            if ret == 0 and "pem" in output and "key.pem" in output:
+                logging.info("It is successful to check certificate files in /etc/pki/entitlement")
+            else:
+                raise FailException("Failed to check certificate files in /etc/pki/entitlement")
+        else:
+            if not (ret == 0 and "pem" in output and "key.pem" in output):
+                logging.info("It is successful to check certificate files in /etc/pki/entitlement")
+            else:
+                raise FailException("Failed to check certificate files in /etc/pki/entitlement")
+
+    def get_service_level(self):
+        cmd = "subscription-manager service-level --show"
+        (result, output) = Command().run(cmd)
+        if result == 0:
+            if "Service level preference not set" in output:
+                service_level = "service-level-notset-combobox"
+            elif "Current service level:" in output:
+                service_level = "service-level-" + output.split(":")[1].strip().lower() + "-combobox"
+            logging.info("It's successful to get current service level by cmd: %s." % service_level)
+            return service_level
+        else:
+            raise FailException("Test Failed - Failed to get current service level by cmd.")
+    
     # ========================================================
     #     2. LDTP GUI Common Functions
 
@@ -794,6 +822,23 @@ class RHSMGuiBase(object):
                 data_dict[keyitem] = valueitem
             data_list.append(data_dict)
         return data_list
+
+    def remove_proxy(self):
+        cmd = "sed -i -e 's/proxy_hostname =.*/proxy_hostname =/g' -e 's/proxy_port =.*/proxy_port =/g' /etc/rhsm/rhsm.conf"
+        (ret, output) = Command().run(cmd)
+        if ret == 0:
+            logging.info("It's successful to remove proxy.")
+        else:
+            raise FailException("Test Failed - Failed to Remove proxy")
+
+    def get_available_release(self):
+        cmd = "subscription-manager release --list"
+        (ret, output) = Command().run(cmd)
+        if ret == 0:
+            logging.info("It's successful to list available releases.")
+            return output.split('\n')[3:]
+        else:
+            raise FailException("Test Failed - Failed to list available releases.")
 
     # ========================================================
     #     LDTP GUI Common Functions

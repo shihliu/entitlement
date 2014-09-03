@@ -153,14 +153,15 @@ class RHSMGuiLocator(object):
     'onlinedocumentation-menu-6':            'mnuOnlineDocumentation',
     'about-menu-6':                          'mnuAbout',
     # service level menu
-    'notset-menu-6':                         'mnuNotSet',
-    'premium-menu-6':                        'mnuPremium',
+    'notset-menu':                         'mnuNotSet',
+    'premium-menu':                        'mnuPremium',
     # release version menu
-    '61-menu-6':                             'mnu61',
-    '62-menu-6':                             'mnu62',
-    '63-menu-6':                             'mnu63',
-    '64-menu-6':                             'mnu64',
-    '6server-menu-6':                        'mnu6Server',
+    '6.1-menu':                             'mnu61',
+    '6.2-menu':                             'mnu62',
+    '6.3-menu':                             'mnu63',
+    '6.4-menu':                             'mnu64',
+    '6.5-menu':                             'mnu65',
+    '6server-menu':                         'mnu6Server',
     # import cert
     'ImportCertificate-menu-6':              'mnuImportCert',
 
