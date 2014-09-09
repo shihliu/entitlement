@@ -24,10 +24,10 @@ class tc_ID155110_GUI_set_release_for_system(RHSMGuiBase):
                         logger.info("It's successful to set release %s." % item.lower())
                     else:
                         raise FailException("Test Faild - Failed to set release %s." % item.lower())
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()

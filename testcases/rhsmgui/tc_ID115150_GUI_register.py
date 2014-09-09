@@ -22,10 +22,10 @@ class tc_ID115150_GUI_register(RHSMGuiBase):
                 self.check_manual_attach_checkbox()
                 self.click_dialog_register_button_without_autoattach()
                 self.check_consumer_cert_files(exist=True)
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()

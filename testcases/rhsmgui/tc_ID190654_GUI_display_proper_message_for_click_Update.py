@@ -20,10 +20,10 @@ class tc_ID190654_GUI_display_proper_message_for_click_Update(RHSMGuiBase):
                     logger.info("It's successful to check display_proper_message_for_click_Update")
                 else:
                     raise FailException("Test Faild - Failed to check display_proper_message_for_click_Update")
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()

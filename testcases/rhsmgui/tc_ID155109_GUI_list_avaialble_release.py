@@ -21,10 +21,10 @@ class tc_ID155109_GUI_list_avaialble_release(RHSMGuiBase):
                         logger.info("It's successful to check release %s exist." % item.lower())
                     else:
                         raise FailException("Test Faild - Failed to check release %s exist." % item.lower())
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()

@@ -22,10 +22,10 @@ class tc_ID189605_GUI_service_level_should_shown_correctly(RHSMGuiBase):
                     logger.info("It's successful to check service_level_should_shown_correctly.")
                 else:
                     raise FailException("Test Failed - Failed to check service_level_should_shown_correctly!")
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()

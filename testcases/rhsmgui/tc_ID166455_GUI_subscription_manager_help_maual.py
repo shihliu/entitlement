@@ -17,10 +17,10 @@ class tc_ID166455_GUI_subscription_manager_help_maual(RHSMGuiBase):
                     logger.info("It's successful to check subscription_manager_help_maual.")
                 else:
                     raise FailException("Test Faild - Failed to check subscription_manager_help_maual!")
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.close_window("subscription-manager-manual-window")

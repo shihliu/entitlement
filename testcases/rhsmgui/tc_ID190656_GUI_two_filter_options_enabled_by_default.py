@@ -21,10 +21,10 @@ class tc_ID190656_GUI_two_filter_options_enabled_by_default(RHSMGuiBase):
                     logger.info("It's successful to check two_filter_options_enabled_by_default")
                 else:
                     raise FailException("Test Faild - Failed to check two_filter_options_enabled_by_default")
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()

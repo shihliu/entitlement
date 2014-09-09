@@ -151,7 +151,7 @@ class RHSMGuiBase(unittest.TestCase):
         if self.check_object_exist('error-dialog', 'error-user-label'):
             return 1
         else:
-            return 0
+            self.assert_(True, case_name)
 
     def click_dialog_subscribe_button(self):
         logger.info("click_dialog_subscribe_button")

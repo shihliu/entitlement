@@ -23,10 +23,10 @@ class tc_ID178186_GUI_register_with_invalid_usename_password(RHSMGuiBase):
                 self.check_window_exist("error-dialog")
                 self.check_object_exist("error-dialog", "register-error-label")
                 self.check_consumer_cert_files(exist=False)
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()

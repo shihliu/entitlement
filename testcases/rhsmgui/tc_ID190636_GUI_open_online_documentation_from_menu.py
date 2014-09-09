@@ -17,10 +17,10 @@ class tc_ID190636_GUI_open_online_documentation_from_menu(RHSMGuiBase):
                     logger.info("It's successful to check open_online_documentation_from_menu.")
                 else:
                     raise FailException("Test Faild - Failed to check open_online_documentation_from_menu!")
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             if self.check_window_open("security-warning-dialog"):

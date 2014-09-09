@@ -41,10 +41,10 @@ class tc_ID115137_GUI_import_existing_certificates(RHSMGuiBase):
                     logger.info("It's successful to check subscriptions under my_subscriptions tab")
                 else:
                     raise FailException("Test Faild - Failed to check subscriptions under my_subscriptions tab")
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()

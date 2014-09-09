@@ -23,10 +23,10 @@ class tc_ID143286_GUI_set_service_level(RHSMGuiBase):
                     logger.info("It's successful to set_service_level.")
                 else:
                     raise FailException("Test Faild - Failed to set_service_level!")
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()

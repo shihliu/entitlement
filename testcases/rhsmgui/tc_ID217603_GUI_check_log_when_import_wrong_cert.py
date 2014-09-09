@@ -23,10 +23,10 @@ class tc_ID217603_GUI_check_log_when_import_wrong_cert(RHSMGuiBase):
 #                     logger.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
 #                 else:
 #                     raise FailException("Test Faild - Failed to register and auto subscribe via GUI!")
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()

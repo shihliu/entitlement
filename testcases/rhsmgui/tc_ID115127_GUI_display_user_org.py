@@ -17,10 +17,10 @@ class tc_ID115127_GUI_display_user_org(RHSMGuiBase):
                 self.register_and_autosubscribe_in_gui(username, password)
                 self.click_view_system_facts_menu()
                 self.check_org_displayed_in_facts(username, password)
-                return 0
+                self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))
-                return -1
+                self.assert_(False, case_name)
         finally:
             self.capture_image(case_name)
             self.restore_gui_environment()
