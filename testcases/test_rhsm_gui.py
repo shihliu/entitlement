@@ -14,7 +14,7 @@ class Test_RHSM_GUI(unittest.TestCase):
 
     def regressionTest(self):
         path = os.path.abspath(os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir, "testcases/rhsmgui/")))
-        files = os.listdir(path)
+        files = os.listdir(path).sort()
         case = re.compile("tc_ID", re.IGNORECASE)
         files = filter(case.search, files)
         filenameToModuleName = lambda f: os.path.splitext(f)[0]
