@@ -274,7 +274,6 @@ class RHSMGuiBase(unittest.TestCase):
             self.click_menu("main-window", "about-menu")
             self.check_window_exist("about-subscription-manager-dialog")
 
-
     def click_unregister_menu(self):
         logger.info("click_unregister_menu")
         self.click_menu("main-window", "unregister-menu")
@@ -379,6 +378,53 @@ class RHSMGuiBase(unittest.TestCase):
             return True
         else:
             return False
+
+    def check_table_value_exist(self, window, table, cellvalue):
+        return ldtp.doesrowexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(table), cellvalue)
+
+    def check_object_exist(self, window, object_name):
+        logger.info("check_object_exist")
+        return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
+
+    def check_object_status(self, window, object_name, status):
+        if status == "ENABLED":
+            real_status = ldtp.state.ENABLED
+        elif status == "VISIBLE":
+            real_status = ldtp.state.VISIBLE
+        return ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name), real_status)
+
+    def wait_until_button_enabled(self, window, button_name):
+        if RHSMGuiLocator().get_os_serials() == "5" or RHSMGuiLocator().get_os_serials() == "6":
+            while ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(button_name), ldtp.state.ENABLED) == 0:
+                ldtp.wait(5)
+
+    def input_text(self, window, text, text_value):
+        ldtp.settextvalue(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(text), text_value)
+
+    def verify_text(self, window, text, text_value):
+        ldtp.verifysettext(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(text), text_value)
+
+    def click_tab(self, tab_name):
+        ldtp.selecttab(RHSMGuiLocator().get_locator("main-window"), RHSMGuiLocator().get_locator("all-tabs"), RHSMGuiLocator().get_locator(tab_name))
+
+    def get_table_row_count(self, window, table_name):
+        return ldtp.getrowcount(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(table_name))
+
+    def get_table_cell(self, window, table_name, row, colomn):
+        return ldtp.getcellvalue(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(table_name), row, colomn)
+
+    def sendkeys(self, key1, key2="", key3=""):
+        ldtp.keypress(key1)
+        if not key2 == "":
+            ldtp.keypress(key2)
+            if not key3 == "":
+                ldtp.keypress(key3)
+                ldtp.keyrelease(key3)
+            ldtp.keyrelease(key2)
+        ldtp.keyrelease(key1)
+
+    def wait_seconds(self, seconds):
+        ldtp.wait(seconds)
 
      # ## firstboot gui
     def welcome_forward_click(self):
@@ -536,9 +582,7 @@ class RHSMGuiBase(unittest.TestCase):
             raise FailException("TestFailed - Failed to check firstboot_creat_user-label")
 
     # ## rhn_classic register and unregister function
-
     def register_rhn_classic(self, username, password):
-
         # open rhn_register gui
         self.set_os_release()
         ldtp.launchapp("rhn_register")
@@ -627,18 +671,15 @@ class RHSMGuiBase(unittest.TestCase):
         else:
             raise FailException("TestFailed - TestFailed to check if the system has been registered with rhn_classic mode")
 
-
         cmd = "rm -f /etc/sysconfig/rhn/systemid"
         (ret, output) = Command().run(cmd)
         if ret == 0:
             logger.info("It's successful to remove /etc/sysconfig/rhn/systemid")
 
-
         cmd = "sed -i 's/enabled =.*/enabled = 0/g' /etc/yum/pluginconf.d/rhnplugin.conf"
         (ret, output) = Command().run(cmd)
         if ret == 0:
             logger.info("It's successful to configure /etc/yum/pluginconf.d/rhnplugin.conf")
-
 
         cmd = "subscription-manager identity"
         (ret, output) = Command().run(cmd)
@@ -696,58 +737,15 @@ class RHSMGuiBase(unittest.TestCase):
         else:
             raise FailException("Test Failed - Failed to set service level %s." % servicelevel)
 
-    # ========================================================
-    #     2. LDTP GUI Common Functions
-
-
-
-    def check_table_value_exist(self, window, table, cellvalue):
-        return ldtp.doesrowexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(table), cellvalue)
-
-    def check_object_exist(self, window, object_name):
-        logger.info("check_object_exist")
-        return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
-
-    def check_object_status(self, window, object_name, status):
-        if status == "ENABLED":
-            real_status = ldtp.state.ENABLED
-        elif status == "VISIBLE":
-            real_status = ldtp.state.VISIBLE
-        return ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name), real_status)
-
-    def wait_until_button_enabled(self, window, button_name):
-        if RHSMGuiLocator().get_os_serials() == "5" or RHSMGuiLocator().get_os_serials() == "6":
-            while ldtp.hasstate(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(button_name), ldtp.state.ENABLED) == 0:
-                ldtp.wait(5)
-
-    def input_text(self, window, text, text_value):
-        ldtp.settextvalue(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(text), text_value)
-
-    def verify_text(self, window, text, text_value):
-        ldtp.verifysettext(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(text), text_value)
-
-    def click_tab(self, tab_name):
-        ldtp.selecttab(RHSMGuiLocator().get_locator("main-window"), RHSMGuiLocator().get_locator("all-tabs"), RHSMGuiLocator().get_locator(tab_name))
-
-    def get_table_row_count(self, window, table_name):
-        return ldtp.getrowcount(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(table_name))
-
-    def get_table_cell(self, window, table_name, row, colomn):
-        return ldtp.getcellvalue(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(table_name), row, colomn)
-
-    def sendkeys(self, key1, key2="", key3=""):
-        ldtp.keypress(key1)
-        if not key2 == "":
-            ldtp.keypress(key2)
-            if not key3 == "":
-                ldtp.keypress(key3)
-                ldtp.keyrelease(key3)
-            ldtp.keyrelease(key2)
-        ldtp.keyrelease(key1)
-
-    def wait_seconds(self, seconds):
-        ldtp.wait(seconds)
-
+    def sub_listinstalledpools(self):
+        cmd = "subscription-manager list --installed"
+        (ret, output) = Command().run(cmd)
+        if ret == 0:
+            logger.info("The right installed pools are listed successfully.")
+            pool_list = self.__parse_listavailable_output(output)
+            return pool_list
+        else:
+            raise FailException("Test Failed - Failed to list installed pools.")
 
     def sub_listavailpools(self, productid):
         cmd = "subscription-manager list --available"
@@ -812,7 +810,7 @@ class RHSMGuiBase(unittest.TestCase):
             raise FailException("Test Failed - Failed to list available releases.")
 
     def open_subscription_manager_by_cmd(self):
-        cmd = "subscription-manager-gui; sleep 20"
+        cmd = "subscription-manager-gui &; sleep 20"
         (ret, output) = Command().run(cmd)
         if ret == 0:
             logger.info("It's successful to run subscription-manager-gui the first time.")
@@ -878,19 +876,16 @@ class RHSMGuiBase(unittest.TestCase):
             return False
 
 
-    def sub_unregister(self, session):
-        if self.sub_isregistered(session):
-            cmd = "subscription-manager unregister"
-            (ret, output) = Command().run(cmd)
-            if ret == 0:
-                if ("System has been unregistered." in output) or ("System has been un-registered." in output):
-                    logger.info("It's successful to unregister.")
-                else:
-                    raise FailException("Test Failed - The information shown after unregistered is not correct.")
+    def sub_unregister(self):
+        cmd = "subscription-manager unregister"
+        (ret, output) = Command().run(cmd)
+        if ret == 0:
+            if ("System has been unregistered." in output) or ("System has been un-registered." in output):
+                logger.info("It's successful to unregister.")
             else:
-                raise FailException("Test Failed - Failed to unregister.")
+                raise FailException("Test Failed - The information shown after unregistered is not correct.")
         else:
-            logger.info("The system is not registered to server now.")
+            raise FailException("Test Failed - Failed to unregister.")
 
     # ========================================================
     #     LDTP GUI Common Functions
