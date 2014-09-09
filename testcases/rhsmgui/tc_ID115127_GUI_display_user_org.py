@@ -6,7 +6,7 @@ from utils.exception.failexception import FailException
 
 class tc_ID115127_GUI_display_user_org(RHSMGuiBase):
 
-    def run(self):
+    def test_run(self):
         case_name = self.__class__.__name__
         logger.info("========== Begin of Running Test Case %s ==========" % case_name)
         try:
@@ -27,4 +27,4 @@ class tc_ID115127_GUI_display_user_org(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID115127_GUI_display_user_org().run()
+    tc_ID115127_GUI_display_user_org().test_run()

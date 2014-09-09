@@ -6,7 +6,7 @@ from utils.exception.failexception import FailException
 
 class tc_ID190632_GUI_quit_subscription_manager_from_menu(RHSMGuiBase):
 
-    def run(self):
+    def test_run(self):
         case_name = self.__class__.__name__
         logger.info("========== Begin of Running Test Case %s ==========" % case_name)
         try:
@@ -36,4 +36,4 @@ class tc_ID190632_GUI_quit_subscription_manager_from_menu(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID190632_GUI_quit_subscription_manager_from_menu().run()
+    tc_ID190632_GUI_quit_subscription_manager_from_menu().test_run()

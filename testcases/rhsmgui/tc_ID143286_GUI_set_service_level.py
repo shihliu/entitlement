@@ -6,7 +6,7 @@ from utils.exception.failexception import FailException
 
 class tc_ID143286_GUI_set_service_level(RHSMGuiBase):
 
-    def run(self):
+    def test_run(self):
         case_name = self.__class__.__name__
         logger.info("========== Begin of Running Test Case %s ==========" % self.__class__.__name__)
         try:
@@ -33,4 +33,4 @@ class tc_ID143286_GUI_set_service_level(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID143286_GUI_set_service_level().run()
+    tc_ID143286_GUI_set_service_level().test_run()

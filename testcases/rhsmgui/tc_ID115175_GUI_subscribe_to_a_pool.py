@@ -6,7 +6,7 @@ from utils.exception.failexception import FailException
 
 class tc_ID115175_GUI_subscribe_to_a_pool(RHSMGuiBase):
 
-    def run(self):
+    def test_run(self):
         case_name = self.__class__.__name__
         logger.info("========== Begin of Running Test Case %s ==========" % case_name)
         try:
@@ -40,4 +40,4 @@ class tc_ID115175_GUI_subscribe_to_a_pool(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID115175_GUI_subscribe_to_a_pool().run()
+    tc_ID115175_GUI_subscribe_to_a_pool().test_run()

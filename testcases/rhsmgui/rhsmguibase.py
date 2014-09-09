@@ -4,7 +4,7 @@ from utils.tools.shell.command import Command
 from testcases.rhsmgui.rhsmguilocator import RHSMGuiLocator
 from utils.exception.failexception import FailException
 
-class RHSMGuiBase(object):
+class RHSMGuiBase(unittest.TestCase):
     # ========================================================
     #     1. LDTP GUI Keyword Functions
     # ========================================================
@@ -122,9 +122,8 @@ class RHSMGuiBase(object):
         if RHSMGuiLocator().get_os_serials() == "5" or RHSMGuiLocator().get_os_serials() == "6":
             logger.info("click_dialog_next_button")
             self.click_button("register-dialog", "dialog-register-button")
-            logger.info(ldtp.getwindowlist())
             self.check_window_exist("register-dialog")
-            logger.info(ldtp.getwindowlist())
+            #logger.info(ldtp.getwindowlist())
 
     def click_configure_proxy_button(self):
         if RHSMGuiLocator().get_os_serials() == "5" or RHSMGuiLocator().get_os_serials() == "6":

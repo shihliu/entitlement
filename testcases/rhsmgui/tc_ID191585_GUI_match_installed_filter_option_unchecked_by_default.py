@@ -6,7 +6,7 @@ from utils.exception.failexception import FailException
 
 class tc_ID191585_GUI_match_installed_filter_option_unchecked_by_default(RHSMGuiBase):
 
-    def run(self):
+    def test_run(self):
         case_name = self.__class__.__name__
         logger.info("========== Begin of Running Test Case %s ==========" % self.__class__.__name__)
         try:
@@ -31,4 +31,4 @@ class tc_ID191585_GUI_match_installed_filter_option_unchecked_by_default(RHSMGui
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID191585_GUI_match_installed_filter_option_unchecked_by_default().run()
+    tc_ID191585_GUI_match_installed_filter_option_unchecked_by_default().test_run()

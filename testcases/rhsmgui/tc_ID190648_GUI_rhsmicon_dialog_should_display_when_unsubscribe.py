@@ -6,7 +6,7 @@ from utils.exception.failexception import FailException
 
 class tc_ID190648_GUI_rhsmicon_dialog_should_display_when_unsubscribe(RHSMGuiBase):
 
-    def run(self):
+    def test_run(self):
         case_name = self.__class__.__name__
         logger.info("========== Begin of Running Test Case %s ==========" % self.__class__.__name__)
         try:
@@ -40,4 +40,4 @@ class tc_ID190648_GUI_rhsmicon_dialog_should_display_when_unsubscribe(RHSMGuiBas
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID190648_GUI_rhsmicon_dialog_should_display_when_unsubscribe().run()
+    tc_ID190648_GUI_rhsmicon_dialog_should_display_when_unsubscribe().test_run()
