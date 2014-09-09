@@ -19,7 +19,7 @@ class tc_ID143277_GUI_autosubscribe_twice(RHSMGuiBase):
                 self.click_attach_button()
                 self.click_my_subscriptions_tab()
                 if self.get_my_subscriptions_table_row_count() >= 1:
-                    logging.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
+                    logger.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
                 else:
                     raise FailException("Test Faild - Failed to auto subscribe via GUI!")
                 self.check_entitlement_cert_files()
@@ -31,7 +31,7 @@ class tc_ID143277_GUI_autosubscribe_twice(RHSMGuiBase):
                 self.click_attach_button()
                 self.click_my_subscriptions_tab()
                 if self.get_my_subscriptions_table_row_count() >= 1:
-                    logging.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
+                    logger.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
                 else:
                     raise FailException("Test Faild - Failed to register and auto subscribe via GUI!")
                 self.check_entitlement_cert_files()

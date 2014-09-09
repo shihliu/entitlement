@@ -1,39 +1,39 @@
-import sys, os, subprocess, commands, random
-import logging
-from autotest_lib.client.common_lib import error
-from autotest_lib.client.bin import utils
-from autotest_lib.client.virt import virt_test_utils, virt_utils
-from autotest_lib.client.tests.kvm.tests.ent_utils import ent_utils as eu
-from autotest_lib.client.tests.kvm.tests.ent_env import ent_env as ee
-from autotest_lib.client.tests.kvm.tests.ent_gui_utils import ent_gui_utils as egu
+from utils import *
+from testcases.rhsmgui.rhsmguibase import RHSMGuiBase
+from testcases.rhsmgui.rhsmguilocator import RHSMGuiLocator
+from testcases.rhsmgui.rhsmconstants import RHSMConstants
+from utils.exception.failexception import FailException
 
-def run_tc_ID190632_GUI_quit_subscription_manager_from_menu(test, params, env):
+class tc_ID190632_GUI_quit_subscription_manager_from_menu(RHSMGuiBase):
 
-	session, vm = eu().init_session_vm(params, env)
-	logging.info("========== Begin of Running Test Case %s ==========" % __name__)
+    def run(self):
+        case_name = self.__class__.__name__
+        logger.info("========== Begin of Running Test Case %s ==========" % case_name)
+        try:
+            try:
+                self.open_subscription_manager()
+                self.click_menu("main-window", "quit-menu")
+                self.wait_seconds(5)
+                if not self.check_object_exist("main-window", "main-window"):
+                    logger.info("It's successful to check quit_subscription_manager_from_menu.")
+                else:
+                    raise FailException("Test Faild - Failed to check quit_subscription_manager_from_menu!")
+                self.open_subscription_manager()
+                self.click_my_subscriptions_tab()
+                self.sendkeys("<ctrl>", "q")
+                self.wait_seconds(5)
+                if not self.check_object_exist("main-window", "main-window"):
+                    logger.info("It's successful to check quit_subscription_manager_from_menu.")
+                else:
+                    raise FailException("Test Faild - Failed to check quit_subscription_manager_from_menu!")
+                return 0
+            except Exception, e:
+                logger.error("Test Failed - ERROR Message:" + str(e))
+                return -1
+        finally:
+            self.capture_image(case_name)
+            self.restore_gui_environment()
+            logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
-	try:
-		# open subscription-manager-gui
-		egu().open_subscription_manager(session)
-		egu().click_menu("main-window", "quit-menu")
-		egu().wait_seconds(5)
-		if not egu().check_object_exist("main-window","main-window"):
-			logging.info("It's successful to check quit_subscription_manager_from_menu.")
-		else:
-			raise error.TestFail("Test Faild - Failed to check quit_subscription_manager_from_menu!")
-		# open subscription-manager-gui
-		egu().open_subscription_manager(session)
-		egu().click_my_subscriptions_tab()
-		egu().sendkeys("<ctrl>", "q")
-		egu().wait_seconds(5)
-		if not egu().check_object_exist("main-window","main-window"):
-			logging.info("It's successful to check quit_subscription_manager_from_menu.")
-		else:
-			raise error.TestFail("Test Faild - Failed to check quit_subscription_manager_from_menu!")
-	except Exception, e:
-		logging.error(str(e))
-		raise error.TestFail("Test Failed - error happened to check quit_subscription_manager_from_menu:" + str(e))
-	finally:
-		egu().capture_image("quit_subscription_manager_from_menu")
-		egu().restore_gui_environment(session)
-		logging.info("========== End of Running Test Case: %s ==========" % __name__)
+if __name__ == "__main__":
+    tc_ID190632_GUI_quit_subscription_manager_from_menu().run()

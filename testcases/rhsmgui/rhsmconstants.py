@@ -2,6 +2,7 @@ from utils import *
 from utils.configs import Configs
 from utils.constants import RHSM_GUI_CONF
 from utils.tools.shell.command import Command
+from utils.exception.failexception import FailException
 
 class RHSMConstants(object):
     sam_cons = {
@@ -36,6 +37,7 @@ class RHSMConstants(object):
             }
 
     server = ""
+    confs = None
     __instance = None
     def __new__(cls):
         if cls.__instance is None:
@@ -76,7 +78,7 @@ class RHSMConstants(object):
             if ret == 0:
                 logger.info("Succeeded to configure /etc/hosts")
             else:
-                logger.error("Failed to configure /etc/hosts")
+                raise FailException("Failed to configure /etc/hosts")
             # config hostname, prefix, port, baseurl and repo_ca_crt by installing candlepin-cert
             cmd = "rpm -qa | grep candlepin-cert-consumer"
             ret, output = Command().run(cmd)
@@ -87,13 +89,13 @@ class RHSMConstants(object):
                 if ret == 0:
                      logger.info("Succeeded to uninstall candlepin-cert-consumer-%s-1.0-1.noarch." % samhostname)
                 else:
-                    logger.error("Failed to uninstall candlepin-cert-consumer-%s-1.0-1.noarch." % samhostname)
+                    raise FailException("Failed to uninstall candlepin-cert-consumer-%s-1.0-1.noarch." % samhostname)
             cmd = "rpm -ivh http://%s/pub/candlepin-cert-consumer-%s-1.0-1.noarch.rpm" % (samhostip, samhostname)
             ret, output = Command().run(cmd)
             if ret == 0:
                 logger.info("Succeeded to install candlepin cert and configure the system with sam configuration as %s." % samhostip)
             else:
-                logger.error("Failed to install candlepin cert and configure the system with sam configuration as %s." % samhostip)
+                raise FailException("Failed to install candlepin cert and configure the system with sam configuration as %s." % samhostip)
 
     def configure_stage_host(self, stage_name):
         ''' configure the host machine for stage '''
@@ -103,7 +105,7 @@ class RHSMConstants(object):
         if ret == 0:
             logger.info("Succeeded to configure rhsm.conf for stage")
         else:
-            logger.error("Failed to configure rhsm.conf for stage")
+            raise FailException("Failed to configure rhsm.conf for stage")
 
     def get_constant(self, name):
         if self.server == "sam":

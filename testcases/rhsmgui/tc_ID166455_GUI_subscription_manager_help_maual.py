@@ -14,7 +14,7 @@ class tc_ID166455_GUI_subscription_manager_help_maual(RHSMGuiBase):
                 self.open_subscription_manager()
                 self.click_gettingstarted_menu()
                 if self.check_window_open("subscription-manager-manual-window"):
-                    logging.info("It's successful to check subscription_manager_help_maual.")
+                    logger.info("It's successful to check subscription_manager_help_maual.")
                 else:
                     raise FailException("Test Faild - Failed to check subscription_manager_help_maual!")
                 return 0

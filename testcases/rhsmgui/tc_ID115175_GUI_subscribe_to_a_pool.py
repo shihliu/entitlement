@@ -27,7 +27,7 @@ class tc_ID115175_GUI_subscribe_to_a_pool(RHSMGuiBase):
                         raise FailException("Test Faild - Failed to list %s in all-subscription-table" % item["SubscriptionName"])
                     
                 if self.get_my_subscriptions_table_row_count() >= 1:
-                    logging.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
+                    logger.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
                 else:
                     raise FailException("Test Faild - Failed to register and auto subscribe via GUI!")
                 return 0

@@ -18,11 +18,11 @@ class tc_ID178118_GUI_display_orgname_and_identity(RHSMGuiBase):
                 self.click_view_system_facts_menu()
                 self.click_facts_view_tree("system")
                 if self.check_org_displayed_in_facts(username, password):
-                    logging.info("It's successful to check orgs displayed in system facts in GUI ")
+                    logger.info("It's successful to check orgs displayed in system facts in GUI ")
                 else:
                     raise FailException("Test Faild - Failed to check orgs displayed in system facts in GUI")
                 if self.check_system_uuid_displayed_in_facts():
-                    logging.info("It's successful to check system_uuid displayed in system facts in GUI ")
+                    logger.info("It's successful to check system_uuid displayed in system facts in GUI ")
                 else:
                     raise FailException("Test Faild - Failed to check system_uuid displayed in system facts in GUI")
                 return 0

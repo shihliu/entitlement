@@ -223,6 +223,6 @@ class RHSMGuiLocator(object):
         (ret, output) = Command().run(cmd, comments=False)
         if ret == 0:
             return output.strip("\n").strip(" ")
-            logging.info("It's successful to get system serials.")
+            logger.info("It's successful to get system serials.")
         else:
-            logging.info("It's failed to get system serials.")
+            logger.info("It's failed to get system serials.")

@@ -18,7 +18,7 @@ class tc_ID143285_GUI_display_current_service_level(RHSMGuiBase):
                 self.click_preferences_menu()
                 # get service-level by cmd line
                 if self.check_object_exist("system-preferences-dialog", self.get_service_level()):
-                    logging.info("It's successful to display current service level.")
+                    logger.info("It's successful to display current service level.")
                 else:
                     raise FailException("Test Faild - Failed to display current service level!")
                 return 0

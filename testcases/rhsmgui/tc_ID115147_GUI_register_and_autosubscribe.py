@@ -22,7 +22,7 @@ class tc_ID115147_GUI_register_and_autosubscribe(RHSMGuiBase):
                 self.click_dialog_subscribe_button()
                 self.click_my_subscriptions_tab()
                 if self.get_my_subscriptions_table_row_count() >= 1:
-                    logging.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
+                    logger.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
                 else:
                     raise FailException("Test Faild - Failed to register and auto subscribe via GUI!")
                 return 0
