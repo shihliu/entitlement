@@ -812,7 +812,7 @@ class RHSMGuiBase(unittest.TestCase):
             raise FailException("Test Failed - Failed to list available releases.")
 
     def open_subscription_manager_by_cmd(self):
-        cmd = "subscription-manager-gui & \ ; sleep 20"
+        cmd = "subscription-manager-gui; sleep 20"
         (ret, output) = Command().run(cmd)
         if ret == 0:
             logger.info("It's successful to run subscription-manager-gui the first time.")

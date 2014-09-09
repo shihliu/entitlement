@@ -31,5 +31,4 @@ class tc_ID217501_GUI_open_rhsm_after_change_hostname(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID217501_GUI_open_rhsm_after_change_hostname().test_run()
-
+    unittest.main()

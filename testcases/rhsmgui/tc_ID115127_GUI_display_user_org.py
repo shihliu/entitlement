@@ -27,4 +27,4 @@ class tc_ID115127_GUI_display_user_org(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID115127_GUI_display_user_org().test_run()
+    unittest.main()

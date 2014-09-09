@@ -51,5 +51,4 @@ class tc_ID115137_GUI_import_existing_certificates(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID115137_GUI_import_existing_certificates().test_run()
-
+    unittest.main()

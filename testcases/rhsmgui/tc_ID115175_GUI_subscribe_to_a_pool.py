@@ -40,4 +40,4 @@ class tc_ID115175_GUI_subscribe_to_a_pool(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID115175_GUI_subscribe_to_a_pool().test_run()
+    unittest.main()

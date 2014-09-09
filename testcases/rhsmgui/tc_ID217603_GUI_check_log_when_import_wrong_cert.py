@@ -33,4 +33,4 @@ class tc_ID217603_GUI_check_log_when_import_wrong_cert(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID217603_GUI_check_log_when_import_wrong_cert().test_run()
+    unittest.main()

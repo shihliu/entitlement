@@ -35,4 +35,4 @@ class tc_ID115141_GUI_list_products_and_subscriptions_info(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID115141_GUI_list_products_and_subscriptions_info().test_run()
+    unittest.main()

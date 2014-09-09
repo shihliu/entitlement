@@ -31,4 +31,4 @@ class tc_ID191585_GUI_match_installed_filter_option_unchecked_by_default(RHSMGui
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID191585_GUI_match_installed_filter_option_unchecked_by_default().test_run()
+    unittest.main()

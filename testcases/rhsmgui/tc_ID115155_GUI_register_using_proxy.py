@@ -37,4 +37,4 @@ class tc_ID115155_GUI_register_using_proxy(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID115155_GUI_register_using_proxy().test_run()
+    unittest.main()

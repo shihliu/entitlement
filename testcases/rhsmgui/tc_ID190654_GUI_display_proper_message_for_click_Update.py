@@ -30,4 +30,4 @@ class tc_ID190654_GUI_display_proper_message_for_click_Update(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID190654_GUI_display_proper_message_for_click_Update().test_run()
+    unittest.main()

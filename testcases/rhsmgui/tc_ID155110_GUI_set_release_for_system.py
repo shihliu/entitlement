@@ -34,4 +34,4 @@ class tc_ID155110_GUI_set_release_for_system(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID155110_GUI_set_release_for_system().test_run()
+    unittest.main()

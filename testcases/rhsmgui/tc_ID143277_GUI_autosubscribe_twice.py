@@ -45,4 +45,4 @@ class tc_ID143277_GUI_autosubscribe_twice(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID143277_GUI_autosubscribe_twice().test_run()
+    unittest.main()

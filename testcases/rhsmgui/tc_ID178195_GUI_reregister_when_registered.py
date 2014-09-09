@@ -40,4 +40,4 @@ class tc_ID178195_GUI_reregister_when_registered(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID178195_GUI_reregister_when_registered().test_run()
+    unittest.main()

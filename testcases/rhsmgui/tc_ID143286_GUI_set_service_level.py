@@ -33,4 +33,4 @@ class tc_ID143286_GUI_set_service_level(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID143286_GUI_set_service_level().test_run()
+    unittest.main()

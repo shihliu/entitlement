@@ -45,6 +45,5 @@ class tc_ID190647_GUI_change_autosubscription_button_to_register(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID190647_GUI_change_autosubscription_button_to_register().test_run()
-
+    unittest.main()
 

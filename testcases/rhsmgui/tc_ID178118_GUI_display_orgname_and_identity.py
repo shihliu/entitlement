@@ -35,4 +35,4 @@ class tc_ID178118_GUI_display_orgname_and_identity(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID178118_GUI_display_orgname_and_identity().test_run()
+    unittest.main()

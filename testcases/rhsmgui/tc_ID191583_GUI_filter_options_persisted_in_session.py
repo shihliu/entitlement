@@ -36,4 +36,4 @@ class tc_ID191583_GUI_filter_options_persisted_in_session(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID191583_GUI_filter_options_persisted_in_session().test_run()
+    unittest.main()

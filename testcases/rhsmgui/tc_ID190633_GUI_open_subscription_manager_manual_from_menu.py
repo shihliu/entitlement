@@ -28,4 +28,4 @@ class tc_ID190633_GUI_open_subscription_manager_manual_from_menu(RHSMGuiBase):
             logger.info("========== End of Running Test Case: %s ==========" % case_name)
 
 if __name__ == "__main__":
-    tc_ID190633_GUI_open_subscription_manager_manual_from_menu().test_run()
+    unittest.main()
