@@ -818,7 +818,7 @@ class RHSMGuiBase(unittest.TestCase):
             raise FailException("Test Failed - Failed to run subscription-manager-gui the first time")
 
     def open_subscription_manager_twice(self):
-        cmd = "subscription-manager-gui"
+        cmd = "subscription-manager-gui &"
         (ret, output) = Command().run(cmd)
         if ret == 0 and "subscription-manager-gui is already running" in output:
             logger.info("It's successful to check message when run_subscription_manager_gui_twice.")
