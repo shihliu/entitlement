@@ -16,20 +16,18 @@ class tc_ID115175_GUI_subscribe_to_a_pool(RHSMGuiBase):
                 self.open_subscription_manager()
                 self.register_in_gui(username, password)
                 productid = RHSMConstants().get_constant("productid")
-                self.click_my_installed_products_tab()
-                self.check_my_installed_products_and_details()
-                self.click_my_subscriptions_tab()
-                self.check_my_subscriptions_and_details()
-        
-                for item in self.sub_listavailpools(productid):
-                    print item
-                    if not self.check_content_in_all_subscription_table(item["SubscriptionName"]):
-                        raise FailException("Test Faild - Failed to list %s in all-subscription-table" % item["SubscriptionName"])
-                    
-                if self.get_my_subscriptions_table_row_count() >= 1:
-                    logger.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
-                else:
-                    raise FailException("Test Faild - Failed to register and auto subscribe via GUI!")
+#                 self.click_my_installed_products_tab()
+#                 self.check_my_installed_products_and_details()
+#                 self.click_my_subscriptions_tab()
+#                 self.check_my_subscriptions_and_details()
+#                 for item in self.sub_listavailpools(productid):
+#                     if not self.check_content_in_all_subscription_table(item["SubscriptionName"]):
+#                         raise FailException("Test Faild - Failed to list %s in all-subscription-table" % item["SubscriptionName"])
+#                 if self.get_my_subscriptions_table_row_count() >= 1:
+#                     logger.info("It's successful to auto subscribe: %s" % self.get_my_subscriptions_table_my_subscriptions())
+#                 else:
+#                     raise FailException("Test Faild - Failed to register and auto subscribe via GUI!")
+                raise FailException("Not completed yet ......")
                 self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))

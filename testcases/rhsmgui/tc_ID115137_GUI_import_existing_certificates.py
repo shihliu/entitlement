@@ -17,6 +17,7 @@ class tc_ID115137_GUI_import_existing_certificates(RHSMGuiBase):
                 self.register_and_autosubscribe_in_gui(username, password)
                 cert = self.generate_cert()
                 self.sub_unregister()
+                self.close_rhsm_gui()
                 self.open_subscription_manager()
                 self.click_register_button()
                 self.click_dialog_next_button()
@@ -25,10 +26,9 @@ class tc_ID115137_GUI_import_existing_certificates(RHSMGuiBase):
                 self.click_dialog_register_button()
                 self.click_dialog_cancle_button()
                 self.click_import_cert_menu()
-                self.click_Certificate_Location()
                 self.click_type_file_name_button()
                 self.input_location(cert)
-                self.click_open_file_button()
+                self.click_import_cert_button()
                 if self.check_window_open("information-dialog") and self.check_object_exist("information-dialog", "import-cert-success-label"):
                     logger.info("It's successful to check prompt message displayed ")
                 else:

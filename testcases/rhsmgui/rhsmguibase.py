@@ -77,23 +77,20 @@ class RHSMGuiBase(unittest.TestCase):
         self.click_menu("main-window", "ImportCertificate-menu")
         self.check_window_exist("import-cert-dialog")
 
-    def click_Certificate_Location(self):
-        if RHSMGuiLocator().get_os_serials() == "6":
-            return
-        else:
-            logger.info("click_Certificate_Location")
-            self.click_button("import-cert-dialog", "type-pem-name-button")
-            time.sleep(30)
-            if ldtp.guiexist(RHSMGuiLocator().get_locator("import-cert-dialog"), RHSMGuiLocator().get_locator("location-text")):
-                pass
+#     def click_Certificate_Location(self):
+#         logger.info("click_Certificate_Location")
+#         self.click_button("import-cert-dialog", "type-pem-name-button")
+#         time.sleep(30)
+#         if ldtp.guiexist(RHSMGuiLocator().get_locator("import-cert-dialog"), RHSMGuiLocator().get_locator("location-text")):
+#             pass
 
     def click_type_file_name_button(self):
-        if ldtp.guiexist(RHSMGuiLocator().get_locator("import-certificate-dialog"), RHSMGuiLocator().get_locator("location-text")) == 1:
+        if ldtp.guiexist(RHSMGuiLocator().get_locator("import-cert-dialog"), RHSMGuiLocator().get_locator("location-text")) == 1:
             return
         else:
             logger.info("click_type_file_name_button")
-            self.click_button("import-certificate-dialog", "type-file-name-button")
-            ldtp.waittillguiexist(RHSMGuiLocator().get_locator("import-certificate-dialog"), RHSMGuiLocator().get_locator("location-text"))
+            self.click_button("import-cert-dialog", "type-file-name-button")
+            ldtp.waittillguiexist(RHSMGuiLocator().get_locator("import-cert-dialog"), RHSMGuiLocator().get_locator("location-text"))
 
     def click_import_cert_button(self):
         logger.info("click import cert button")
@@ -115,7 +112,7 @@ class RHSMGuiBase(unittest.TestCase):
 
     def click_open_file_button(self):
         logger.info("click_open_file_button")
-        self.click_button("import-certificate-dialog", "open-file-button")
+        self.click_button("import-cert-dialog", "import-button")
         self.check_window_exist("information-dialog")
 
     def click_dialog_next_button(self):
@@ -123,7 +120,7 @@ class RHSMGuiBase(unittest.TestCase):
             logger.info("click_dialog_next_button")
             self.click_button("register-dialog", "dialog-register-button")
             self.check_window_exist("register-dialog")
-            #logger.info(ldtp.getwindowlist())
+            # logger.info(ldtp.getwindowlist())
 
     def click_configure_proxy_button(self):
         if RHSMGuiLocator().get_os_serials() == "5" or RHSMGuiLocator().get_os_serials() == "6":
@@ -243,7 +240,7 @@ class RHSMGuiBase(unittest.TestCase):
             logger.info("click_import_cert_menu")
             self.click_menu("main-window", "system-menu")
             self.click_menu("main-window", "importcert-menu")
-            self.check_window_exist("import-certificate-dialog")
+            self.check_window_exist("import-cert-dialog")
 
     def click_preferences_menu(self):
         if RHSMGuiLocator().get_os_serials() == "6":
@@ -319,7 +316,7 @@ class RHSMGuiBase(unittest.TestCase):
         return False
 
     def check_content_in_my_subscriptions_table(self, content):
-        for row in range(self.get_all_subscription_table_row_count()):
+        for row in range(self.get_my_subscriptions_table_row_count()):
             if self.get_table_cell("main-window", 'my-subscription-table', row , 0) == content:
                 logger.info("%s is listed in my_subscriptions_table" % content)
                 return True
@@ -747,6 +744,16 @@ class RHSMGuiBase(unittest.TestCase):
         else:
             raise FailException("Test Failed - Failed to list installed pools.")
 
+    def sub_listconsumedpools(self):
+        cmd = "subscription-manager list --consumed"
+        (ret, output) = Command().run(cmd)
+        if ret == 0:
+            logger.info("The right consumed pools are listed successfully.")
+            pool_list = self.__parse_listavailable_output(output)
+            return pool_list
+        else:
+            raise FailException("Test Failed - Failed to list consumed pools.")
+
     def sub_listavailpools(self, productid):
         cmd = "subscription-manager list --available"
         (ret, output) = Command().run(cmd)
@@ -891,12 +898,14 @@ class RHSMGuiBase(unittest.TestCase):
     #     LDTP GUI Common Functions
     # ========================================================
     def restore_gui_environment(self):
-        # close subscription-manager-gui
+        self.close_rhsm_gui()
+        self.unregister()
+
+    def close_rhsm_gui(self):
         cmd = "killall -9 subscription-manager-gui"
         (ret, output) = Command().run(cmd)
         if ret == 0:
             logger.info("It's successful to close subscription-manager-gui.")
-        self.unregister()
 
     def unregister(self):
         # close subscription-manager-gui

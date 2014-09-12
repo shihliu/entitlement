@@ -14,7 +14,6 @@ class RHSMGuiLocator(object):
     'register-dialog-6':                     'dlgregister_dialog',
     'subscribe-dialog-5':                    'Subscribe System',
     'subscribe-dialog-6':                    'frmSubscribeSystem',
-    'import-certificate-dialog':             'dlgProvideaSubscriptionCertificate',
     'import-cert-dialog':                    'dlgImportCertificates',
     'select-file-dialog':                    'dlgSelectAFile',
     'system-facts-dialog':                   'dlgfacts_dialog',
@@ -69,16 +68,14 @@ class RHSMGuiLocator(object):
     'dialog-back-button':                    'btnBack',
     # button in register dialog
     'configure-proxy-button-6':              'btnproxybutton',
-    # button in subscribe dialog
     # button in import-certificate-dialog
     'ok-button-6':                           'btnOK',
-    'import-file-button-6':                  'btnImport',
+    'import-file-button':                    'btnImport',
     'type-pem-name-button-6':                'tbtnTypefilename',
     'certificate-location-button-6':         'btn(None)',
     # button in select-file-dialog
     'type-file-name-button-6':               'tbtnTypeafilename',
-    'open-file-button-6':                    'btnOpen',
-    'open-file-button-6':                  'btnImport',
+    'open-file-button':                      'btnOpen',
     'proxy-close-button-6':                  'btnCloseButton',
     'yes-button-6':                          'btnYes',
     # button in system-preferences-dialog
