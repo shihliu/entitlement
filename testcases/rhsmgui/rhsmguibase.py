@@ -383,6 +383,10 @@ class RHSMGuiBase(unittest.TestCase):
         logger.info("check_object_exist")
         return ldtp.guiexist(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(object_name))
 
+    def check_menu_enabled(self, window, menu_name):
+        logger.info("check_menu_enabled")
+        return ldtp.menuitemenabled(RHSMGuiLocator().get_locator(window), RHSMGuiLocator().get_locator(menu_name))
+
     def check_object_status(self, window, object_name, status):
         if status == "ENABLED":
             real_status = ldtp.state.ENABLED
@@ -713,16 +717,16 @@ class RHSMGuiBase(unittest.TestCase):
             else:
                 raise FailException("Failed to check certificate files in /etc/pki/entitlement")
 
-    def get_service_level(self):
+    def get_service_level_menu(self):
         cmd = "subscription-manager service-level --show"
         (result, output) = Command().run(cmd)
         if result == 0:
             if "Service level preference not set" in output:
-                service_level = "service-level-notset-combobox"
+                service_level_menu = "sl-notset-menu"
             elif "Current service level:" in output:
-                service_level = "service-level-" + output.split(":")[1].strip().lower() + "-combobox"
-            logger.info("It's successful to get current service level by cmd: %s." % service_level)
-            return service_level
+                service_level_menu = output.split(":")[1].strip().lower() + "-menu"
+            logger.info("It's successful to get current service level menu by cmd: %s." % service_level_menu)
+            return service_level_menu
         else:
             raise FailException("Test Failed - Failed to get current service level by cmd.")
 

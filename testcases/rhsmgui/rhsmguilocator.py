@@ -150,9 +150,15 @@ class RHSMGuiLocator(object):
     'onlinedocumentation-menu-6':            'mnuOnlineDocumentation',
     'about-menu-6':                          'mnuAbout',
     # service level menu
-    'notset-menu':                         'mnuNotSet',
-    'premium-menu':                        'mnuPremium',
+    'sl-notset-menu':                        'mnuNotSet1',
+    'none-menu':                             'mnuNone',
+    'premium-menu':                          'mnuPremium',
+    'standard-menu':                         'mnuStandard',
+    'self-support-menu':                     'mnuSelf-Support',
+    'layered-menu':                          'mnuLayered',
+
     # release version menu
+    'rv-notset-menu':                       'mnuNotSet',
     '6.1-menu':                             'mnu61',
     '6.2-menu':                             'mnu62',
     '6.3-menu':                             'mnu63',
@@ -193,11 +199,14 @@ class RHSMGuiLocator(object):
     'classic-review-subscription-label-6':       'lblReviewSubscription',
 
     ######## Combobox Element ########
-    'service-level-notset-combobox-6':           'cboNotSet',
-    'service-level-premium-combobox-6':          'cboPremium',
-    'service-level-none-combobox-6':             'cboNone',
-    'release-version-combobox-6':                'cbo1',
-    'release-version-6server-combobox-6':        'cbo6Server',
+    'service-level-combobox':                    'cboslaselectioncombobox',
+    'release-version-combobox':                  'cboreleaseselectioncombobox',
+
+#     'service-level-notset-combobox-6':           'cboNotSet',
+#     'service-level-premium-combobox-6':          'cboPremium',
+#     'service-level-none-combobox-6':             'cboNone',
+#     'release-version-combobox-6':                'cbo1',
+#     'release-version-6server-combobox-6':        'cbo6Server',
 
     ######## Other Element ########
     'register-progressbar-6':                    'pbarregisterprogressbar',

@@ -16,6 +16,7 @@ class tc_ID143277_GUI_autosubscribe_twice(RHSMGuiBase):
                 self.open_subscription_manager()
                 self.register_in_gui(username, password)
                 self.click_autoattach_button()
+                self.click_dialog_next_button()
                 self.click_attach_button()
                 self.click_my_subscriptions_tab()
                 if self.get_my_subscriptions_table_row_count() >= 1:
@@ -28,6 +29,7 @@ class tc_ID143277_GUI_autosubscribe_twice(RHSMGuiBase):
                 # repeat
                 self.click_my_installed_products_tab()
                 self.click_autoattach_button()
+                self.click_dialog_next_button()
                 self.click_attach_button()
                 self.click_my_subscriptions_tab()
                 if self.get_my_subscriptions_table_row_count() >= 1:

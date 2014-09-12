@@ -19,7 +19,7 @@ class tc_ID143286_GUI_set_service_level(RHSMGuiBase):
                 self.click_menu("system-preferences-dialog", "premium-menu")
                 self.click_close_button()
                 self.click_preferences_menu()
-                if self.check_object_exist("system-preferences-dialog", "service-level-premium-combobox"):
+                if self.check_menu_enabled("system-preferences-dialog", "premium-menu"):
                     logger.info("It's successful to set_service_level.")
                 else:
                     raise FailException("Test Faild - Failed to set_service_level!")
