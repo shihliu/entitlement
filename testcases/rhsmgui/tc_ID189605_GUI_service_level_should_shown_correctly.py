@@ -18,7 +18,7 @@ class tc_ID189605_GUI_service_level_should_shown_correctly(RHSMGuiBase):
                 servicelevel = RHSMConstants().get_constant("servicelevel")
                 self.set_service_level(servicelevel)
                 self.click_preferences_menu()
-                if self.check_object_exist("system-preferences-dialog", "service-level-" + servicelevel.lower() + "-combobox"):
+                if self.check_menu_enabled("system-preferences-dialog", servicelevel.lower() + "-menu"):
                     logger.info("It's successful to check service_level_should_shown_correctly.")
                 else:
                     raise FailException("Test Failed - Failed to check service_level_should_shown_correctly!")

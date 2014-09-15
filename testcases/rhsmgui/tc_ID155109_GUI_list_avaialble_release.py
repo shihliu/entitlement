@@ -18,9 +18,9 @@ class tc_ID155109_GUI_list_avaialble_release(RHSMGuiBase):
                 self.click_preferences_menu()
                 for item in self.get_available_release():
                     if self.check_object_exist("system-preferences-dialog", item.lower() + "-menu"):
-                        logger.info("It's successful to check release %s exist." % item.lower())
+                        logger.info("It's successful to check release %s exist." % (item.lower() + "-menu"))
                     else:
-                        raise FailException("Test Faild - Failed to check release %s exist." % item.lower())
+                        raise FailException("Test Faild - Failed to check release %s exist." % (item.lower() + "-menu"))
                 self.assert_(True, case_name)
             except Exception, e:
                 logger.error("Test Failed - ERROR Message:" + str(e))

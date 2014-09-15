@@ -13,8 +13,8 @@ class tc_ID217603_GUI_check_log_when_import_wrong_cert(RHSMGuiBase):
             try:
                 self.open_subscription_manager()
                 # click register button
-                self.click_ImportCertificate_button()
-                self.click_Certificate_Location()
+                self.click_import_cert_menu()
+                self.click_type_file_name_button()
                 self.input_location("/tmp/doesnotexistblahblah.pem")
                 self.click_import_cert_button()
                 self.close_error_cert_dialog()
