@@ -98,8 +98,9 @@ class VirtWhoKickstart(Command):
         if rhel_version == 5:
             compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/tree-x86_64/" % compose
         elif rhel_version == 6:
-            compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/%s/Server/x86_64/os/" % (compose, self.get_rhel_version(compose))
-        elif rhel_version == 7:
+#           compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/%s/Server/x86_64/os/" % (compose, self.get_rhel_version(compose))
+	    compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/compose/Server/x86_64/os/" % compose
+	elif rhel_version == 7:
             compose_url = "http://download.englab.nay.redhat.com/pub/rhel/rel-eng/%s/compose/Server/x86_64/os/" % compose
         if not self.__check_file_exist(distro_file):
             cmd = ('cat <<EOF > %s\n'
