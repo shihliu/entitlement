@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ $# != 1 ] ; then
 	echo "PARAMETER ERROR !!!"
 	echo " USAGE: $0 job_xml"
